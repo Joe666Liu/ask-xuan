@@ -13,8 +13,8 @@ export const Route = createFileRoute("/{-$locale}/_main/_landing/blog/")({
   }),
   head: () => ({
     meta: [
-      { title: "Blog - VibeAny" },
-      { name: "description", content: "Latest news, tutorials and updates from VibeAny" },
+      { title: "Blog - Ask Xuan" },
+      { name: "description", content: "Latest news, tutorials and updates from Ask Xuan" },
     ],
   }),
   loader: async ({ params }) => {
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/{-$locale}/_main/_landing/blog/")({
 })
 
 const getBlogListData = createServerFn({ method: "GET" })
-  .inputValidator((params: { lang?: string }) => params)
+  .validator((params: { lang?: string }) => params)
   .handler(async ({ data: { lang } }) => {
     const posts = getBlogPosts(lang).map(mapToBlogPost)
     const categories = getCategories(lang)

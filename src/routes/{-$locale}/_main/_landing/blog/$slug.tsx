@@ -19,7 +19,7 @@ import { cn } from "@/shared/lib/utils"
 import type { BlogCategory } from "@/shared/types/blog"
 
 const serverLoader = createServerFn({ method: "GET" })
-  .inputValidator((params: { slug: string; lang?: string }) => params)
+  .validator((params: { slug: string; lang?: string }) => params)
   .handler(async ({ data: { slug, lang } }) => {
     const page = blogSource.getPage([slug], lang)
     if (!page) throw notFound()
@@ -45,7 +45,7 @@ const serverLoader = createServerFn({ method: "GET" })
 export const Route = createFileRoute("/{-$locale}/_main/_landing/blog/$slug")({
   component: BlogPostPage,
   head: () => ({
-    meta: [{ title: "Blog - VibeAny" }],
+    meta: [{ title: "Blog - Ask Xuan" }],
     links: [{ rel: "stylesheet", href: blogCss }],
   }),
   loader: async ({ params }) => {

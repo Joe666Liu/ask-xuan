@@ -22,7 +22,7 @@ function hasLocalePrefix(pathname: string): boolean {
 const getServerLocaleRedirectHref = createServerFn({
   method: "GET",
 })
-  .inputValidator((input: { pathname: string; href: string }) => input)
+  .validator((input: { pathname: string; href: string }) => input)
   .handler(({ data }) => {
     if (hasLocalePrefix(data.pathname)) {
       return null

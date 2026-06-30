@@ -106,7 +106,7 @@ export default function AdminSidebar() {
                 </div>
                 <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{content.title}</span>
-                  <span className="truncate text-xs text-muted-foreground">Vibe Any</span>
+                  <span className="truncate text-xs text-muted-foreground">Ask Xuan</span>
                 </div>
               </LocalizedLink>
             </SidebarMenuButton>

@@ -306,7 +306,7 @@ const ApiAdminUsersIdBanRoute = ApiAdminUsersIdBanRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/{-$locale}': typeof Char123LocaleChar125MainLandingRouteRouteWithChildren
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/admin': typeof ApiAdminRouteRouteWithChildren

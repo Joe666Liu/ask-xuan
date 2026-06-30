@@ -8,7 +8,7 @@ import blogCss from "@/config/style/blog.css?url"
 import { getBlogMDXComponents } from "@/shared/components/blog/custom-mdx-content"
 
 const serverLoader = createServerFn({ method: "GET" })
-  .inputValidator((params: { slug: string; lang?: string }) => params)
+  .validator((params: { slug: string; lang?: string }) => params)
   .handler(async ({ data: { slug, lang } }) => {
     const page = legalSource.getPage([slug], lang)
     if (!page) throw notFound()
@@ -26,7 +26,7 @@ const serverLoader = createServerFn({ method: "GET" })
 export const Route = createFileRoute("/{-$locale}/_main/_landing/legal/$slug")({
   component: LegalPage,
   head: () => ({
-    meta: [{ title: "Legal - VibeAny" }],
+    meta: [{ title: "Legal - Ask Xuan" }],
     links: [{ rel: "stylesheet", href: blogCss }],
   }),
   loader: async ({ params }) => {

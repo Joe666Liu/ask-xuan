@@ -3,7 +3,7 @@ import { MenuIcon } from "lucide-react"
 import { useIntlayer } from "react-intlayer"
 import { siteConfig } from "@/config/site-config"
 import { LocaleSwitcher } from "@/shared/components/locale/locale-switcher"
-import { LocalizedLink, type To } from "@/shared/components/locale/localized-link"
+import { type AnchorTo, LocalizedLink, type To } from "@/shared/components/locale/localized-link"
 import { Button } from "@/shared/components/ui/button"
 import {
   DropdownMenu,
@@ -27,10 +27,12 @@ import { cn } from "@/shared/lib/utils"
 import { ThemeSwitcher } from "./theme-switcher"
 import { UserMenu } from "./user-menu"
 
+type HeaderHref = To | AnchorTo
+
 interface MenuItem {
   id: string
   label: string
-  href?: To | string
+  href?: HeaderHref
   children?: MenuItem[]
 }
 
@@ -46,7 +48,7 @@ export const LandingHeader = () => {
             (child: { label: { value: string }; href: { value: string } }, childIndex: number) => ({
               id: `${index}-${childIndex}`,
               label: child.label.value,
-              href: child.href.value as To,
+              href: child.href.value as HeaderHref,
             })
           )
         : undefined
@@ -54,12 +56,12 @@ export const LandingHeader = () => {
     return {
       id: `${index}`,
       label: item.label.value,
-      href: "href" in item ? (item.href.value as To) : undefined,
+      href: "href" in item ? (item.href.value as HeaderHref) : undefined,
       children,
     }
   })
 
-  const isActivePath = (href: string) => {
+  const isActivePath = (href: HeaderHref) => {
     if (href === "/") return false
     return location.pathname.includes(href)
   }
@@ -130,7 +132,7 @@ export const LandingHeader = () => {
                     className={navigationMenuTriggerStyle()}
                   >
                     <LocalizedLink
-                      to={item.href ?? ("/" as To)}
+                      to={item.href ?? "/"}
                       className={cn(
                         item.href && isActivePath(item.href) && "text-primary bg-muted/50"
                       )}

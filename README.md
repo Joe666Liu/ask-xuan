@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="./public/logo.svg" alt="VibeAny" width="80" height="80" />
+  <img src="./public/logo.svg" alt="Ask Xuan" width="80" height="80" />
 </p>
-<h1 align="center">VibeAny</h1>
+<h1 align="center">Ask Xuan</h1>
 <p align="center">
   <a href="./README.zh-CN.md">中文</a> | <a href="./README.md">English</a>
 </p>
@@ -10,28 +10,28 @@
   Authentication, payments, AI, i18n, and more — out of the box. Go from idea to launch in hours, not days.
 </p>
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/jiahao-jayden/vibe-any-tanstack" alt="License" /></a>
-  <a href="https://github.com/jiahao-jayden/vibe-any-tanstack/stargazers"><img src="https://img.shields.io/github/stars/jiahao-jayden/vibe-any-tanstack" alt="Stars" /></a>
-  <a href="https://github.com/jiahao-jayden/vibe-any-tanstack/issues"><img src="https://img.shields.io/github/issues/jiahao-jayden/vibe-any-tanstack" alt="Issues" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Joe666Liu/ask-xuan" alt="License" /></a>
+  <a href="https://github.com/Joe666Liu/ask-xuan/stargazers"><img src="https://img.shields.io/github/stars/Joe666Liu/ask-xuan" alt="Stars" /></a>
+  <a href="https://github.com/Joe666Liu/ask-xuan/issues"><img src="https://img.shields.io/github/issues/Joe666Liu/ask-xuan" alt="Issues" /></a>
   <a href="https://discord.gg/FQ2TAHh6"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 <p align="center">
   <a href="https://youtu.be/0DqfKBenvkQ">
     <img src="https://img.shields.io/badge/▶_Watch_Demo-black?style=for-the-badge" alt="Watch Demo" />
   </a>
-  <a href="https://vibeany.dev/docs">
+  <a href="https://askxuan.dev/docs">
     <img src="https://img.shields.io/badge/📖_Documentation-blue?style=for-the-badge" alt="Documentation" />
   </a>
 </p>
 <p align="center">
   <a href="https://youtu.be/0DqfKBenvkQ">
-    <img src="./public/image.png" alt="VibeAny Landing Page" width="800" />
+    <img src="./public/image.png" alt="Ask Xuan Landing Page" width="800" />
   </a>
 </p>
 
-## Why VibeAny
+## Why Ask Xuan
 
-We noticed that many people have to repeatedly write boilerplate code and rebuild infrastructure when vibe coding new products. VibeAny changes that — with just 10–20 minutes of configuration, you get:
+We noticed that many people have to repeatedly write boilerplate code and rebuild infrastructure when vibe coding new products. Ask Xuan changes that — with just 10–20 minutes of configuration, you get:
 
 - Complete **authentication** system with email/password, Google/GitHub OAuth, magic links
 - Multi-provider **AI chat** with 100+ models (OpenAI, Claude, Gemini, DeepSeek, Grok, and more)
@@ -179,8 +179,8 @@ graph TB
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/jiahao-jayden/vibe-any-tanstack.git
-cd vibe-any
+git clone https://github.com/Joe666Liu/ask-xuan.git ask-xuan
+cd ask-xuan
 pnpm install
 ```
 
@@ -206,7 +206,7 @@ pnpm dev
 
 Open [http://localhost:3377](http://localhost:3377).
 
-> For full setup instructions including AI, payments, and email, see the [Documentation](https://vibeany.dev/docs).
+> For full setup instructions including AI, payments, and email, see the [Documentation](https://askxuan.dev/docs).
 
 ## Project Structure
 
@@ -247,13 +247,13 @@ pnpm build:cf
 wrangler deploy
 ```
 
-Configure `wrangler.toml` with your D1 database and R2 bucket bindings. See the [Cloudflare deployment guide](https://vibeany.dev/docs) for details.
+Configure `wrangler.toml` with your D1 database and R2 bucket bindings. See the [Cloudflare deployment guide](https://askxuan.dev/docs) for details.
 
 ### Docker
 
 ```bash
-docker build -t vibe-any .
-docker run -d -p 3000:3000 vibe-any
+docker build -t ask-xuan .
+docker run -d -p 3000:3000 ask-xuan
 ```
 
 ### Node.js
@@ -272,8 +272,8 @@ Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md)
 ## Community
 
 - [Discord](https://discord.gg/FQ2TAHh6) — Chat with the team and other developers
-- [GitHub Issues](https://github.com/jiahao-jayden/vibe-any-tanstack/issues) — Report bugs or request features
-- [Documentation](https://vibeany.dev/docs) — Full setup and usage guide
+- [GitHub Issues](https://github.com/Joe666Liu/ask-xuan/issues) — Report bugs or request features
+- [Documentation](https://askxuan.dev/docs) — Full setup and usage guide
 
 ## License
 

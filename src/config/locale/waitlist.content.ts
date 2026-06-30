@@ -3,8 +3,8 @@ import { type Dictionary, t } from "intlayer"
 export const waitlistEmailTranslations = {
   subject: { en: "You're on the waitlist!", zh: "您已加入等待列表！" },
   preview: {
-    en: "Thanks for joining the VibeAny waitlist — early bird discount inside",
-    zh: "感谢加入 VibeAny 等待列表 — 内含早鸟优惠信息",
+    en: "Thanks for joining the Ask Xuan waitlist — early bird discount inside",
+    zh: "感谢加入 Ask Xuan 等待列表 — 内含早鸟优惠信息",
   },
   heading: { en: "You're on the list!", zh: "您已成功加入等待列表！" },
   description: {
@@ -16,8 +16,8 @@ export const waitlistEmailTranslations = {
     zh: "作为早期支持者，您将在上线时享有优先体验资格和最优价格。",
   },
   footer: {
-    en: "You're receiving this because you signed up for the VibeAny waitlist. No spam, ever.",
-    zh: "您收到此邮件是因为您注册了 VibeAny 等待列表。我们绝不发送垃圾邮件。",
+    en: "You're receiving this because you signed up for the Ask Xuan waitlist. No spam, ever.",
+    zh: "您收到此邮件是因为您注册了 Ask Xuan 等待列表。我们绝不发送垃圾邮件。",
   },
 } as const
 

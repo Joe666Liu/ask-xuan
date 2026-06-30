@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="./public/logo.svg" alt="VibeAny" width="80" height="80" />
+  <img src="./public/logo.svg" alt="Ask Xuan" width="80" height="80" />
 </p>
-<h1 align="center">VibeAny</h1>
+<h1 align="center">Ask Xuan</h1>
 <p align="center">
   <a href="./README.zh-CN.md">中文</a> | <a href="./README.md">English</a>
 </p>
@@ -10,28 +10,28 @@
   认证、支付、AI、国际化等开箱即用，从想法到上线只需数小时。
 </p>
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/jiahao-jayden/vibe-any-tanstack" alt="License" /></a>
-  <a href="https://github.com/jiahao-jayden/vibe-any-tanstack/stargazers"><img src="https://img.shields.io/github/stars/jiahao-jayden/vibe-any-tanstack" alt="Stars" /></a>
-  <a href="https://github.com/jiahao-jayden/vibe-any-tanstack/issues"><img src="https://img.shields.io/github/issues/jiahao-jayden/vibe-any-tanstack" alt="Issues" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Joe666Liu/ask-xuan" alt="License" /></a>
+  <a href="https://github.com/Joe666Liu/ask-xuan/stargazers"><img src="https://img.shields.io/github/stars/Joe666Liu/ask-xuan" alt="Stars" /></a>
+  <a href="https://github.com/Joe666Liu/ask-xuan/issues"><img src="https://img.shields.io/github/issues/Joe666Liu/ask-xuan" alt="Issues" /></a>
   <a href="https://discord.gg/FQ2TAHh6"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 <p align="center">
   <a href="https://youtu.be/0DqfKBenvkQ">
     <img src="https://img.shields.io/badge/▶_观看演示-black?style=for-the-badge" alt="Watch Demo" />
   </a>
-  <a href="https://vibeany.dev/docs">
+  <a href="https://askxuan.dev/docs">
     <img src="https://img.shields.io/badge/📖_文档-blue?style=for-the-badge" alt="Documentation" />
   </a>
 </p>
 <p align="center">
   <a href="https://youtu.be/0DqfKBenvkQ">
-    <img src="./public/image.png" alt="VibeAny 落地页" width="800" />
+    <img src="./public/image.png" alt="Ask Xuan 落地页" width="800" />
   </a>
 </p>
 
-## 为什么选择 VibeAny
+## 为什么选择 Ask Xuan
 
-我们发现很多人在 vibe coding 新产品时，不得不反复编写样板代码、重建基础设施。VibeAny 改变了这一切——只需 10–20 分钟配置，你就能获得：
+我们发现很多人在 vibe coding 新产品时，不得不反复编写样板代码、重建基础设施。Ask Xuan 改变了这一切——只需 10–20 分钟配置，你就能获得：
 
 - 完整的**认证系统**：邮箱密码、Google/GitHub OAuth、魔法链接
 - 多供应商 **AI 聊天**：100+ 模型（OpenAI、Claude、Gemini、DeepSeek、Grok 等）
@@ -179,8 +179,8 @@ graph TB
 ### 1. 克隆并安装
 
 ```bash
-git clone https://github.com/jiahao-jayden/vibe-any-tanstack.git
-cd vibe-any
+git clone https://github.com/Joe666Liu/ask-xuan.git ask-xuan
+cd ask-xuan
 pnpm install
 ```
 
@@ -206,7 +206,7 @@ pnpm dev
 
 打开 [http://localhost:3377](http://localhost:3377)。
 
-> 完整的配置指南（包括 AI、支付、邮件等）请查看[文档](https://vibeany.dev/docs)。
+> 完整的配置指南（包括 AI、支付、邮件等）请查看[文档](https://askxuan.dev/docs)。
 
 ## 项目结构
 
@@ -247,13 +247,13 @@ pnpm build:cf
 wrangler deploy
 ```
 
-在 `wrangler.toml` 中配置 D1 数据库和 R2 存储桶绑定，详见[部署文档](https://vibeany.dev/docs)。
+在 `wrangler.toml` 中配置 D1 数据库和 R2 存储桶绑定，详见[部署文档](https://askxuan.dev/docs)。
 
 ### Docker
 
 ```bash
-docker build -t vibe-any .
-docker run -d -p 3000:3000 vibe-any
+docker build -t ask-xuan .
+docker run -d -p 3000:3000 ask-xuan
 ```
 
 ### Node.js
@@ -272,8 +272,8 @@ node .output/server/index.mjs
 ## 社区
 
 - [Discord](https://discord.gg/FQ2TAHh6) — 与团队和其他开发者交流
-- [GitHub Issues](https://github.com/jiahao-jayden/vibe-any-tanstack/issues) — 报告 Bug 或提出功能建议
-- [文档](https://vibeany.dev/docs) — 完整的配置和使用指南
+- [GitHub Issues](https://github.com/Joe666Liu/ask-xuan/issues) — 报告 Bug 或提出功能建议
+- [文档](https://askxuan.dev/docs) — 完整的配置和使用指南
 
 ## 许可证
 

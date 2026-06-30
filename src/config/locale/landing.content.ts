@@ -25,12 +25,12 @@ export default {
     },
     hero: {
       title: t({
-        en: "Vibe Any AI Startups in hours, not days",
-        zh: "VibeAny AI 加速想法落地",
+        en: "Ask Xuan AI Startups in hours, not days",
+        zh: "Ask Xuan AI 加速想法落地",
       }),
       description: t({
-        en: "VibeAny is a TanStack boilerplate for building AI SaaS startups. Ship Fast with database, authentication, payment, AI, internationalization and more.",
-        zh: "VibeAny 是一个 TanStack Start 模板，用于构建 AI SaaS 创业项目。快速集成数据库、认证、支付、AI、国际化等能力。",
+        en: "Ask Xuan is a TanStack boilerplate for building AI SaaS startups. Ship Fast with database, authentication, payment, AI, internationalization and more.",
+        zh: "Ask Xuan 是一个 TanStack Start 模板，用于构建 AI SaaS 创业项目。快速集成数据库、认证、支付、AI、国际化等能力。",
       }),
       announcement: {
         show: true,
@@ -367,8 +367,8 @@ export default {
       display: false,
       title: t({ en: "Featured Capabilities", zh: "特色能力" }),
       description: t({
-        en: "Discover what VibeAny can do for you",
-        zh: "探索 VibeAny 能为你做什么",
+        en: "Discover what Ask Xuan can do for you",
+        zh: "探索 Ask Xuan 能为你做什么",
       }),
       items: [
         {
@@ -424,8 +424,8 @@ export default {
       testimonials: [
         {
           text: t({
-            en: "VibeAny has completely transformed how we build AI applications. The templates are production-ready and save us weeks of development time.",
-            zh: "VibeAny 彻底改变了我们构建 AI 应用的方式。模板开箱即用，为我们节省了数周的开发时间。",
+            en: "Ask Xuan has completely transformed how we build AI applications. The templates are production-ready and save us weeks of development time.",
+            zh: "Ask Xuan 彻底改变了我们构建 AI 应用的方式。模板开箱即用，为我们节省了数周的开发时间。",
           }),
           image: "/avatars/user1.avif",
           name: "Sarah Chen",
@@ -442,8 +442,8 @@ export default {
         },
         {
           text: t({
-            en: "From prototype to production in record time. VibeAny's infrastructure and tools are exactly what modern AI projects need.",
-            zh: "从原型到生产的速度创下纪录。VibeAny 的基础设施和工具正是现代 AI 项目所需要的。",
+            en: "From prototype to production in record time. Ask Xuan's infrastructure and tools are exactly what modern AI projects need.",
+            zh: "从原型到生产的速度创下纪录。Ask Xuan 的基础设施和工具正是现代 AI 项目所需要的。",
           }),
           image: "/avatars/user3.avif",
           name: "Emily Johnson",
@@ -478,8 +478,8 @@ export default {
         },
         {
           text: t({
-            en: "VibeAny's AI templates are incredibly well-designed. They've accelerated our development process by months.",
-            zh: "VibeAny 的 AI 模板设计精良。它们将我们的开发进程加速了数月。",
+            en: "Ask Xuan's AI templates are incredibly well-designed. They've accelerated our development process by months.",
+            zh: "Ask Xuan 的 AI 模板设计精良。它们将我们的开发进程加速了数月。",
           }),
           image: "/avatars/user7.avif",
           name: "Alex Thompson",
@@ -599,17 +599,17 @@ export default {
       }),
       items: [
         {
-          question: t({ en: "What is VibeAny?", zh: "什么是 VibeAny？" }),
+          question: t({ en: "What is Ask Xuan?", zh: "什么是 Ask Xuan？" }),
           answer: t({
-            en: "VibeAny is a platform for boosting any website.",
-            zh: "VibeAny 是一个用于提升任何网站的平台。",
+            en: "Ask Xuan is a platform for boosting any website.",
+            zh: "Ask Xuan 是一个用于提升任何网站的平台。",
           }),
         },
         {
-          question: t({ en: "What is VibeAny?", zh: "什么是 VibeAny？" }),
+          question: t({ en: "What is Ask Xuan?", zh: "什么是 Ask Xuan？" }),
           answer: t({
-            en: "VibeAny is a platform for boosting any website.",
-            zh: "VibeAny 是一个用于提升任何网站的平台。",
+            en: "Ask Xuan is a platform for boosting any website.",
+            zh: "Ask Xuan 是一个用于提升任何网站的平台。",
           }),
         },
       ],
@@ -666,7 +666,7 @@ export default {
     },
     footer: {
       display: true,
-      companyName: "VibeAny",
+      companyName: "Ask Xuan",
       scrollToTop: t({ en: "Back to Top", zh: "返回顶部" }),
       sections: [
         {

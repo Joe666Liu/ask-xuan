@@ -1,9 +1,9 @@
 export const siteConfig = {
-  title: "VibeAny",
+  title: "Ask Xuan",
   titleSuffix: "AI SaaS Starter | Chat, Subscriptions & AI Models",
   author: "Jayden & Lingjue",
   description:
-    "VibeAny - AI SaaS starter kit with chat, subscriptions, credits, and admin. Built with TanStack Start, Stripe, and 100+ AI models.",
+    "Ask Xuan - AI SaaS starter kit with chat, subscriptions, credits, and admin. Built with TanStack Start, Stripe, and 100+ AI models.",
   keywords: [
     "AI SaaS",
     "AI chat",
@@ -28,7 +28,7 @@ export const siteConfig = {
     header: "index, follow",
   },
   social: {
-    github: "https://github.com/jiahao-jayden/vibe-any-tanstack",
+    github: "https://github.com/Joe666Liu/ask-xuan",
     twitter: "https://x.com/jiahao_jayden",
     discord: "https://discord.gg/FQ2TAHh6",
     youtube: "https://www.youtube.com/@huanhao1323",

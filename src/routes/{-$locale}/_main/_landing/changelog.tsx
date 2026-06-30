@@ -42,7 +42,7 @@ export const Route = createFileRoute("/{-$locale}/_main/_landing/changelog")({
 })
 
 const getChangelogData = createServerFn({ method: "GET" })
-  .inputValidator((params: { lang?: string }) => params)
+  .validator((params: { lang?: string }) => params)
   .handler(async ({ data: { lang } }): Promise<{ entries: ChangelogEntry[]; lang: string }> => {
     const { getChangelogs } = await import("@/config/content/changelog-source")
     const entries = getChangelogs(lang)

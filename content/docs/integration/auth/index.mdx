@@ -3,7 +3,7 @@ title: Authentication
 description: Built-in authentication system powered by better-auth, supporting email/password login, OAuth providers, email verification, and captcha protection
 ---
 
-VibeAny uses [better-auth](https://www.better-auth.com/) as its authentication framework, with session data stored in PostgreSQL. Authentication is optional — if `DATABASE_URL` and `BETTER_AUTH_SECRET` are not configured, the app runs in static mode without user login.
+Ask Xuan uses [better-auth](https://www.better-auth.com/) as its authentication framework, with session data stored in PostgreSQL. Authentication is optional — if `DATABASE_URL` and `BETTER_AUTH_SECRET` are not configured, the app runs in static mode without user login.
 
 ## Prerequisites
 
@@ -88,7 +88,7 @@ Email verification is required — users cannot sign in until they verify their 
 
 ## OAuth Providers
 
-VibeAny supports GitHub and Google as OAuth providers. They are automatically enabled when the corresponding environment variables are set.
+Ask Xuan supports GitHub and Google as OAuth providers. They are automatically enabled when the corresponding environment variables are set.
 
 ### GitHub
 
@@ -148,7 +148,7 @@ OAuth providers are optional. The login page automatically shows the correspondi
 
 ## Captcha Protection
 
-VibeAny supports [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) to protect sign-in, sign-up, and OAuth flows from bots.
+Ask Xuan supports [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) to protect sign-in, sign-up, and OAuth flows from bots.
 
 <div className="fd-steps">
   <div className="fd-step">

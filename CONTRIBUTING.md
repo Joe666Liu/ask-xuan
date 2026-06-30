@@ -1,4 +1,4 @@
-# Contributing to VibeAny
+# Contributing to Ask Xuan
 
 Thanks for your interest in contributing! This guide will help you get started.
 
@@ -13,8 +13,8 @@ Thanks for your interest in contributing! This guide will help you get started.
 ### Setup
 
 ```bash
-git clone https://github.com/jiahao-jayden/vibe-any-tanstack.git
-cd vibe-any
+git clone https://github.com/Joe666Liu/ask-xuan.git ask-xuan
+cd ask-xuan
 pnpm install
 cp .env.example .env.local
 pnpm dev
@@ -70,8 +70,8 @@ docs(readme): update deployment instructions
 
 ## Reporting Issues
 
-- Use the [Bug Report](https://github.com/jiahao-jayden/vibe-any-tanstack/issues/new?template=bug_report.yml) template for bugs
-- Use the [Feature Request](https://github.com/jiahao-jayden/vibe-any-tanstack/issues/new?template=feature_request.yml) template for suggestions
+- Use the [Bug Report](https://github.com/Joe666Liu/ask-xuan/issues/new?template=bug_report.yml) template for bugs
+- Use the [Feature Request](https://github.com/Joe666Liu/ask-xuan/issues/new?template=feature_request.yml) template for suggestions
 - Search existing issues before creating a new one
 
 ## License

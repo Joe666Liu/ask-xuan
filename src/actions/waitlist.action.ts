@@ -5,7 +5,7 @@ import { isEmailEnabled, sendEmail } from "@/shared/lib/email/send-email"
 import { insertWaitlistEntry } from "@/shared/model/waitlist.model"
 
 export const joinWaitlistFn = createServerFn({ method: "GET" })
-  .inputValidator((params: { email: string; locale?: string }) => params)
+  .validator((params: { email: string; locale?: string }) => params)
   .handler(async ({ data: { email, locale = "en" } }) => {
     const entry = await insertWaitlistEntry({ email, locale })
 

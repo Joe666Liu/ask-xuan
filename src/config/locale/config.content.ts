@@ -16,7 +16,7 @@ export default {
     mailFrom: {
       label: t({ zh: "发件邮箱", en: "From Email" }),
       description: t({
-        zh: "用于发送邮件的邮箱 (VibeAny <noreply@auth.vibeany.dev>)",
+        zh: "用于发送邮件的邮箱 (Ask Xuan <noreply@auth.askxuan.dev>)",
         en: "Email for sending emails",
       }),
     },

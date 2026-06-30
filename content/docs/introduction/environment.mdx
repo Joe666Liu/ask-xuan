@@ -6,9 +6,9 @@ description: Configure your project through environment variables to enable all 
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## Environment Variable System Overview
-VibeAny supports two ways to configure environment variables:
+Ask Xuan supports two ways to configure environment variables:
 1. Via environment variable files — for values that rarely change, such as database connection URLs and auth secrets.
-2. Via the admin config panel — for values that change frequently. VibeAny provides a dynamic config panel where you can modify variables at any time, such as payment keys and email server settings.
+2. Via the admin config panel — for values that change frequently. Ask Xuan provides a dynamic config panel where you can modify variables at any time, such as payment keys and email server settings.
 
 ## Configuration via Environment Variable Files
 ### Site URL Configuration
@@ -47,7 +47,7 @@ If you want to use OAuth (GitHub or Google login), configure the following:
 | GOOGLE_CLIENT_SECRET  |  Google OAuth Client Secret    |
 
 ### TURNSTILE
-VibeAny uses TURNSTILE as a captcha service to protect your website. You need to register an account on the [TURNSTILE](https://developers.cloudflare.com/turnstile/?preferred-color-scheme=light) website and create a site to get the site key. See the captcha setup documentation for more details.
+Ask Xuan uses TURNSTILE as a captcha service to protect your website. You need to register an account on the [TURNSTILE](https://developers.cloudflare.com/turnstile/?preferred-color-scheme=light) website and create a site to get the site key. See the captcha setup documentation for more details.
 
 | Variable   | Description |
 | -------- | ------- |
@@ -56,7 +56,7 @@ VibeAny uses TURNSTILE as a captcha service to protect your website. You need to
 | VITE_TURNSTILE_CAPTCHA_ENABLED  |  Enable TURNSTILE captcha, `true` to enable, `false` to disable    |
 
 ### Email
-You can use the Resend service or a custom email server. VibeAny recommends using Resend. See the email setup documentation for more details.
+You can use the Resend service or a custom email server. Ask Xuan recommends using Resend. See the email setup documentation for more details.
 
 Email verification is disabled by default. Configure an email provider so users can verify their accounts:
 ```bash
@@ -68,7 +68,7 @@ For Resend, you need to create an API key at [Resend](https://resend.com/api-key
 | Variable   | Description |
 | -------- | ------- |
 | EMAIL_PROVIDER  | Email provider, `resend` or `custom`    |
-| EMAIL_FROM  | Sender email, e.g.: `VibeAny <noreply@auth.vibeany.dev>`    |
+| EMAIL_FROM  | Sender email, e.g.: `Ask Xuan <noreply@auth.askxuan.dev>`    |
 | RESEND_API_KEY  |  Resend API key    |
 
 For a custom email server, configure the following variables. Refer to your email provider's documentation for details:
@@ -106,7 +106,7 @@ See the payment setup documentation for more details.
 | VITE_CREEM_LIFETIME_PRODUCT_ID | Creem lifetime product ID |
 
 ### Credits
-To simplify developer configuration, VibeAny integrates the credit system into the admin panel. You can modify credit settings at any time in the admin config panel, such as credit amounts and expiration periods. See the credit setup documentation for more details.
+To simplify developer configuration, Ask Xuan integrates the credit system into the admin panel. You can modify credit settings at any time in the admin config panel, such as credit amounts and expiration periods. See the credit setup documentation for more details.
 
 ### Storage
 
@@ -122,7 +122,7 @@ See the storage setup documentation for more details.
 
 ## Configuration via Admin Panel
 
-VibeAny provides a dynamic config panel where you can modify the following settings at any time without restarting the service.
+Ask Xuan provides a dynamic config panel where you can modify the following settings at any time without restarting the service.
 
 <Callout type="warn" title="Priority Note">
 Environment variable file configuration takes priority over the admin panel:
@@ -215,7 +215,7 @@ You can select the payment provider in the admin panel: `stripe`, `creem`, `payp
 
 ### Storage
 
-VibeAny supports S3-compatible storage services (e.g., AWS S3, Cloudflare R2, MinIO).
+Ask Xuan supports S3-compatible storage services (e.g., AWS S3, Cloudflare R2, MinIO).
 
 | Config Item | Environment Variable | Default |
 | -------- | -------- | ------- |

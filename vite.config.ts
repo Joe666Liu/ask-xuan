@@ -31,13 +31,13 @@ const config = defineConfig({
     ],
   },
   plugins: [
+    devtools(),
     intlayerProxy(
       {},
       {
         ignore: (req) => req.url?.startsWith("/api/") ?? false,
       }
     ),
-    devtools(),
     nitro(),
     tanstackServerHMR(),
     // this is the plugin that enables path aliases
