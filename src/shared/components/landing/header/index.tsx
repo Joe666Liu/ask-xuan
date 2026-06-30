@@ -1,6 +1,8 @@
 import { useLocation } from "@tanstack/react-router"
+import { getPrefix } from "intlayer"
 import { MenuIcon } from "lucide-react"
-import { useIntlayer } from "react-intlayer"
+import type { MouseEvent } from "react"
+import { useIntlayer, useLocale } from "react-intlayer"
 import { siteConfig } from "@/config/site-config"
 import { LocaleSwitcher } from "@/shared/components/locale/locale-switcher"
 import { type AnchorTo, LocalizedLink, type To } from "@/shared/components/locale/localized-link"
@@ -38,8 +40,11 @@ interface MenuItem {
 
 export const LandingHeader = () => {
   const { header } = useIntlayer("landing")
+  const { locale } = useLocale()
   const location = useLocation()
   const { title, images, theme } = siteConfig
+  const { localePrefix } = getPrefix(locale)
+  const localizedHomePath = localePrefix ? `/${localePrefix}` : "/"
 
   const items: MenuItem[] = header.items.map((item, index) => {
     const children =
@@ -66,6 +71,28 @@ export const LandingHeader = () => {
     return location.pathname.includes(href)
   }
 
+  const handleHomeClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      location.pathname !== localizedHomePath
+    ) {
+      return
+    }
+
+    event.preventDefault()
+
+    if (window.location.hash) {
+      window.history.pushState(window.history.state, "", localizedHomePath)
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+  }
+
   return (
     <header
       className={cn(
@@ -80,6 +107,7 @@ export const LandingHeader = () => {
           className="flex min-h-11 items-center gap-1"
           to="/"
           aria-label="Go to homepage"
+          onClick={handleHomeClick}
         >
           {images.logo && (
             <img
