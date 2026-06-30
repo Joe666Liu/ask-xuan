@@ -17,6 +17,12 @@ const isGitHubOAuthEnabled = !!process.env.GITHUB_CLIENT_ID && !!process.env.GIT
 
 const isGoogleOAuthEnabled = !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET
 
+const authMinPasswordLength = Number.parseInt(
+  process.env.BETTER_AUTH_MIN_PASSWORD_LENGTH ?? "8",
+  10
+)
+const minPasswordLength = Number.isFinite(authMinPasswordLength) ? authMinPasswordLength : 8
+
 function getLocaleFromUrl(url: string): string {
   try {
     const urlObj = new URL(url)
@@ -58,6 +64,7 @@ function createAuth() {
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: isEmailVerificationEnabled,
+      minPasswordLength,
     },
     ...(isEmailVerificationEnabled && {
       emailVerification: {
