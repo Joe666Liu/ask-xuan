@@ -25,7 +25,6 @@
       "icon": "Rocket",
       "color": "#34D399",
       "items": [
-        { "title": "AI 对话系统", "description": "内置 AI 对话功能，支持模型选择、会话管理、多服务商切换" },
         { "title": "AI 服务商集成", "description": "支持 100+ 模型，涵盖 OpenAI、Anthropic、Google、DeepSeek、Groq、Mistral 等主流服务商" },
         { "title": "订阅管理", "description": "用户可自主管理订阅，支持客户门户、取消续费、生命周期跟踪" },
         { "title": "SEO 优化", "description": "动态 Sitemap 生成与可配置 robots.txt" },

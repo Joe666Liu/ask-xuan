@@ -25,7 +25,6 @@ const STATIC_ROUTES: PageInfo[] = [
   { path: "waitlist", changeFrequency: "weekly", priority: 0.8 },
   { path: "changelog", changeFrequency: "weekly", priority: 0.7 },
   { path: "roadmap", changeFrequency: "weekly", priority: 0.7 },
-  { path: "chat", changeFrequency: "weekly", priority: 0.6 },
   { path: "login", changeFrequency: "monthly", priority: 0.4 },
 ]
 

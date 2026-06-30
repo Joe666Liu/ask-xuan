@@ -34,7 +34,7 @@
 We noticed that many people have to repeatedly write boilerplate code and rebuild infrastructure when vibe coding new products. Ask Xuan changes that — with just 10–20 minutes of configuration, you get:
 
 - Complete **authentication** system with email/password, Google/GitHub OAuth, magic links
-- Multi-provider **AI chat** with 100+ models (OpenAI, Claude, Gemini, DeepSeek, Grok, and more)
+- Multi-provider **AI integration** with 100+ models (OpenAI, Claude, Gemini, DeepSeek, Grok, and more)
 - **Payment** integration with Stripe, Creem, PayPal, WeChat Pay, Alipay — subscriptions & one-time
 - **Credit system** for AI monetization with daily rewards, sign-up bonuses, and FIFO consumption
 - Enterprise-grade **landing page** components — responsive and SEO-friendly
@@ -47,11 +47,11 @@ We noticed that many people have to repeatedly write boilerplate code and rebuil
 <table>
   <tr>
     <td align="center"><b>🔐 Authentication</b></td>
-    <td align="center"><b>🤖 AI Chat (100+ models)</b></td>
+    <td align="center"><b>🤖 AI Providers (100+ models)</b></td>
   </tr>
   <tr>
     <td><img src="./public/landing/introduction/auth.webp" alt="Authentication" width="400" /></td>
-    <td><img src="./public/landing/introduction/ai-chat.webp" alt="AI Chat" width="400" /></td>
+    <td><img src="./public/landing/introduction/ai-chat.webp" alt="AI Providers" width="400" /></td>
   </tr>
   <tr>
     <td align="center"><b>💳 Payment & Pricing</b></td>
@@ -222,7 +222,6 @@ src/
 │       ├── _main/
 │       │   ├── _landing/   # Landing pages (home, blog, changelog, etc.)
 │       │   ├── admin/      # Admin panel
-│       │   └── chat/       # AI chat
 │       ├── docs/     # Documentation
 │       └── login/    # Login page
 ├── services/         # Business logic

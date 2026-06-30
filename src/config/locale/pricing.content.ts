@@ -40,7 +40,7 @@ export default {
         price: "$0",
         popular: false,
         features: [
-          t({ en: "Up to 10 AI conversations per month", zh: "每月最多 10 次 AI 对话" }),
+          t({ en: "Up to 10 AI requests per month", zh: "每月最多 10 次 AI 请求" }),
           t({ en: "Basic text generation", zh: "基础文本生成" }),
           t({ en: "Community support", zh: "社区支持" }),
           t({ en: "Access to free models", zh: "访问免费模型" }),
@@ -58,7 +58,7 @@ export default {
         originalPrice: "$49",
         popular: true,
         features: [
-          t({ en: "Unlimited AI conversations", zh: "无限 AI 对话" }),
+          t({ en: "Unlimited AI requests", zh: "无限 AI 请求" }),
           t({ en: "Advanced text and image generation", zh: "高级文本和图像生成" }),
           t({ en: "Priority support", zh: "优先支持" }),
           t({ en: "Access to premium models", zh: "访问高级模型" }),

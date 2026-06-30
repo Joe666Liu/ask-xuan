@@ -34,7 +34,7 @@
 我们发现很多人在 vibe coding 新产品时，不得不反复编写样板代码、重建基础设施。Ask Xuan 改变了这一切——只需 10–20 分钟配置，你就能获得：
 
 - 完整的**认证系统**：邮箱密码、Google/GitHub OAuth、魔法链接
-- 多供应商 **AI 聊天**：100+ 模型（OpenAI、Claude、Gemini、DeepSeek、Grok 等）
+- 多供应商 **AI 集成**：100+ 模型（OpenAI、Claude、Gemini、DeepSeek、Grok 等）
 - **支付集成**：Stripe、Creem、PayPal、微信支付、支付宝——订阅和一次性付款
 - **积分系统**：AI 计费，支持每日奖励、注册赠送、FIFO 消耗策略
 - 企业级**落地页**组件——响应式设计，SEO 友好
@@ -47,11 +47,11 @@
 <table>
   <tr>
     <td align="center"><b>🔐 认证系统</b></td>
-    <td align="center"><b>🤖 AI 聊天（100+ 模型）</b></td>
+    <td align="center"><b>🤖 AI 服务商（100+ 模型）</b></td>
   </tr>
   <tr>
     <td><img src="./public/landing/introduction/auth.webp" alt="认证" width="400" /></td>
-    <td><img src="./public/landing/introduction/ai-chat.webp" alt="AI 聊天" width="400" /></td>
+    <td><img src="./public/landing/introduction/ai-chat.webp" alt="AI 服务商" width="400" /></td>
   </tr>
   <tr>
     <td align="center"><b>💳 支付与定价</b></td>
@@ -222,7 +222,6 @@ src/
 │       ├── _main/
 │       │   ├── _landing/   # 落地页（首页、博客、变更日志等）
 │       │   ├── admin/      # 管理后台
-│       │   └── chat/       # AI 聊天
 │       ├── docs/     # 文档
 │       └── login/    # 登录页
 ├── services/         # 业务逻辑

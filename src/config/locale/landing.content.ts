@@ -43,7 +43,7 @@ export default {
       buttons: {
         start: {
           text: t({ en: "Get Started", zh: "开始" }),
-          url: "/chat",
+          url: "/docs",
         },
         docs: {
           text: t({ en: "Learn More", zh: "了解更多" }),
@@ -634,10 +634,6 @@ export default {
           href: "/docs",
         },
         {
-          label: t({ en: "Chat", zh: "聊天" }),
-          href: "/chat",
-        },
-        {
           label: t({ en: "Features", zh: "特点" }),
           href: "#introduction",
         },
@@ -688,7 +684,7 @@ export default {
         {
           title: t({ en: "Products", zh: "产品" }),
           links: [
-            { label: t({ en: "AI Chat", zh: "AI 对话" }), href: "/chat" },
+            { label: t({ en: "AI Providers", zh: "AI 服务商" }), href: "/docs/integration/ai" },
             { label: t({ en: "Templates", zh: "模板" }), href: "/templates" },
             { label: t({ en: "Components", zh: "组件" }), href: "/components" },
           ],

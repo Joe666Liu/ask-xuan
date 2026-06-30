@@ -103,7 +103,7 @@ Next.js is designed as "server-first" — all components are Server Components b
 TanStack Start is different: you decide each page's rendering strategy.
 
 ```tsx
-// Pure SPA mode: ideal for dashboards, AI chat, and other highly interactive apps
+// Pure SPA mode: ideal for dashboards, workspaces, and other highly interactive apps
 export const Route = createFileRoute('/dashboard')({
   ssr: false,
   component: Dashboard,
@@ -129,15 +129,15 @@ You can mix different rendering strategies within the same application without b
 TanStack Router has excellent type safety:
 
 ```tsx
-// Filename: $threadId.tsx
-export const Route = createFileRoute('/chat/$threadId')({
+// Filename: $workspaceId.tsx
+export const Route = createFileRoute('/workspace/$workspaceId')({
   loader: async ({ params }) => {
-    // params.threadId is automatically inferred as string
-    return fetchThread(params.threadId);
+    // params.workspaceId is automatically inferred as string
+    return fetchWorkspace(params.workspaceId);
   },
   component: () => {
-    const { threadId } = Route.useParams();
-    // threadId is guaranteed to exist at compile time
+    const { workspaceId } = Route.useParams();
+    // workspaceId is guaranteed to exist at compile time
   }
 });
 ```
@@ -214,7 +214,7 @@ Next.js is still a great framework:
 - You don't want to deal with a new framework's rough edges
 
 **Consider TanStack Start**:
-- Building interaction-heavy applications (dashboards, AI chat, collaboration tools)
+- Building interaction-heavy applications (dashboards, workspaces, collaboration tools)
 - You value end-to-end type safety
 - You want more flexible rendering strategies
 - You can tolerate an early framework's documentation and ecosystem gaps

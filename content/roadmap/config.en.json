@@ -25,7 +25,6 @@
       "icon": "Rocket",
       "color": "#34D399",
       "items": [
-        { "title": "AI Chat System", "description": "Built-in AI chat with model selector, conversation management, and multi-provider support" },
         { "title": "AI Service Integration", "description": "100+ models across OpenAI, Anthropic, Google, DeepSeek, Groq, Mistral and more providers" },
         { "title": "Subscription Management", "description": "Self-service subscription management with customer portal, cancellation and lifecycle tracking" },
         { "title": "SEO Optimization", "description": "Dynamic sitemap generation and configurable robots.txt" },

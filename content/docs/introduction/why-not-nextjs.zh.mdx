@@ -103,7 +103,7 @@ Next.js 的设计是"服务端优先"——默认所有组件都是 Server Compo
 TanStack Start 不同：你来决定每个页面的渲染策略。
 
 ```tsx
-// 纯 SPA 模式：适合仪表盘、AI 聊天等高交互应用
+// 纯 SPA 模式：适合仪表盘、工作区等高交互应用
 export const Route = createFileRoute('/dashboard')({
   ssr: false,
   component: Dashboard,
@@ -129,15 +129,15 @@ export const Route = createFileRoute('/about')({
 TanStack Router 的类型安全做得很好：
 
 ```tsx
-// 文件名：$threadId.tsx
-export const Route = createFileRoute('/chat/$threadId')({
+// 文件名：$workspaceId.tsx
+export const Route = createFileRoute('/workspace/$workspaceId')({
   loader: async ({ params }) => {
-    // params.threadId 的类型自动推断为 string
-    return fetchThread(params.threadId);
+    // params.workspaceId 的类型自动推断为 string
+    return fetchWorkspace(params.workspaceId);
   },
   component: () => {
-    const { threadId } = Route.useParams();
-    // 编译时就知道 threadId 一定存在
+    const { workspaceId } = Route.useParams();
+    // 编译时就知道 workspaceId 一定存在
   }
 });
 ```
@@ -214,7 +214,7 @@ Next.js 仍然是好框架：
 - 不想踩新框架的坑
 
 **考虑 TanStack Start**：
-- 构建交互密集型应用（仪表盘、AI 聊天、协作工具）
+- 构建交互密集型应用（仪表盘、工作区、协作工具）
 - 看重端到端的类型安全
 - 想要更灵活的渲染策略
 - 能接受早期框架的文档和生态不完善

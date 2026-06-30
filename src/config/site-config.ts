@@ -1,12 +1,12 @@
 export const siteConfig = {
   title: "Ask Xuan",
-  titleSuffix: "AI SaaS Starter | Chat, Subscriptions & AI Models",
+  titleSuffix: "AI SaaS Starter | Subscriptions & AI Models",
   author: "Jayden & Lingjue",
   description:
-    "Ask Xuan - AI SaaS starter kit with chat, subscriptions, credits, and admin. Built with TanStack Start, Stripe, and 100+ AI models.",
+    "Ask Xuan - AI SaaS starter kit with subscriptions, credits, admin, and AI provider integrations. Built with TanStack Start, Stripe, and 100+ AI models.",
   keywords: [
     "AI SaaS",
-    "AI chat",
+    "AI models",
     "TanStack Start",
     "Stripe",
     "subscription",
