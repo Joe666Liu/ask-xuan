@@ -361,7 +361,7 @@ export default {
       ],
     },
     pricing: {
-      display: false,
+      display: true,
     },
     horizontalShowcase: {
       display: false,

@@ -1,7 +1,8 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import { createFileRoute, Outlet, redirect, useLocation } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { getRequestHeader } from "@tanstack/react-start/server"
 import { getCookie, getPathWithoutLocale, getPrefix, Locales, validatePrefix } from "intlayer"
+import { useEffect } from "react"
 import { IntlayerProvider, useLocale } from "react-intlayer"
 import { GlobalNotFoundComponent } from "@/shared/components/landing/not-found"
 import { useI18nHTMLAttributes } from "@/shared/hooks/use-i18n-HTMLAttributes"
@@ -106,6 +107,7 @@ function LayoutComponent() {
   return (
     <IntlayerProvider locale={locale ?? defaultLocale}>
       <LocaleHTMLAttributes />
+      <HashScrollRestoration />
       <Outlet />
     </IntlayerProvider>
   )
@@ -118,9 +120,60 @@ function NotFoundLayout() {
   return (
     <IntlayerProvider locale={locale ?? defaultLocale}>
       <LocaleHTMLAttributes />
+      <HashScrollRestoration />
       <GlobalNotFoundComponent />
     </IntlayerProvider>
   )
+}
+
+function HashScrollRestoration() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const hash = window.location.hash
+
+    if (!hash || hash === "#") {
+      return
+    }
+
+    let targetId: string
+
+    try {
+      targetId = decodeURIComponent(hash.slice(1))
+    } catch {
+      targetId = hash.slice(1)
+    }
+
+    if (!targetId) {
+      return
+    }
+
+    const scrollToTarget = () => {
+      document.getElementById(targetId)?.scrollIntoView({ block: "start" })
+    }
+
+    scrollToTarget()
+
+    const firstFrame = window.requestAnimationFrame(scrollToTarget)
+    let nestedFrame: number | undefined
+    const secondFrame = window.requestAnimationFrame(() => {
+      nestedFrame = window.requestAnimationFrame(scrollToTarget)
+    })
+    const shortTimer = window.setTimeout(scrollToTarget, 150)
+    const layoutTimer = window.setTimeout(scrollToTarget, 600)
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame)
+      window.cancelAnimationFrame(secondFrame)
+      if (nestedFrame) {
+        window.cancelAnimationFrame(nestedFrame)
+      }
+      window.clearTimeout(shortTimer)
+      window.clearTimeout(layoutTimer)
+    }
+  }, [location.href])
+
+  return null
 }
 
 function LocaleHTMLAttributes() {
