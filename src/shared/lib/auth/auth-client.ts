@@ -150,11 +150,21 @@ export async function signOut({ fetchOptions }: { fetchOptions?: FetchOptions } 
 export const signIn = authClient.signIn
 export const signUp = authClient.signUp
 
-export function useSession() {
+type UseSessionOptions = {
+  enabled?: boolean
+}
+
+export function useSession({ enabled = true }: UseSessionOptions = {}) {
   const [data, setData] = useState<AuthSession | null>(null)
-  const [isPending, setIsPending] = useState(true)
+  const [isPending, setIsPending] = useState(enabled)
 
   useEffect(() => {
+    if (!enabled) {
+      setData(null)
+      setIsPending(false)
+      return
+    }
+
     let mounted = true
     const supabase = getSupabaseBrowserClient()
 
@@ -175,7 +185,7 @@ export function useSession() {
       mounted = false
       subscription.unsubscribe()
     }
-  }, [])
+  }, [enabled])
 
   return { data, isPending }
 }

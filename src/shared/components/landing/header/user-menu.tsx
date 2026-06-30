@@ -21,7 +21,7 @@ import {
   UserDashboard,
 } from "@/shared/components/user-dashboard"
 import { useGlobalContext } from "@/shared/context/global.context"
-import { signOut } from "@/shared/lib/auth/auth-client"
+import { signOut, useSession } from "@/shared/lib/auth/auth-client"
 
 const rootRouteApi = getRouteApi("__root__")
 
@@ -37,8 +37,11 @@ function getInitials(name: string | undefined | null) {
 
 export function UserMenu() {
   const { userMenu } = useIntlayer("auth")
-  const { userInfo, credits, config, isLoadingUserInfo } = useGlobalContext()
+  const { userInfo, credits, config } = useGlobalContext()
   const { isAuthEnabled } = rootRouteApi.useLoaderData()
+  const { data: authSession, isPending: isLoadingSession } = useSession({
+    enabled: isAuthEnabled,
+  })
   const creditEnabled = config?.public_credit_enable ?? false
   const [dashboardPanel, setDashboardPanel] = useQueryState(
     "dashboard",
@@ -60,11 +63,13 @@ export function UserMenu() {
     return null
   }
 
-  if (isLoadingUserInfo) {
+  const user = userInfo?.user ?? authSession?.user ?? null
+
+  if (!user && isLoadingSession) {
     return <Skeleton className="size-9 rounded-full" />
   }
 
-  if (!userInfo?.user) {
+  if (!user) {
     return (
       <Button
         asChild
@@ -75,7 +80,6 @@ export function UserMenu() {
     )
   }
 
-  const { user } = userInfo
   const activePanel: DashboardPanel =
     dashboardPanel && (creditEnabled || dashboardPanel === "account") ? dashboardPanel : "account"
   const isOpenUserDashboard = dashboardPanel !== null
