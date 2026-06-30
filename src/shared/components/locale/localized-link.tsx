@@ -10,8 +10,9 @@ export type RemoveLocaleParam<T> = T extends string ? RemoveLocaleFromString<T> 
 
 export type To = RemoveLocaleParam<NonNullable<LinkComponentProps["to"]>>
 export type HashTo = `#${string}`
+export type HomeHashTo = `/#${string}`
 export type ExternalTo = `${"http://" | "https://" | "mailto:" | "tel:"}${string}`
-export type AnchorTo = HashTo | ExternalTo
+export type AnchorTo = HashTo | HomeHashTo | ExternalTo
 export type LocalizedTo = To | AnchorTo
 
 type CollapseDoubleSlashes<S extends string> = S extends `${infer H}//${infer T}`
@@ -35,9 +36,11 @@ export const LocalizedLink: FC<LocalizedLinkProps> = (props) => {
   const { locale } = useLocale()
   const { localePrefix } = getPrefix(locale)
 
+  const isHomeHashTo = typeof props.to === "string" && props.to.startsWith("/#")
   const isAnchorTo =
     typeof props.to === "string" &&
     (props.to.startsWith("#") ||
+      isHomeHashTo ||
       props.to.startsWith("http://") ||
       props.to.startsWith("https://") ||
       props.to.startsWith("mailto:") ||
@@ -45,10 +48,14 @@ export const LocalizedLink: FC<LocalizedLinkProps> = (props) => {
 
   if (isAnchorTo) {
     const { to, ...rest } = props
+    const anchorTo = to as AnchorTo
+    const homePath = localePrefix ? `/${localePrefix}` : "/"
+    const href = isHomeHashTo ? `${homePath}${anchorTo.slice(1)}` : anchorTo
+
     return (
       <a
         {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
-        href={to}
+        href={href}
       />
     )
   }

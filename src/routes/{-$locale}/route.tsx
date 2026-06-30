@@ -42,9 +42,9 @@ const getServerLocaleRedirectHref = createServerFn({
 
     const { localePrefix } = getPrefix(storedLocale)
     const newPath = data.pathname === "/" ? `/${localePrefix}` : `/${localePrefix}${data.pathname}`
-    const search = new URL(data.href, "http://localhost").search
+    const url = new URL(data.href, "http://localhost")
 
-    return newPath + search
+    return newPath + url.search + url.hash
   })
 
 export const Route = createFileRoute("/{-$locale}")({
@@ -80,10 +80,12 @@ export const Route = createFileRoute("/{-$locale}")({
         if (!localeParam) {
           const { localePrefix: storedPrefix } = getPrefix(storedLocale)
           const pathWithoutLocale = getPathWithoutLocale(location.pathname)
+          const currentUrl = new URL(location.href, window.location.origin)
+          const nextPath =
+            pathWithoutLocale === "/" ? `/${storedPrefix}` : `/${storedPrefix}${pathWithoutLocale}`
 
           throw redirect({
-            to: `/{-$locale}${pathWithoutLocale}` as string,
-            params: { locale: storedPrefix } as never,
+            href: `${nextPath}${currentUrl.search}${currentUrl.hash}`,
             replace: true,
           })
         } else {

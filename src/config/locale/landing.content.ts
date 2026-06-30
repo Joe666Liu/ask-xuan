@@ -635,11 +635,11 @@ export default {
         },
         {
           label: t({ en: "Features", zh: "特点" }),
-          href: "#introduction",
+          href: "/#introduction",
         },
         {
           label: t({ en: "Pricing", zh: "定价" }),
-          href: "#pricing",
+          href: "/#pricing",
         },
         {
           label: t({ en: "More Features", zh: "更多功能" }),
@@ -670,7 +670,7 @@ export default {
           links: [
             { label: t({ en: "About Us", zh: "关于我们" }), href: "/about" },
             { label: t({ en: "Works", zh: "作品" }), href: "/works" },
-            { label: t({ en: "Pricing", zh: "定价" }), href: "/pricing" },
+            { label: t({ en: "Pricing", zh: "定价" }), href: "/#pricing" },
           ],
         },
         {

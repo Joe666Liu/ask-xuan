@@ -36,7 +36,6 @@ export const Route = createFileRoute("/{-$locale}/_main/_landing/changelog")({
   }),
   loader: async ({ params }) => {
     const data = await getChangelogData({ data: { lang: params.locale } })
-    await Promise.all(data.entries.map((entry) => clientLoader.preload(entry.path)))
     return data
   },
 })

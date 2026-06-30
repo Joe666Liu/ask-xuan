@@ -31,5 +31,5 @@ export const localeRedirectMiddleware = createMiddleware().server(async ({ next,
   const { localePrefix } = getPrefix(storedLocale)
   const newPath = pathname === "/" ? `/${localePrefix}` : `/${localePrefix}${pathname}`
 
-  throw redirect({ href: newPath + url.search })
+  throw redirect({ href: newPath + url.search + url.hash })
 })
