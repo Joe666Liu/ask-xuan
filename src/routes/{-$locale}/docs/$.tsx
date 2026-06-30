@@ -6,16 +6,24 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs"
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/docs/page"
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared"
 import defaultMdxComponents from "fumadocs-ui/mdx"
+import { getPrefix } from "intlayer"
 import { source } from "@/config/content/source"
+import { siteConfig } from "@/config/site-config"
 import docsCss from "@/config/style/docs.css?url"
 import { getMDXComponents } from "@/shared/components/docs/mdx-components"
 import { i18n } from "@/shared/lib/i18n"
 
-export function baseOptions(): BaseLayoutProps {
+const getLocalizedHomeHref = (locale?: string) => {
+  const { localePrefix } = getPrefix(locale)
+  return localePrefix ? `/${localePrefix}` : "/"
+}
+
+export function baseOptions(locale?: string): BaseLayoutProps {
   return {
     i18n,
     nav: {
-      title: "Documentation",
+      title: siteConfig.title,
+      url: getLocalizedHomeHref(locale),
     },
   }
 }
@@ -84,10 +92,11 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 function Page() {
   const data = useFumadocsLoader(Route.useLoaderData())
+  const { locale } = Route.useParams()
 
   return (
     <DocsLayout
-      {...baseOptions()}
+      {...baseOptions(locale)}
       tree={data.pageTree}
     >
       <div id="main-content">{clientLoader.useContent(data.path)}</div>
