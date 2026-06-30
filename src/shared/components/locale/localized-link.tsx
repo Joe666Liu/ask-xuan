@@ -11,9 +11,10 @@ export type RemoveLocaleParam<T> = T extends string ? RemoveLocaleFromString<T> 
 export type To = RemoveLocaleParam<NonNullable<LinkComponentProps["to"]>>
 export type HashTo = `#${string}`
 export type HomeHashTo = `/#${string}`
+export type DocsSplatTo = `/docs/${string}`
 export type ExternalTo = `${"http://" | "https://" | "mailto:" | "tel:"}${string}`
 export type AnchorTo = HashTo | HomeHashTo | ExternalTo
-export type LocalizedTo = To | AnchorTo
+export type LocalizedTo = To | DocsSplatTo | AnchorTo
 
 type CollapseDoubleSlashes<S extends string> = S extends `${infer H}//${infer T}`
   ? CollapseDoubleSlashes<`${H}/${T}`>
@@ -61,10 +62,11 @@ export const LocalizedLink: FC<LocalizedLinkProps> = (props) => {
   }
 
   const { to = "/" as To, params, ...rest } = props
-  const isDocsIndex = to === "/docs"
+  const isDocsRoute = typeof to === "string" && (to === "/docs" || to.startsWith("/docs/"))
+  const docsSplat = isDocsRoute && to !== "/docs" ? to.slice("/docs/".length) : ""
   const linkParams = {
     locale: localePrefix,
-    ...(isDocsIndex ? { _splat: "" } : {}),
+    ...(isDocsRoute ? { _splat: docsSplat } : {}),
     ...(typeof params === "object" ? params : {}),
   }
 
@@ -73,7 +75,7 @@ export const LocalizedLink: FC<LocalizedLinkProps> = (props) => {
       {...(rest as Omit<LinkComponentProps, "to" | "params">)}
       params={linkParams}
       to={
-        (isDocsIndex
+        (isDocsRoute
           ? `/${LOCALE_ROUTE}/docs/$`
           : `/${LOCALE_ROUTE}${to}`) as LinkComponentProps["to"]
       }

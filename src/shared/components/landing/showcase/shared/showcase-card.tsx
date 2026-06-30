@@ -9,6 +9,7 @@ import type { ShowcaseCardProps } from "@/shared/types/landing"
  */
 export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
   const key = `${item.title}-${index}`
+  const hasLink = Boolean(item.link && item.link !== "#")
 
   const cardContent = (
     <div
@@ -17,7 +18,7 @@ export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
         "h-full flex flex-col",
         "bg-card rounded-xl border border-border overflow-hidden",
         "transition-[box-shadow,transform,border-color] duration-300",
-        item.link && "hover:shadow-lg hover:-translate-y-1",
+        hasLink && "hover:shadow-lg hover:-translate-y-1",
         className
       )}
     >
@@ -28,7 +29,7 @@ export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
           layout="fullWidth"
           className={cn(
             "object-cover",
-            item.link && "transition-transform duration-300 group-hover:scale-105"
+            hasLink && "transition-transform duration-300 group-hover:scale-105"
           )}
         />
       </div>
@@ -38,7 +39,7 @@ export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
         <h3
           className={cn(
             "font-semibold text-lg mb-2",
-            item.link && "group-hover:text-primary transition-colors"
+            hasLink && "group-hover:text-primary transition-colors"
           )}
         >
           {item.title}
@@ -51,7 +52,7 @@ export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
     </div>
   )
 
-  if (item.link) {
+  if (hasLink) {
     return (
       <LocalizedLink
         to={item.link}

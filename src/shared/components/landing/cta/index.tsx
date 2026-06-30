@@ -1,8 +1,10 @@
 import { useId } from "react"
 import { useIntlayer } from "react-intlayer"
-import { LocalizedLink } from "@/shared/components/locale/localized-link"
+import { LocalizedLink, type LocalizedTo } from "@/shared/components/locale/localized-link"
 import { Button } from "@/shared/components/ui/button"
 import { cn } from "@/shared/lib/utils"
+
+const isActionableHref = (href: string) => Boolean(href && href !== "#")
 
 export const Cta = () => {
   const { cta } = useIntlayer("landing")
@@ -36,30 +38,51 @@ export const Cta = () => {
           </p>
 
           <div className={cn("mt-12", "flex flex-wrap justify-center gap-4")}>
-            <Button
-              asChild
-              size="lg"
-            >
-              <LocalizedLink
-                to={primaryHref}
-                aria-label={`${primaryText} - Primary action`}
+            {isActionableHref(primaryHref) ? (
+              <Button
+                asChild
+                size="lg"
+              >
+                <LocalizedLink
+                  to={primaryHref as LocalizedTo}
+                  aria-label={`${primaryText} - Primary action`}
+                >
+                  <span>{primaryText}</span>
+                </LocalizedLink>
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                disabled
+                aria-label={`${primaryText} - Primary action unavailable`}
               >
                 <span>{primaryText}</span>
-              </LocalizedLink>
-            </Button>
+              </Button>
+            )}
 
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-            >
-              <LocalizedLink
-                to={secondaryHref}
-                aria-label={`${secondaryText} - Secondary action`}
+            {isActionableHref(secondaryHref) ? (
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+              >
+                <LocalizedLink
+                  to={secondaryHref as LocalizedTo}
+                  aria-label={`${secondaryText} - Secondary action`}
+                >
+                  <span>{secondaryText}</span>
+                </LocalizedLink>
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                variant="outline"
+                disabled
+                aria-label={`${secondaryText} - Secondary action unavailable`}
               >
                 <span>{secondaryText}</span>
-              </LocalizedLink>
-            </Button>
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -377,7 +377,7 @@ export default {
             en: "/home/introduction/ai-capabilities.png",
             zh: "/home/introduction/ai-capabilities-zh.png",
           }),
-          link: "/",
+          link: "/docs/integration/ai",
           description: t({
             en: "Add AI-powered interactions to your website",
             zh: "为你的网站添加 AI 驱动的交互",
@@ -389,7 +389,7 @@ export default {
             en: "/home/introduction/authentication.png",
             zh: "/home/introduction/authentication-zh.png",
           }),
-          link: "/",
+          link: "/docs/integration/auth",
           description: t({
             en: "One-click login and third-party integrations",
             zh: "一键登录和第三方集成",
@@ -398,7 +398,7 @@ export default {
         {
           title: t({ en: "Payment Solutions", zh: "支付方案" }),
           imagePath: "/landing/introduction/payment.png",
-          link: "/",
+          link: "/docs/integration/payment/stripe",
           description: t({
             en: "Flexible subscriptions and one-time payments",
             zh: "灵活的订阅和一次性支付",
@@ -410,7 +410,7 @@ export default {
             en: "/landing/introduction/blog.png",
             zh: "/landing/introduction/blog-zh.png",
           }),
-          link: "/",
+          link: "/docs/integration/document-system/blog",
           description: t({
             en: "Multilingual blogs and documentation system",
             zh: "多语言博客和文档系统",
@@ -525,8 +525,8 @@ export default {
           imagePath: "/landing/media/tech-research-paper.avif",
           source: "Tech Journal",
           date: "2025.09.15",
-          href: "#",
-          external: true,
+          href: "",
+          external: false,
         },
         {
           title: t({
@@ -540,8 +540,8 @@ export default {
           imagePath: "/landing/media/ai-solutions-development.avif",
           source: "AI Weekly",
           date: "2025.08.20",
-          href: "#",
-          external: true,
+          href: "",
+          external: false,
         },
         {
           title: t({
@@ -555,8 +555,8 @@ export default {
           imagePath: "/landing/media/platform-innovation.avif",
           source: "Tech News",
           date: "2025.07.10",
-          href: "#",
-          external: true,
+          href: "",
+          external: false,
         },
         {
           title: t({
@@ -570,8 +570,8 @@ export default {
           imagePath: "/landing/media/software-solutions.avif",
           source: "Dev Magazine",
           date: "2025.05.25",
-          href: "#",
-          external: true,
+          href: "",
+          external: false,
         },
         {
           title: t({
@@ -585,8 +585,8 @@ export default {
           imagePath: "/landing/media/development-tools.avif",
           source: "Code Review",
           date: "2025.02.18",
-          href: "#",
-          external: true,
+          href: "",
+          external: false,
         },
       ],
     },
@@ -622,9 +622,9 @@ export default {
         zh: "立即开始，构建你的下一个伟大项目。",
       }),
       primaryButtonText: t({ en: "Get Started", zh: "立即开始" }),
-      primaryButtonHref: "/",
+      primaryButtonHref: "/docs",
       secondaryButtonText: t({ en: "Book Demo", zh: "预约演示" }),
-      secondaryButtonHref: "/",
+      secondaryButtonHref: "",
     },
     header: {
       display: true,
@@ -668,8 +668,8 @@ export default {
         {
           title: t({ en: "About", zh: "关于" }),
           links: [
-            { label: t({ en: "About Us", zh: "关于我们" }), href: "/about" },
-            { label: t({ en: "Works", zh: "作品" }), href: "/works" },
+            { label: t({ en: "About Us", zh: "关于我们" }), href: "" },
+            { label: t({ en: "Works", zh: "作品" }), href: "" },
             { label: t({ en: "Pricing", zh: "定价" }), href: "/#pricing" },
           ],
         },
@@ -685,8 +685,8 @@ export default {
           title: t({ en: "Products", zh: "产品" }),
           links: [
             { label: t({ en: "AI Providers", zh: "AI 服务商" }), href: "/docs/integration/ai" },
-            { label: t({ en: "Templates", zh: "模板" }), href: "/templates" },
-            { label: t({ en: "Components", zh: "组件" }), href: "/components" },
+            { label: t({ en: "Templates", zh: "模板" }), href: "" },
+            { label: t({ en: "Components", zh: "组件" }), href: "" },
           ],
         },
         {
@@ -694,15 +694,15 @@ export default {
           links: [
             { label: t({ en: "Changelog", zh: "更新日志" }), href: "/changelog" },
             { label: t({ en: "Blog", zh: "博客" }), href: "/blog" },
-            { label: t({ en: "Community", zh: "社区" }), href: "/community" },
+            { label: t({ en: "Community", zh: "社区" }), href: "" },
           ],
         },
         {
           title: t({ en: "Company", zh: "公司" }),
           links: [
-            { label: t({ en: "Contact", zh: "联系我们" }), href: "/contact" },
-            { label: t({ en: "Terms", zh: "服务条款" }), href: "/terms" },
-            { label: t({ en: "Privacy", zh: "隐私政策" }), href: "/privacy" },
+            { label: t({ en: "Contact", zh: "联系我们" }), href: "" },
+            { label: t({ en: "Terms", zh: "服务条款" }), href: "/legal/terms-of-service" },
+            { label: t({ en: "Privacy", zh: "隐私政策" }), href: "/legal/privacy-policy" },
           ],
         },
       ],

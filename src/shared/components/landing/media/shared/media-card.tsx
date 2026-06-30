@@ -1,6 +1,6 @@
 import { Image } from "@unpic/react"
 import { ExternalLink } from "lucide-react"
-import { LocalizedLink, type To } from "@/shared/components/locale/localized-link"
+import { LocalizedLink, type LocalizedTo } from "@/shared/components/locale/localized-link"
 import { cn } from "@/shared/lib/utils"
 import type { MediaCardProps } from "@/shared/types/landing"
 
@@ -10,14 +10,16 @@ import type { MediaCardProps } from "@/shared/types/landing"
  * Supports accessibility and external links
  */
 export const MediaCard = ({ item, index }: MediaCardProps) => {
+  const hasLink = Boolean(item.href && item.href !== "#")
+
   const cardContent = (
-    <div className={cn("shrink-0 w-80 h-full", item.href && "group cursor-pointer")}>
+    <div className={cn("shrink-0 w-80 h-full", hasLink && "group cursor-pointer")}>
       <article
         className={cn(
           "h-full flex flex-col",
           "bg-card rounded-xl border border-border overflow-hidden",
           "transition-[box-shadow,transform,border-color] duration-300",
-          item.href && "hover:shadow-lg hover:-translate-y-1",
+          hasLink && "hover:shadow-lg hover:-translate-y-1",
           "focus-within:ring-2 focus-within:ring-primary/20",
           "focus-within:ring-offset-2"
         )}
@@ -31,7 +33,7 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
             layout="fullWidth"
             className={cn(
               "object-cover",
-              item.href && "transition-transform duration-300 group-hover:scale-105"
+              hasLink && "transition-transform duration-300 group-hover:scale-105"
             )}
           />
         </div>
@@ -51,11 +53,11 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
             id={`media-title-${index}`}
             className={cn(
               "font-semibold text-lg leading-tight line-clamp-2",
-              item.href && "group-hover:text-primary transition-colors"
+              hasLink && "group-hover:text-primary transition-colors"
             )}
           >
             {item.title}
-            {item.external && (
+            {hasLink && item.external && (
               <ExternalLink
                 className="ml-1 inline-block size-4"
                 aria-hidden="true"
@@ -74,7 +76,7 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
     </div>
   )
 
-  if (!item.href) {
+  if (!hasLink) {
     return <li key={`media-${index}`}>{cardContent}</li>
   }
 
@@ -102,7 +104,7 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
   return (
     <li key={`media-${index}`}>
       <LocalizedLink
-        to={item.href as To}
+        to={item.href as LocalizedTo}
         className={linkClassName}
         aria-label={`Read article: ${item.title}`}
       >

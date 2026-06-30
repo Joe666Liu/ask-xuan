@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react"
-import type { To } from "@/shared/components/locale/localized-link"
+import type { LocalizedTo } from "@/shared/components/locale/localized-link"
 
 // ============================================================================
 // Base Types
@@ -138,7 +138,7 @@ export interface ShowcaseItem {
   title: string
   description: string
   imagePath: string
-  link?: To
+  link?: LocalizedTo
 }
 
 export interface ShowcaseCardProps {

@@ -1,10 +1,12 @@
 import { ArrowUp } from "lucide-react"
 import { useIntlayer } from "react-intlayer"
-import { LocalizedLink, type To } from "@/shared/components/locale/localized-link"
+import { LocalizedLink, type LocalizedTo } from "@/shared/components/locale/localized-link"
 import { Button } from "@/shared/components/ui/button"
 import { cn } from "@/shared/lib/utils"
 
 const CURRENT_YEAR = new Date().getFullYear()
+
+const isActionableHref = (href: string) => Boolean(href && href !== "#")
 
 export const Footer = () => {
   const { footer } = useIntlayer("landing")
@@ -21,19 +23,30 @@ export const Footer = () => {
             <div key={index}>
               <h3 className="text-sm font-semibold text-foreground">{section.title.value}</h3>
               <ul className="mt-4 space-y-3">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <LocalizedLink
-                      to={link.href.value as To}
-                      className={cn(
-                        "inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground sm:min-h-0 sm:min-w-0",
-                        "hover:text-foreground transition-colors"
+                {section.links.map((link, linkIndex) => {
+                  const href = link.href.value
+                  const className = cn(
+                    "inline-flex min-h-11 min-w-11 items-center text-sm sm:min-h-0 sm:min-w-0",
+                    isActionableHref(href)
+                      ? "text-muted-foreground hover:text-foreground transition-colors"
+                      : "text-muted-foreground/60 cursor-default"
+                  )
+
+                  return (
+                    <li key={linkIndex}>
+                      {isActionableHref(href) ? (
+                        <LocalizedLink
+                          to={href as LocalizedTo}
+                          className={className}
+                        >
+                          {link.label.value}
+                        </LocalizedLink>
+                      ) : (
+                        <span className={className}>{link.label.value}</span>
                       )}
-                    >
-                      {link.label.value}
-                    </LocalizedLink>
-                  </li>
-                ))}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           ))}
