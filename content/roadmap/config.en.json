@@ -29,7 +29,7 @@
         { "title": "Subscription Management", "description": "Self-service subscription management with customer portal, cancellation and lifecycle tracking" },
         { "title": "SEO Optimization", "description": "Dynamic sitemap generation and configurable robots.txt" },
         { "title": "TanStack Start Framework", "description": "Built with React 19 + TanStack Router/Query" },
-        { "title": "Better Auth System", "description": "Email login, social login, magic link and more authentication methods" },
+        { "title": "Supabase Auth System", "description": "Email login and OAuth authentication through Supabase" },
         { "title": "Internationalization", "description": "Complete i18n solution based on intlayer with multi-language support" },
         { "title": "Stripe & Creem Payments", "description": "One-time payments and subscriptions with automatic webhook handling via Stripe and Creem" },
         { "title": "Credit System", "description": "Sign-up bonus, daily rewards, credit purchase and consumption, credit history" },

@@ -7,6 +7,7 @@ import {
   Loader2Icon,
   RefreshCwIcon,
 } from "lucide-react"
+import { parseAsInteger, useQueryState } from "nuqs"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useIntlayer } from "react-intlayer"
 import { PricingDialog } from "@/shared/components/landing/pricing/pricing-dialog"
@@ -60,7 +61,12 @@ export function CreditHistoryPanel() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [pullDistance, setPullDistance] = useState(0)
-  const [page, setPage] = useState(1)
+  const [rawPage, setPage] = useQueryState(
+    "creditsPage",
+    parseAsInteger
+      .withOptions({ history: "push", shallow: true, clearOnDefault: true })
+      .withDefault(1)
+  )
   const [isPricingOpen, setIsPricingOpen] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const startY = useRef(0)
@@ -71,6 +77,7 @@ export function CreditHistoryPanel() {
   const planName = userInfo?.payment?.activePlan?.id ?? "free"
   const limit = 10
   const pullThreshold = 60
+  const page = Math.max(1, rawPage)
 
   const creditTypeLabels: Record<string, string> = {
     [CreditsType.ADD_FIRST_REGISTRATION]: creditTypes.add_first_registration.value,
@@ -111,6 +118,12 @@ export function CreditHistoryPanel() {
     },
     [page]
   )
+
+  useEffect(() => {
+    if (rawPage < 1) {
+      void setPage(1)
+    }
+  }, [rawPage, setPage])
 
   useEffect(() => {
     fetchHistory()
@@ -256,9 +269,9 @@ export function CreditHistoryPanel() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="size-8"
+                  className="sm:size-8"
                   disabled={page <= 1}
-                  onClick={() => setPage((p) => p - 1)}
+                  onClick={() => void setPage(page - 1)}
                   aria-label="Previous page"
                 >
                   <ChevronLeftIcon className="size-4" />
@@ -269,9 +282,9 @@ export function CreditHistoryPanel() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="size-8"
+                  className="sm:size-8"
                   disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => void setPage(page + 1)}
                   aria-label="Next page"
                 >
                   <ChevronRightIcon className="size-4" />

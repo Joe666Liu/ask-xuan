@@ -16,7 +16,7 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
         className={cn(
           "h-full flex flex-col",
           "bg-card rounded-xl border border-border overflow-hidden",
-          "transition-all duration-300",
+          "transition-[box-shadow,transform,border-color] duration-300",
           item.href && "hover:shadow-lg hover:-translate-y-1",
           "focus-within:ring-2 focus-within:ring-primary/20",
           "focus-within:ring-offset-2"

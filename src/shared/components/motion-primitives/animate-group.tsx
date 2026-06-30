@@ -1,6 +1,6 @@
 
 import type { Variants } from "motion/react"
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import type { ReactNode } from "react"
 import React from "react"
 
@@ -52,12 +52,12 @@ const presetVariants: Record<PresetType, Variants> = {
     visible: { scale: 1 },
   },
   blur: {
-    hidden: { filter: "blur(4px)" },
-    visible: { filter: "blur(0px)" },
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
   },
   "blur-slide": {
-    hidden: { filter: "blur(4px)", y: 20 },
-    visible: { filter: "blur(0px)", y: 0 },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   },
   zoom: {
     hidden: { scale: 0.5 },
@@ -102,6 +102,7 @@ const addDefaultVariants = (variants: Variants) => ({
 })
 
 function AnimatedGroup({ children, className, variants, preset, as = "div", asChild = "div" }: AnimatedGroupProps) {
+  const shouldReduceMotion = useReducedMotion()
   const selectedVariants = {
     item: addDefaultVariants(preset ? presetVariants[preset] : {}),
     container: addDefaultVariants(defaultContainerVariants),
@@ -111,6 +112,19 @@ function AnimatedGroup({ children, className, variants, preset, as = "div", asCh
 
   const MotionComponent = React.useMemo(() => motion.create(as as React.ElementType), [as])
   const MotionChild = React.useMemo(() => motion.create(asChild as React.ElementType), [asChild])
+
+  if (shouldReduceMotion) {
+    const Component = as
+    const Child = asChild
+
+    return (
+      <Component className={className}>
+        {React.Children.map(children, (child, index) => (
+          <Child key={index}>{child}</Child>
+        ))}
+      </Component>
+    )
+  }
 
   return (
     <MotionComponent initial="hidden" animate="visible" variants={containerVariants} className={className}>

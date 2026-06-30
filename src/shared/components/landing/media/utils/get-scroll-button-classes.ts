@@ -11,14 +11,14 @@ export const getScrollButtonClasses = (canScroll: boolean): string =>
   cn(
     // Position and layout
     "absolute top-1/2 -translate-y-1/2 z-10",
-    "w-10 h-10 rounded-full",
+    "size-11 rounded-full sm:size-10",
 
     // Visual styling
     "bg-background border border-border shadow-lg",
     "flex items-center justify-center",
 
     // Interaction states
-    "transition-all duration-200",
+    "transition-[opacity,background-color,box-shadow,transform] duration-200",
     canScroll
       ? cn(
           "opacity-100",

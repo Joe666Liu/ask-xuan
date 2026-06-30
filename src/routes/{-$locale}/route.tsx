@@ -4,6 +4,7 @@ import { getRequestHeader } from "@tanstack/react-start/server"
 import { getCookie, getPathWithoutLocale, getPrefix, Locales, validatePrefix } from "intlayer"
 import { IntlayerProvider, useLocale } from "react-intlayer"
 import { GlobalNotFoundComponent } from "@/shared/components/landing/not-found"
+import { useI18nHTMLAttributes } from "@/shared/hooks/use-i18n-HTMLAttributes"
 import { setLocaleCookie } from "@/shared/lib/locale/locale-cookie"
 
 const LOCALE_STORAGE_KEY = "INTLAYER_LOCALE"
@@ -102,6 +103,7 @@ function LayoutComponent() {
 
   return (
     <IntlayerProvider locale={locale ?? defaultLocale}>
+      <LocaleHTMLAttributes />
       <Outlet />
     </IntlayerProvider>
   )
@@ -113,7 +115,13 @@ function NotFoundLayout() {
 
   return (
     <IntlayerProvider locale={locale ?? defaultLocale}>
+      <LocaleHTMLAttributes />
       <GlobalNotFoundComponent />
     </IntlayerProvider>
   )
+}
+
+function LocaleHTMLAttributes() {
+  useI18nHTMLAttributes()
+  return null
 }

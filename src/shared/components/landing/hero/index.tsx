@@ -18,10 +18,7 @@ export const Hero = () => {
         "flex flex-col items-center justify-center select-none w-full overflow-x-clip"
       )}
     >
-      <main
-        className="w-full max-w-full overflow-x-clip"
-        aria-label="Main content area"
-      >
+      <div className="w-full max-w-full overflow-x-clip">
         {/* Decorative background elements */}
         <div
           aria-hidden="true"
@@ -227,7 +224,7 @@ export const Hero = () => {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </header>
   )
 }

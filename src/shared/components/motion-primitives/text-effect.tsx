@@ -1,6 +1,6 @@
 
 import type { TargetAndTransition, Transition, Variant, Variants } from "motion/react"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import React from "react"
 import { cn } from "@/shared/lib/utils"
 
@@ -61,17 +61,17 @@ const presetVariants: Record<PresetType, { container: Variants; item: Variants }
   blur: {
     container: defaultContainerVariants,
     item: {
-      hidden: { opacity: 0, filter: "blur(12px)" },
-      visible: { opacity: 1, filter: "blur(0px)" },
-      exit: { opacity: 0, filter: "blur(12px)" },
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 },
+      exit: { opacity: 0 },
     },
   },
   "fade-in-blur": {
     container: defaultContainerVariants,
     item: {
-      hidden: { opacity: 0, y: 20, filter: "blur(12px)" },
-      visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-      exit: { opacity: 0, y: 20, filter: "blur(12px)" },
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: 20 },
     },
   },
   scale: {
@@ -207,6 +207,18 @@ export function TextEffect({
 }: TextEffectProps) {
   const segments = splitText(children, per)
   const MotionTag = motion[as as keyof typeof motion] as typeof motion.div
+  const shouldReduceMotion = useReducedMotion()
+
+  if (shouldReduceMotion) {
+    return (
+      <MotionTag
+        className={className}
+        style={style}
+      >
+        {children}
+      </MotionTag>
+    )
+  }
 
   const baseVariants = preset
     ? presetVariants[preset]

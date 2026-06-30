@@ -1,25 +1,27 @@
 import { redirect } from "@tanstack/react-router"
 import { createMiddleware } from "@tanstack/react-start"
 import { getRequestHeaders } from "@tanstack/react-start/server"
-import { auth } from "@/shared/lib/auth/auth-server"
+import { ensureUserProfile, getSessionFromHeaders } from "@/shared/lib/auth/auth-server"
+import type { AuthSession } from "@/shared/lib/auth/auth-types"
 import { Resp } from "@/shared/lib/tools/response"
 import { isUserAdmin } from "@/shared/model/rabc.model"
 import { isAuthConfigured } from "../lib/auth/auth-config"
 
-type Session = typeof auth extends null
-  ? null
-  : Awaited<ReturnType<NonNullable<typeof auth>["api"]["getSession"]>>
+type Session = AuthSession | null
 
 /**
  * session middleware, pass session to handler context (can be null)
  */
 export const sessionMiddleware = createMiddleware().server(async ({ next }) => {
-  if (!isAuthConfigured || !auth) {
+  if (!isAuthConfigured) {
     return await next({ context: { session: null } })
   }
   try {
     const headers = getRequestHeaders()
-    const session = await auth.api.getSession({ headers })
+    const session = await getSessionFromHeaders(headers)
+    if (session) {
+      await ensureUserProfile(session.user)
+    }
     return await next({ context: { session } })
   } catch (error) {
     console.error("[sessionMiddleware] Failed to get session:", error)

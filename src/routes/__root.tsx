@@ -34,7 +34,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           content: "width=device-width, initial-scale=1",
         },
         {
-          title: `${siteConfig.title} -${siteConfig.titleSuffix}`,
+          title: `${siteConfig.title} - ${siteConfig.titleSuffix}`,
         },
         {
           name: "description",
@@ -89,6 +89,25 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       links: [
         ...(baseUrl ? [{ rel: "canonical", href: canonical }] : []),
         {
+          rel: "preconnect",
+          href: "https://cdn.jsdelivr.net",
+          crossOrigin: "anonymous",
+        },
+        {
+          rel: "preload",
+          as: "font",
+          type: "font/woff2",
+          href: "https://cdn.jsdelivr.net/fontsource/fonts/manrope:vf@latest/latin-wght-normal.woff2",
+          crossOrigin: "anonymous",
+        },
+        {
+          rel: "preload",
+          as: "font",
+          type: "font/woff2",
+          href: "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
+          crossOrigin: "anonymous",
+        },
+        {
           rel: "stylesheet",
           href: appCss,
         },
@@ -105,6 +124,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       suppressHydrationWarning
     >
       <head>
+        <meta
+          name="theme-color"
+          content="#ffffff"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#16161a"
+          media="(prefers-color-scheme: dark)"
+        />
         <HeadContent />
         {import.meta.env.VITE_GA_MEASUREMENT_ID && (
           <>
@@ -121,6 +150,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         )}
       </head>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only fixed left-4 top-4 z-[100] rounded-md bg-background px-4 py-2 text-foreground shadow-md focus:not-sr-only focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          Skip to content
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme={siteConfig.theme.defaultTheme}

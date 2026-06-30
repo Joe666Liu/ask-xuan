@@ -20,7 +20,7 @@ function RouteComponent() {
     <div className="relative min-h-dvh overflow-x-clip">
       {!hideHeader && banner.display && <Banner />}
       {!hideHeader && header.display && <LandingHeader />}
-      <main>
+      <main id="main-content">
         <Outlet />
         {!hideHeader && footer.display && <Footer />}
       </main>

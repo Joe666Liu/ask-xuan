@@ -6,7 +6,7 @@ description: Open-source Firebase alternative with PostgreSQL database, auth, st
 [Supabase](https://supabase.com/) is built on PostgreSQL and provides authentication, file storage, Edge Functions, and more beyond the database. Check the [Supabase pricing page](https://supabase.com/pricing) for current free-tier limits.
 
 <Callout type="info" title="Integration scope">
-Ask Xuan uses Supabase as a PostgreSQL provider through Drizzle ORM. Authentication remains powered by Better Auth, and file uploads use the project's S3-compatible storage layer.
+Ask Xuan uses Supabase for PostgreSQL through Drizzle ORM and for authentication through Supabase Auth. File uploads still use the project's S3-compatible storage layer.
 </Callout>
 
 ## Quick Start
@@ -34,7 +34,8 @@ Ask Xuan uses Supabase as a PostgreSQL provider through Drizzle ORM. Authenticat
 
     ```bash
     DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres"
-    BETTER_AUTH_SECRET="your-generated-secret"
+    VITE_SUPABASE_URL="https://xxx.supabase.co"
+    VITE_SUPABASE_ANON_KEY="sb_publishable_xxx"
     ```
 
     For migrations, prefer Supabase's direct connection string. Add it as `DATABASE_MIGRATION_URL`; Drizzle Kit will use it automatically and fall back to `DATABASE_URL` when it is not set.

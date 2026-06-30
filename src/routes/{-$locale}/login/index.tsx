@@ -2,8 +2,7 @@ import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { ChevronLeftIcon, Eye, EyeOff, Loader2 } from "lucide-react"
 import type React from "react"
-import { useId, useState } from "react"
-import { toast } from "sonner"
+import { useId, useRef, useState } from "react"
 import { siteConfig } from "@/config/site-config"
 import { LocalizedLink } from "@/shared/components/locale/localized-link"
 import { FloatingPaths } from "@/shared/components/login/floating-paths"
@@ -17,6 +16,13 @@ import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
 export const Route = createFileRoute("/{-$locale}/login/")({
   component: RouteComponent,
   ssr: false,
+  head: () => ({
+    meta: [
+      {
+        title: `Login | ${siteConfig.title}`,
+      },
+    ],
+  }),
   beforeLoad: async () => {
     const isAuthEnabled = await getIsAuthEnabled()
     if (!isAuthEnabled) {
@@ -40,12 +46,32 @@ function RouteComponent() {
   const nameId = useId()
   const emailId = useId()
   const passwordId = useId()
+  const captchaErrorId = useId()
+  const formErrorId = useId()
+  const nameErrorId = useId()
+  const emailErrorId = useId()
+  const passwordErrorId = useId()
+  const nameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [name, setName] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<"name" | "email" | "password" | "captcha", string>>
+  >({})
   const { title, author } = siteConfig
+  const hasFieldErrors = Object.values(fieldErrors).some(Boolean)
+
+  const clearFieldError = (field: keyof typeof fieldErrors) => {
+    setFieldErrors((prev) => {
+      const next = { ...prev }
+      delete next[field]
+      return next
+    })
+  }
 
   const {
     googleMutation,
@@ -71,23 +97,58 @@ function RouteComponent() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email.trim() || !password.trim()) {
-      toast.error(loginPage.toast.fillAllFields.value)
+
+    const nextErrors: Partial<Record<"name" | "email" | "password" | "captcha", string>> = {}
+    if (isSignUp && !name.trim()) {
+      nextErrors.name = loginPage.form.errors.nameRequired.value
+    }
+    if (!email.trim()) {
+      nextErrors.email = loginPage.form.errors.emailRequired.value
+    }
+    if (!password.trim()) {
+      nextErrors.password = loginPage.form.errors.passwordRequired.value
+    }
+    if (isCaptchaEnabled && !turnstileToken) {
+      nextErrors.captcha = loginPage.form.errors.captchaRequired.value
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors)
+      if (nextErrors.name) nameRef.current?.focus()
+      else if (nextErrors.email) emailRef.current?.focus()
+      else if (nextErrors.password) passwordRef.current?.focus()
       return
     }
+
+    setFieldErrors({})
     if (isSignUp) {
-      if (!name.trim()) {
-        toast.error(loginPage.toast.enterName.value)
-        return
-      }
       signUpMutation.mutate({ email, password, name })
     } else {
       signInMutation.mutate({ email, password })
     }
   }
 
+  const handleSocialSignIn = (provider: "google" | "github") => {
+    if (isCaptchaEnabled && !turnstileToken) {
+      setFieldErrors({ captcha: loginPage.form.errors.captchaRequired.value })
+      return
+    }
+
+    setFieldErrors({})
+    if (provider === "google") {
+      googleMutation.mutate()
+    } else {
+      githubMutation.mutate()
+    }
+  }
+
+  const submitLabel = isSignUp ? loginPage.signUp.button.value : loginPage.signIn.button.value
+
   return (
-    <main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2">
+    <main
+      id="main-content"
+      className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2"
+    >
       <div className="relative hidden h-full flex-col border-r bg-secondary p-10 lg:flex dark:bg-secondary/20">
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background" />
         <LocalizedLink
@@ -143,8 +204,8 @@ function RouteComponent() {
               className="w-full"
               size="lg"
               variant="outline"
-              onClick={() => googleMutation.mutate()}
-              disabled={isLoading || (isCaptchaEnabled && !turnstileToken)}
+              onClick={() => handleSocialSignIn("google")}
+              disabled={isLoading}
             >
               {googleMutation.isPending ? (
                 <Loader2 className="size-4 animate-spin" />
@@ -158,8 +219,8 @@ function RouteComponent() {
               className="w-full"
               size="lg"
               variant="outline"
-              onClick={() => githubMutation.mutate()}
-              disabled={isLoading || (isCaptchaEnabled && !turnstileToken)}
+              onClick={() => handleSocialSignIn("github")}
+              disabled={isLoading}
             >
               {githubMutation.isPending ? (
                 <Loader2 className="size-4 animate-spin" />
@@ -189,44 +250,84 @@ function RouteComponent() {
               <div className="space-y-2">
                 <Label htmlFor={nameId}>{loginPage.form.name.value}</Label>
                 <Input
+                  ref={nameRef}
                   id={nameId}
+                  name="name"
                   type="text"
+                  autoComplete="name"
                   placeholder={loginPage.form.namePlaceholder.value}
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    clearFieldError("name")
+                  }}
                   disabled={isLoading}
+                  aria-invalid={!!fieldErrors.name}
+                  aria-describedby={fieldErrors.name ? nameErrorId : undefined}
                 />
+                {fieldErrors.name && (
+                  <p
+                    id={nameErrorId}
+                    className="text-sm text-destructive"
+                  >
+                    {fieldErrors.name}
+                  </p>
+                )}
               </div>
             )}
 
             <div className="space-y-2">
               <Label htmlFor={emailId}>{loginPage.form.email.value}</Label>
               <Input
+                ref={emailRef}
                 id={emailId}
+                name="email"
                 type="email"
+                autoComplete="email"
                 placeholder={loginPage.form.emailPlaceholder.value}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  clearFieldError("email")
+                }}
                 disabled={isLoading}
+                aria-invalid={!!fieldErrors.email}
+                aria-describedby={fieldErrors.email ? emailErrorId : undefined}
               />
+              {fieldErrors.email && (
+                <p
+                  id={emailErrorId}
+                  className="text-sm text-destructive"
+                >
+                  {fieldErrors.email}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor={passwordId}>{loginPage.form.password.value}</Label>
               <div className="relative">
                 <Input
+                  ref={passwordRef}
                   id={passwordId}
+                  name="password"
                   type={showPassword ? "text" : "password"}
+                  autoComplete={isSignUp ? "new-password" : "current-password"}
                   placeholder="••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    clearFieldError("password")
+                  }}
                   disabled={isLoading}
                   className="pr-10"
+                  aria-invalid={!!fieldErrors.password}
+                  aria-describedby={fieldErrors.password ? passwordErrorId : undefined}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-1 top-1/2 flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-9 sm:min-w-9"
                   aria-label={
                     showPassword
                       ? loginPage.form.hidePassword.value
@@ -236,37 +337,66 @@ function RouteComponent() {
                   {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               </div>
+              {fieldErrors.password && (
+                <p
+                  id={passwordErrorId}
+                  className="text-sm text-destructive"
+                >
+                  {fieldErrors.password}
+                </p>
+              )}
             </div>
 
             {isCaptchaEnabled && (
-              <Turnstile
-                ref={(instance: TurnstileInstance | null) => {
-                  turnstileResetRef.current = () => instance?.reset()
-                }}
-                siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-                onSuccess={setTurnstileToken}
-                onExpire={() => setTurnstileToken(null)}
-                onError={() => setTurnstileToken(null)}
-                options={{
-                  theme: "auto",
-                }}
-              />
+              <div
+                aria-describedby={fieldErrors.captcha ? captchaErrorId : undefined}
+                aria-invalid={!!fieldErrors.captcha}
+              >
+                <Turnstile
+                  ref={(instance: TurnstileInstance | null) => {
+                    turnstileResetRef.current = () => instance?.reset()
+                  }}
+                  siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                  onSuccess={(token) => {
+                    setTurnstileToken(token)
+                    clearFieldError("captcha")
+                  }}
+                  onExpire={() => setTurnstileToken(null)}
+                  onError={() => setTurnstileToken(null)}
+                  options={{
+                    theme: "auto",
+                  }}
+                />
+                {fieldErrors.captcha && (
+                  <p
+                    id={captchaErrorId}
+                    className="mt-2 text-sm text-destructive"
+                    role="alert"
+                  >
+                    {fieldErrors.captcha}
+                  </p>
+                )}
+              </div>
             )}
 
             <Button
               className="w-full"
               size="lg"
               type="submit"
-              disabled={isLoading || (isCaptchaEnabled && !turnstileToken)}
+              disabled={isLoading}
+              aria-describedby={hasFieldErrors ? formErrorId : undefined}
             >
-              {signInMutation.isPending || signUpMutation.isPending ? (
+              {(signInMutation.isPending || signUpMutation.isPending) && (
                 <Loader2 className="size-4 animate-spin" />
-              ) : isSignUp ? (
-                loginPage.signUp.button.value
-              ) : (
-                loginPage.signIn.button.value
               )}
+              <span>{submitLabel}</span>
             </Button>
+            <span
+              id={formErrorId}
+              className="sr-only"
+            >
+              {Object.values(fieldErrors).filter(Boolean).join(" ")}
+            </span>
           </form>
 
           <div className="text-center text-sm">
@@ -276,7 +406,7 @@ function RouteComponent() {
             <button
               type="button"
               onClick={() => setIsSignUp(!isSignUp)}
-              className="text-primary underline underline-offset-4 hover:text-primary/80"
+              className="inline-flex min-h-11 items-center text-primary underline underline-offset-4 hover:text-primary/80 sm:min-h-6"
               disabled={isLoading}
             >
               {isSignUp ? loginPage.signUp.switchAction.value : loginPage.signIn.switchAction.value}

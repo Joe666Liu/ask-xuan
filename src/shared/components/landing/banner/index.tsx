@@ -24,7 +24,7 @@ export default function Banner() {
           href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noopener noreferrer" : undefined}
-          className="underline hover:no-underline transition-all"
+          className="underline transition-[text-decoration-color,color] hover:no-underline"
         >
           {banner.button.text.value}
         </a>

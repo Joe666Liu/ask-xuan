@@ -31,6 +31,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -45,6 +53,16 @@ code {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: color-mix(in oklch, var(--foreground) 12%, transparent);
   }
 
   ::-webkit-scrollbar {
@@ -121,7 +139,7 @@ code {
 
   /* Optimize navigation links - compact and elegant */
   aside[data-fd-sidebar] a {
-    @apply px-2 py-1 font-medium rounded-md transition-all duration-200;
+    @apply px-2 py-1 font-medium rounded-md transition-[color,background-color,border-color,box-shadow] duration-200;
     @apply hover:bg-slate-100 hover:text-slate-900;
     @apply dark:hover:bg-slate-800 dark:hover:text-slate-100;
     font-size: 13px;
@@ -143,7 +161,7 @@ code {
   aside[data-fd-sidebar] button[data-fd-collapsible-trigger] {
     @apply px-2 py-1 font-medium rounded-md;
     @apply hover:bg-slate-50 dark:hover:bg-slate-800/50;
-    @apply transition-all duration-200;
+    @apply transition-[color,background-color,border-color,box-shadow] duration-200;
     font-size: 13px;
     min-height: 26px;
   }
@@ -154,7 +172,7 @@ code {
     @apply border border-slate-200 dark:border-slate-700;
     @apply hover:border-slate-300 dark:hover:border-slate-600;
     @apply focus:border-blue-400 dark:focus:border-blue-500;
-    @apply transition-all duration-200 rounded-md;
+    @apply transition-[color,background-color,border-color,box-shadow] duration-200 rounded-md;
     font-size: 13px;
   }
 

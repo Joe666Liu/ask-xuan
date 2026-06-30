@@ -23,8 +23,9 @@ export const AnimatedThemeToggler = ({
     if (!buttonRef.current) return
 
     const newTheme = isDark ? "light" : "dark"
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    if (!document.startViewTransition) {
+    if (prefersReducedMotion || !document.startViewTransition) {
       setTheme(newTheme)
       return
     }

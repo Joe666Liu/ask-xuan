@@ -33,7 +33,7 @@
 
 We noticed that many people have to repeatedly write boilerplate code and rebuild infrastructure when vibe coding new products. Ask Xuan changes that — with just 10–20 minutes of configuration, you get:
 
-- Complete **authentication** system with email/password, Google/GitHub OAuth, magic links
+- Complete **authentication** system with Supabase Auth email/password and OAuth login
 - Multi-provider **AI integration** with 100+ models (OpenAI, Claude, Gemini, DeepSeek, Grok, and more)
 - **Payment** integration with Stripe, Creem, PayPal, WeChat Pay, Alipay — subscriptions & one-time
 - **Credit system** for AI monetization with daily rewards, sign-up bonuses, and FIFO consumption
@@ -76,7 +76,7 @@ We noticed that many people have to repeatedly write boilerplate code and rebuil
 | Category | What You Get |
 |----------|-------------|
 | **Framework** | TanStack Start + React 19 + Vite — file-based routing, SSR, server functions |
-| **Auth** | Email/password, Google, GitHub OAuth, magic links, email verification (Better Auth) |
+| **Auth** | Supabase Auth with email/password and OAuth providers |
 | **RBAC** | Role-based access control with permission inheritance |
 | **AI** | Vercel AI SDK with 12 providers, 100+ models, streaming responses |
 | **Payments** | Stripe, Creem, PayPal, WeChat Pay, Alipay — subscriptions & one-time payments |
@@ -86,7 +86,7 @@ We noticed that many people have to repeatedly write boilerplate code and rebuil
 | **Changelog & Roadmap** | Product changelog timeline and visual roadmap board |
 | **Admin Panel** | User management, system configuration, role management |
 | **i18n** | Type-safe internationalization with Intlayer (English + Chinese out of the box) |
-| **Email** | Verification and magic link emails via Resend or custom SMTP |
+| **Email** | Transactional emails via Resend or custom SMTP |
 | **Storage** | S3-compatible upload (Cloudflare R2, AWS S3, MinIO) |
 | **UI** | Tailwind CSS v4, shadcn/ui, Radix primitives, Lucide icons |
 | **Theme** | Light / dark / system with one-click toggle |
@@ -107,7 +107,7 @@ graph TB
 
     subgraph Backend["TanStack Start (Vite + Nitro)"]
         API[Server Functions / API Routes]
-        Auth[Better Auth]
+        Auth[Supabase Auth]
         Services[Business Logic]
         RBAC[RBAC Middleware]
     end
@@ -157,7 +157,7 @@ graph TB
 | Routing | [TanStack Router](https://tanstack.com/router) (file-based) |
 | Data Fetching | [TanStack Query](https://tanstack.com/query) |
 | Database | [PostgreSQL](https://www.postgresql.org) + [Drizzle ORM](https://orm.drizzle.team) |
-| Auth | [Better Auth](https://www.better-auth.com) |
+| Auth | [Supabase Auth](https://supabase.com/auth) |
 | Payments | [Stripe](https://stripe.com) / Creem / PayPal / WeChat / Alipay |
 | AI | [Vercel AI SDK](https://sdk.vercel.ai) (12 providers, 100+ models) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
@@ -190,7 +190,7 @@ pnpm install
 cp .env.example .env.local
 ```
 
-The app runs in **static mode** with zero configuration — landing page, blog, and docs work without a database. To enable auth and user features, set `DATABASE_URL` and `BETTER_AUTH_SECRET`.
+The app runs in **static mode** with zero configuration — landing page, blog, and docs work without a database. To enable auth and user features, set `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and `DATABASE_URL`.
 
 Supabase is supported as the PostgreSQL provider. Use the Supabase pooled transaction URL for `DATABASE_URL`, and optionally set `DATABASE_MIGRATION_URL` to the direct URL for Drizzle migrations. See `content/docs/integration/database/supabase.mdx`.
 

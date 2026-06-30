@@ -221,6 +221,10 @@ export default {
       cancel: t({ en: "Cancel", zh: "取消" }),
       saveSuccess: t({ en: "Configuration saved", zh: "配置已保存" }),
       saveFailed: t({ en: "Failed to save", zh: "保存失败" }),
+      unsavedChanges: t({
+        en: "You have unsaved configuration changes. Leave this page?",
+        zh: "您有未保存的配置更改，确定要离开此页面吗？",
+      }),
       showValues: t({ en: "Show values", zh: "显示值" }),
       hideValues: t({ en: "Hide values", zh: "隐藏值" }),
     },

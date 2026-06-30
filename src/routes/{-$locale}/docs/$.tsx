@@ -90,7 +90,7 @@ function Page() {
       {...baseOptions()}
       tree={data.pageTree}
     >
-      {clientLoader.useContent(data.path)}
+      <div id="main-content">{clientLoader.useContent(data.path)}</div>
     </DocsLayout>
   )
 }

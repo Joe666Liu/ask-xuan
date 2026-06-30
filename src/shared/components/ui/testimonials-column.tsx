@@ -1,5 +1,5 @@
 import { Image } from "@unpic/react"
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import React from "react"
 import { cn } from "@/shared/lib/utils"
 
@@ -24,32 +24,37 @@ export const TestimonialsColumn = ({
   duration = 10,
   columnIndex = 1,
 }: TestimonialsColumnProps) => {
+  const shouldReduceMotion = useReducedMotion()
+  const loops = shouldReduceMotion ? 1 : 2
+
   return (
     <div className={className}>
       <motion.div
-        animate={{
-          y: "-50%",
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
-        }}
+        animate={shouldReduceMotion ? undefined : { y: "-50%" }}
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration,
+                repeat: Infinity,
+                ease: "linear",
+                repeatType: "loop",
+              }
+        }
         className={cn("flex flex-col gap-6 pb-6")}
         style={{ backgroundColor: "transparent" }}
         aria-live="polite"
-        aria-label="Scrolling testimonials"
+        aria-label={shouldReduceMotion ? "Testimonials" : "Scrolling testimonials"}
       >
         {[
-          ...new Array(2).fill(0).map((_, index) => (
+          ...new Array(loops).fill(0).map((_, index) => (
             <React.Fragment key={`loop-${index}`}>
               {testimonials.map(({ text, image, name, role }, i) => (
                 <article
                   key={`${index}-${i}`}
                   className={cn(
                     "max-w-xs w-full p-6 rounded-2xl",
-                    "transition-all duration-300 hover:scale-105",
+                    "transition-[box-shadow,transform,border-color,background-color] duration-300 hover:scale-105",
                     "focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
                     "border shadow-lg shadow-primary/10",
                     "dark:bg-white/5 dark:border-white/10 dark:backdrop-blur-md"

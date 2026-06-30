@@ -33,7 +33,7 @@
 
 我们发现很多人在 vibe coding 新产品时，不得不反复编写样板代码、重建基础设施。Ask Xuan 改变了这一切——只需 10–20 分钟配置，你就能获得：
 
-- 完整的**认证系统**：邮箱密码、Google/GitHub OAuth、魔法链接
+- 完整的**认证系统**：Supabase Auth 邮箱密码登录与 OAuth 登录
 - 多供应商 **AI 集成**：100+ 模型（OpenAI、Claude、Gemini、DeepSeek、Grok 等）
 - **支付集成**：Stripe、Creem、PayPal、微信支付、支付宝——订阅和一次性付款
 - **积分系统**：AI 计费，支持每日奖励、注册赠送、FIFO 消耗策略
@@ -76,7 +76,7 @@
 | 分类 | 内容 |
 |------|------|
 | **框架** | TanStack Start + React 19 + Vite——基于文件的路由、SSR、服务端函数 |
-| **认证** | 邮箱密码、Google、GitHub OAuth、魔法链接、邮箱验证（Better Auth） |
+| **认证** | Supabase Auth 邮箱密码登录与 OAuth 登录 |
 | **RBAC** | 基于角色的权限控制，支持权限继承 |
 | **AI** | Vercel AI SDK，12 个供应商，100+ 模型，流式响应 |
 | **支付** | Stripe、Creem、PayPal、微信支付、支付宝——订阅和一次性付款 |
@@ -86,7 +86,7 @@
 | **变更日志与路线图** | 产品更新时间线和可视化路线图看板 |
 | **管理后台** | 用户管理、系统配置、角色管理 |
 | **国际化** | Intlayer 类型安全国际化（内置中英文） |
-| **邮件** | 通过 Resend 或自定义 SMTP 发送验证和魔法链接邮件 |
+| **邮件** | 通过 Resend 或自定义 SMTP 发送业务邮件 |
 | **存储** | S3 兼容上传（Cloudflare R2、AWS S3、MinIO） |
 | **UI** | Tailwind CSS v4、shadcn/ui、Radix 原语、Lucide 图标 |
 | **主题** | 亮色 / 暗色 / 跟随系统，一键切换 |
@@ -107,7 +107,7 @@ graph TB
 
     subgraph Backend["TanStack Start (Vite + Nitro)"]
         API[Server Functions / API Routes]
-        Auth[Better Auth]
+        Auth[Supabase Auth]
         Services[业务逻辑]
         RBAC[RBAC 中间件]
     end
@@ -157,7 +157,7 @@ graph TB
 | 路由 | [TanStack Router](https://tanstack.com/router)（基于文件） |
 | 数据获取 | [TanStack Query](https://tanstack.com/query) |
 | 数据库 | [PostgreSQL](https://www.postgresql.org) + [Drizzle ORM](https://orm.drizzle.team) |
-| 认证 | [Better Auth](https://www.better-auth.com) |
+| 认证 | [Supabase Auth](https://supabase.com/auth) |
 | 支付 | [Stripe](https://stripe.com) / Creem / PayPal / 微信 / 支付宝 |
 | AI | [Vercel AI SDK](https://sdk.vercel.ai)（12 个供应商，100+ 模型） |
 | 样式 | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
@@ -190,7 +190,7 @@ pnpm install
 cp .env.example .env.local
 ```
 
-应用支持**零配置启动**——落地页、博客和文档无需数据库即可运行。如需启用认证和用户功能，请设置 `DATABASE_URL` 和 `BETTER_AUTH_SECRET`。
+应用支持**零配置启动**——落地页、博客和文档无需数据库即可运行。如需启用认证和用户功能，请设置 `VITE_SUPABASE_URL`、`VITE_SUPABASE_ANON_KEY` 和 `DATABASE_URL`。
 
 项目支持将 Supabase 作为 PostgreSQL 数据库提供商。`DATABASE_URL` 建议使用 Supabase 的 pooled transaction URL；`DATABASE_MIGRATION_URL` 可选填 direct URL，专门给 Drizzle 迁移使用。详见 `content/docs/integration/database/supabase.zh.mdx`。
 

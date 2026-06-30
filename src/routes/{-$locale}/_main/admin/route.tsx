@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import { siteConfig } from "@/config/site-config"
 import AdminSidebar from "@/shared/components/sidebar/admin-sidebar"
 import { SidebarProvider, SidebarTrigger } from "@/shared/components/ui/sidebar"
 import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
@@ -7,6 +8,13 @@ import { pageAdminMiddleware } from "@/shared/middleware/auth.middleware"
 export const Route = createFileRoute("/{-$locale}/_main/admin")({
   component: RouteComponent,
   ssr: false,
+  head: () => ({
+    meta: [
+      {
+        title: `Admin | ${siteConfig.title}`,
+      },
+    ],
+  }),
   server: {
     middleware: [pageAdminMiddleware],
   },
@@ -25,6 +33,7 @@ function RouteComponent() {
     <SidebarProvider>
       <AdminSidebar />
       <main
+        id="main-content"
         className="flex min-h-dvh min-w-0 flex-1 flex-col"
         style={{ fontFamily: "Inter Variable" }}
       >

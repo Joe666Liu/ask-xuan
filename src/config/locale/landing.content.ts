@@ -139,8 +139,8 @@ export default {
           type: "image" as const,
           title: t({ en: "Zero-Config Authentication", zh: "零配置认证系统" }),
           description: t({
-            en: "Built on Better Auth with one-click social login, magic links, and role-based access control. Just configure your OAuth credentials in the admin panel — no code changes needed.",
-            zh: "基于 Better Auth 构建，支持社交登录、魔法链接和基于角色的访问控制。只需在后台配置 OAuth 凭证，无需修改代码即可启用。",
+            en: "Built on Supabase Auth with email/password login, social login, and role-based access control. Configure providers in Supabase and keep app sessions in Supabase-managed cookies.",
+            zh: "基于 Supabase Auth 构建，支持邮箱密码登录、社交登录和基于角色的访问控制。在 Supabase 中配置登录提供商，应用会使用 Supabase 管理的会话 Cookie。",
           }),
           image: "/landing/introduction/auth.webp" as const,
           imagePosition: "left" as const,
@@ -153,10 +153,10 @@ export default {
               }),
             },
             {
-              title: t({ en: "Magic Link & Password", zh: "魔法链接与密码" }),
+              title: t({ en: "Email & Password", zh: "邮箱与密码" }),
               description: t({
-                en: "Passwordless login via email or traditional credentials",
-                zh: "通过邮件无密码登录或传统账密认证",
+                en: "Supabase-hosted user accounts with secure credential handling",
+                zh: "使用 Supabase 托管用户账号与安全凭据处理",
               }),
             },
             {

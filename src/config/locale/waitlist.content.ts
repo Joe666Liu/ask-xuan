@@ -32,9 +32,13 @@ export default {
       en: "Get notified on launch day with an exclusive early bird discount code.",
       zh: "上线当天我们将发送专属早鸟优惠码给您。",
     }),
+    emailLabel: t({
+      en: "Email",
+      zh: "邮箱",
+    }),
     emailPlaceholder: t({
-      en: "Enter your email",
-      zh: "输入您的邮箱",
+      en: "you@example.com…",
+      zh: "you@example.com…",
     }),
     joinButton: t({
       en: "Join",
@@ -70,6 +74,14 @@ export default {
       endsIn: t({
         en: "Ends in",
         zh: "剩余时间",
+      }),
+      expiredTitle: t({
+        en: "Early bird offer has ended",
+        zh: "早鸟优惠已结束",
+      }),
+      expiredDescription: t({
+        en: "You can still join the waitlist and receive launch updates.",
+        zh: "您仍可加入等待列表并接收上线通知。",
       }),
     },
     footer: t({

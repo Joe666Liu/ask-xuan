@@ -16,7 +16,7 @@ export const ShowcaseCard = ({ item, index, className }: ShowcaseCardProps) => {
       className={cn(
         "h-full flex flex-col",
         "bg-card rounded-xl border border-border overflow-hidden",
-        "transition-all duration-300",
+        "transition-[box-shadow,transform,border-color] duration-300",
         item.link && "hover:shadow-lg hover:-translate-y-1",
         className
       )}

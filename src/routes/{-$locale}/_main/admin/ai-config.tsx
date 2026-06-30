@@ -11,6 +11,7 @@ import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card"
 import { Skeleton } from "@/shared/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip"
+import { useUnsavedChangesWarning } from "@/shared/hooks/use-unsaved-changes-warning"
 import type { ConfigMeta } from "@/shared/lib/config/helper"
 import { http } from "@/shared/lib/tools/http-client"
 
@@ -23,6 +24,8 @@ function AIConfigPage() {
   const configI18n = useIntlayer("admin-config")
   const content = useIntlayer("admin")
   const [pendingChanges, setPendingChanges] = useState<Record<string, unknown>>({})
+  const hasPendingChanges = Object.keys(pendingChanges).length > 0
+  useUnsavedChangesWarning(hasPendingChanges, content.config.unsavedChanges.value)
   const [showValues, setShowValues] = useState(() => {
     const saved = localStorage.getItem("admin-ai-config-show-values")
     return saved === null ? true : saved === "true"

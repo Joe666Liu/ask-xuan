@@ -77,6 +77,15 @@ export default {
         password: t({ en: "Password", zh: "密码" }),
         showPassword: t({ en: "Show password", zh: "显示密码" }),
         hidePassword: t({ en: "Hide password", zh: "隐藏密码" }),
+        errors: {
+          nameRequired: t({ en: "Enter your name.", zh: "请输入您的姓名。" }),
+          emailRequired: t({ en: "Enter your email address.", zh: "请输入您的邮箱地址。" }),
+          passwordRequired: t({ en: "Enter your password.", zh: "请输入您的密码。" }),
+          captchaRequired: t({
+            en: "Complete the captcha verification.",
+            zh: "请完成人机验证。",
+          }),
+        },
       },
       toast: {
         signInSuccess: t({ en: "Signed in successfully!", zh: "登录成功！" }),

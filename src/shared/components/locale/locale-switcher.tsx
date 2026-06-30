@@ -29,7 +29,7 @@ export const LocaleSwitcher = () => {
         <Button
           variant="outline"
           size="sm"
-          className="gap-2 select-none cursor-pointer"
+          className="min-w-11 gap-2 select-none cursor-pointer"
           aria-label="Switch language"
         >
           <Globe className="size-4" />

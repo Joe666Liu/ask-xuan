@@ -24,9 +24,9 @@ export const Footer = () => {
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <LocalizedLink
-                      to={link.href as To}
+                      to={link.href.value as To}
                       className={cn(
-                        "text-sm text-muted-foreground",
+                        "inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground sm:min-h-0 sm:min-w-0",
                         "hover:text-foreground transition-colors"
                       )}
                     >

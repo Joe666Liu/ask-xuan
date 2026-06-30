@@ -1,5 +1,5 @@
 import { Image } from "@unpic/react"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { useId } from "react"
 import { useIntlayer } from "react-intlayer"
 import { LocalizedLink } from "@/shared/components/locale/localized-link"
@@ -105,6 +105,7 @@ export function GlobalNotFoundComponent() {
   const titleId = useId()
   const descId = useId()
   const content = useIntlayer("not-found")
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <section
@@ -120,9 +121,9 @@ export function GlobalNotFoundComponent() {
         <motion.div
           className="text-center"
           variants={containerVariants}
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           animate="visible"
-          exit="hidden"
+          exit={shouldReduceMotion ? undefined : "hidden"}
         >
           <div className="flex items-center justify-center gap-4 md:gap-6 mb-8 md:mb-12">
             <motion.span
@@ -135,8 +136,8 @@ export function GlobalNotFoundComponent() {
             </motion.span>
             <motion.div
               variants={ghostVariants}
-              whileHover="hover"
-              animate={["visible", "floating"]}
+              whileHover={shouldReduceMotion ? undefined : "hover"}
+              animate={shouldReduceMotion ? "visible" : ["visible", "floating"]}
               aria-hidden="true"
             >
               <Image
@@ -176,13 +177,17 @@ export function GlobalNotFoundComponent() {
 
           <motion.div
             variants={itemVariants}
-            whileHover={{
-              scale: 1.05,
-              transition: {
-                duration: 0.3,
-                ease: [0.43, 0.13, 0.23, 0.96] as const,
-              },
-            }}
+            whileHover={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: 1.05,
+                    transition: {
+                      duration: 0.3,
+                      ease: [0.43, 0.13, 0.23, 0.96] as const,
+                    },
+                  }
+            }
           >
             <LocalizedLink
               to="/"

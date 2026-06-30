@@ -29,7 +29,7 @@
         { "title": "订阅管理", "description": "用户可自主管理订阅，支持客户门户、取消续费、生命周期跟踪" },
         { "title": "SEO 优化", "description": "动态 Sitemap 生成与可配置 robots.txt" },
         { "title": "TanStack Start 全栈框架", "description": "基于 React 19 + TanStack Router/Query 构建" },
-        { "title": "Better Auth 认证系统", "description": "支持邮箱登录、社交登录、魔法链接等多种认证方式" },
+        { "title": "Supabase Auth 认证系统", "description": "通过 Supabase 支持邮箱登录与 OAuth 登录" },
         { "title": "多语言国际化", "description": "基于 intlayer 的完整国际化方案，支持中英文切换" },
         { "title": "Stripe & Creem 支付", "description": "支持 Stripe 和 Creem 双支付渠道，一次性支付和订阅付款，Webhook 自动处理" },
         { "title": "积分系统", "description": "注册奖励、每日签到、积分购买与消费、积分历史记录" },

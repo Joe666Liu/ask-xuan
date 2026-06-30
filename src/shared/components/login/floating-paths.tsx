@@ -1,6 +1,7 @@
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 export function FloatingPaths({ position }: { position: number }) {
+  const shouldReduceMotion = useReducedMotion()
   const paths = Array.from({ length: 36 }, (_, i) => ({
     id: i,
     d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
@@ -24,22 +25,34 @@ export function FloatingPaths({ position }: { position: number }) {
         <title>Background Paths</title>
         {paths.map((path) => (
           <motion.path
-            animate={{
-              pathLength: 1,
-              opacity: [0.3, 0.6, 0.3],
-              pathOffset: [0, 1, 0],
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    pathLength: 1,
+                    opacity: [0.3, 0.6, 0.3],
+                    pathOffset: [0, 1, 0],
+                  }
+            }
             d={path.d}
-            initial={{ pathLength: 0.3, opacity: 0.6 }}
+            initial={
+              shouldReduceMotion
+                ? { pathLength: 1, opacity: 0.3 }
+                : { pathLength: 0.3, opacity: 0.6 }
+            }
             key={path.id}
             stroke="currentColor"
             strokeOpacity={0.1 + path.id * 0.03}
             strokeWidth={path.width}
-            transition={{
-              duration: 20 + Math.random() * 10,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
+            transition={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    duration: 20 + path.id * 0.25,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }
+            }
           />
         ))}
       </svg>

@@ -1,4 +1,4 @@
-import { logger } from "better-auth"
+import { logger } from "@/shared/lib/tools/logger"
 import type { PlanPrice, PlanWithPrice } from "@/shared/types/payment"
 
 const currency = import.meta.env.VITE_CURRENCY || "USD"

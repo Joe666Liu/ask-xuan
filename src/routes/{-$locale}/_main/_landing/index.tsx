@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useIntlayer } from "react-intlayer"
+import { siteConfig } from "@/config/site-config"
 import { ThreeBenefits } from "@/shared/components/landing/benefits"
 import { Cta } from "@/shared/components/landing/cta"
 import { Faq } from "@/shared/components/landing/faq"
@@ -15,6 +16,13 @@ import { Testimonials } from "@/shared/components/landing/testimonials"
 export const Route = createFileRoute("/{-$locale}/_main/_landing/")({
   component: RouteComponent,
   ssr: true,
+  head: () => ({
+    meta: [
+      {
+        title: `${siteConfig.title} | AI SaaS Starter`,
+      },
+    ],
+  }),
 })
 
 function RouteComponent() {

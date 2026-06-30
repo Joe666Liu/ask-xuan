@@ -6,7 +6,7 @@ description: 开源 Firebase 替代品，PostgreSQL 数据库 + 认证 + 存储 
 [Supabase](https://supabase.com/) 基于 PostgreSQL，除了数据库还提供认证、文件存储、Edge Functions 等功能。免费额度可能随时间调整，请以 [Supabase 价格页](https://supabase.com/pricing) 为准。
 
 <Callout type="info" title="集成范围">
-Ask Xuan 将 Supabase 作为 PostgreSQL 数据库提供商，通过 Drizzle ORM 访问数据库。登录认证仍由 Better Auth 提供，文件上传仍走项目内 S3 兼容存储层。
+Ask Xuan 通过 Drizzle ORM 使用 Supabase PostgreSQL，并通过 Supabase Auth 处理登录认证。文件上传仍走项目内 S3 兼容存储层。
 </Callout>
 
 ## 快速开始
@@ -34,7 +34,8 @@ Ask Xuan 将 Supabase 作为 PostgreSQL 数据库提供商，通过 Drizzle ORM 
 
     ```bash
     DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres"
-    BETTER_AUTH_SECRET="your-generated-secret"
+    VITE_SUPABASE_URL="https://xxx.supabase.co"
+    VITE_SUPABASE_ANON_KEY="sb_publishable_xxx"
     ```
 
     迁移建议使用 Supabase direct connection。将它配置为 `DATABASE_MIGRATION_URL` 后，Drizzle Kit 会自动优先使用它；未配置时会回退到 `DATABASE_URL`。

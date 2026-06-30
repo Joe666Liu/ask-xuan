@@ -1,19 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { ArrowRightIcon, CheckIcon, ClockIcon, Loader2Icon, SparklesIcon } from "lucide-react"
-import { motion } from "motion/react"
-import { type FormEvent, useEffect, useState } from "react"
+import { motion, useReducedMotion } from "motion/react"
+import { type FormEvent, useEffect, useId, useRef, useState } from "react"
 import { useIntlayer, useLocale } from "react-intlayer"
 import { z } from "zod"
 import { joinWaitlistFn } from "@/actions/waitlist.action"
+import { siteConfig } from "@/config/site-config"
 import { GlowingEffect } from "@/shared/components/motion-primitives/glowing-effect"
 import { TextEffect } from "@/shared/components/motion-primitives/text-effect"
 import { Badge } from "@/shared/components/ui/badge"
 import { Button } from "@/shared/components/ui/button"
 import { Input } from "@/shared/components/ui/input"
+import { Label } from "@/shared/components/ui/label"
 import { cn } from "@/shared/lib/utils"
 
 export const Route = createFileRoute("/{-$locale}/_main/_landing/waitlist")({
   component: WaitlistPage,
+  head: () => ({
+    meta: [
+      {
+        title: `Waitlist | ${siteConfig.title}`,
+      },
+    ],
+  }),
   staticData: {
     hideHeader: true,
   },
@@ -26,6 +35,8 @@ function useCountdown(targetDate: Date) {
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(targetDate))
 
   useEffect(() => {
+    if (targetDate.getTime() <= Date.now()) return
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(targetDate))
     }, 1000)
@@ -63,10 +74,16 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 function WaitlistPage() {
   const content = useIntlayer("waitlist")
   const { locale } = useLocale()
+  const shouldReduceMotion = useReducedMotion()
+  const emailId = useId()
+  const emailErrorId = useId()
+  const emailRef = useRef<HTMLInputElement>(null)
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
   const timeLeft = useCountdown(EARLY_BIRD_END_DATE)
+  const isOfferExpired =
+    timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -75,6 +92,7 @@ function WaitlistPage() {
     if (!parsed.success) {
       setStatus("error")
       setErrorMessage(content.invalidEmail.value)
+      emailRef.current?.focus()
       return
     }
 
@@ -101,9 +119,9 @@ function WaitlistPage() {
 
       <div className="w-full max-w-md">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? undefined : { duration: 0.4 }}
           className="text-center"
         >
           <TextEffect
@@ -127,15 +145,15 @@ function WaitlistPage() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: 0.3 }}
           className="mt-10"
         >
           {status === "success" ? (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
               className="flex flex-col items-center gap-4 rounded-xl border bg-card p-8 text-center"
             >
               <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
@@ -152,6 +170,7 @@ function WaitlistPage() {
             <form
               onSubmit={handleSubmit}
               className="space-y-4"
+              noValidate
             >
               <div className="relative rounded-xl">
                 <GlowingEffect
@@ -161,48 +180,66 @@ function WaitlistPage() {
                   proximity={64}
                   inactiveZone={0.01}
                 />
-                <div className="relative flex gap-2 rounded-xl border bg-card p-2">
-                  <Input
-                    type="email"
-                    placeholder={content.emailPlaceholder.value}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      if (status === "error") {
-                        setStatus("idle")
-                        setErrorMessage("")
-                      }
-                    }}
-                    className={cn(
-                      "h-11 flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0",
-                      status === "error" && "text-destructive"
-                    )}
-                    disabled={status === "loading"}
-                    aria-label="Email address"
-                  />
-                  <Button
-                    type="submit"
-                    size="lg"
-                    disabled={status === "loading"}
-                    className="h-11 gap-2"
+                <div className="relative flex flex-col gap-2 rounded-xl border bg-card p-2">
+                  <Label
+                    htmlFor={emailId}
+                    className="px-1 pt-1"
                   >
-                    {status === "loading" ? (
-                      <Loader2Icon className="size-4 animate-spin" />
-                    ) : (
-                      <>
-                        {content.joinButton.value}
-                        <ArrowRightIcon className="size-4" />
-                      </>
-                    )}
-                  </Button>
+                    {content.emailLabel.value}
+                  </Label>
+                  <div className="flex gap-2">
+                    <Input
+                      ref={emailRef}
+                      id={emailId}
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder={content.emailPlaceholder.value}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                        if (status === "error") {
+                          setStatus("idle")
+                          setErrorMessage("")
+                        }
+                      }}
+                      className={cn(
+                        "h-11 flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0",
+                        status === "error" && "text-destructive"
+                      )}
+                      disabled={status === "loading"}
+                      aria-invalid={status === "error"}
+                      aria-describedby={status === "error" ? emailErrorId : undefined}
+                    />
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={status === "loading"}
+                      className="h-11 gap-2"
+                    >
+                      {status === "loading" ? (
+                        <>
+                          <Loader2Icon className="size-4 animate-spin" />
+                          <span>{content.joinButton.value}</span>
+                        </>
+                      ) : (
+                        <>
+                          {content.joinButton.value}
+                          <ArrowRightIcon className="size-4" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </div>
 
               {status === "error" && (
                 <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  id={emailErrorId}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: -10 }}
+                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   className="text-center text-sm text-destructive"
+                  role="alert"
                 >
                   {errorMessage}
                 </motion.p>
@@ -212,58 +249,70 @@ function WaitlistPage() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1 }}
+          transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: 0.5 }}
           className="mt-10 rounded-xl border bg-card/50 p-6"
         >
           <div className="flex items-center justify-center gap-2 text-sm">
             <SparklesIcon className="size-4 text-primary" />
-            <span className="font-medium">{content.earlyBird.title.value}</span>
+            <span className="font-medium">
+              {isOfferExpired
+                ? content.earlyBird.expiredTitle.value
+                : content.earlyBird.title.value}
+            </span>
           </div>
 
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <span className="text-2xl font-bold">$69</span>
-            <span className="text-muted-foreground line-through">$89</span>
-            <Badge
-              variant="secondary"
-              className="text-xs"
-            >
-              {content.earlyBird.save.value}
-            </Badge>
-          </div>
+          {isOfferExpired ? (
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              {content.earlyBird.expiredDescription.value}
+            </p>
+          ) : (
+            <>
+              <div className="mt-4 flex items-center justify-center gap-3">
+                <span className="text-2xl font-bold">$69</span>
+                <span className="text-muted-foreground line-through">$89</span>
+                <Badge
+                  variant="secondary"
+                  className="text-xs"
+                >
+                  {content.earlyBird.save.value}
+                </Badge>
+              </div>
 
-          <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-            <ClockIcon className="size-3" />
-            <span>{content.earlyBird.endsIn.value}</span>
-            <div className="flex items-center gap-1">
-              <CountdownUnit
-                value={timeLeft.days}
-                label="d"
-              />
-              <span>:</span>
-              <CountdownUnit
-                value={timeLeft.hours}
-                label="h"
-              />
-              <span>:</span>
-              <CountdownUnit
-                value={timeLeft.minutes}
-                label="m"
-              />
-              <span>:</span>
-              <CountdownUnit
-                value={timeLeft.seconds}
-                label="s"
-              />
-            </div>
-          </div>
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+                <ClockIcon className="size-3" />
+                <span>{content.earlyBird.endsIn.value}</span>
+                <div className="flex items-center gap-1">
+                  <CountdownUnit
+                    value={timeLeft.days}
+                    label="d"
+                  />
+                  <span>:</span>
+                  <CountdownUnit
+                    value={timeLeft.hours}
+                    label="h"
+                  />
+                  <span>:</span>
+                  <CountdownUnit
+                    value={timeLeft.minutes}
+                    label="m"
+                  />
+                  <span>:</span>
+                  <CountdownUnit
+                    value={timeLeft.seconds}
+                    label="s"
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1 }}
+          transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: 0.6 }}
           className="mt-4 text-center text-xs text-muted-foreground"
         >
           {content.footer.value}

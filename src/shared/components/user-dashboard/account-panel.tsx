@@ -199,7 +199,7 @@ function PlanDetail({ onUpgradeClick }: { onUpgradeClick: () => void }) {
             <AlertDialogTrigger asChild>
               <button
                 type="button"
-                className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                className="inline-flex min-h-11 items-center text-xs text-muted-foreground transition-colors hover:text-destructive sm:min-h-6"
               >
                 {bt.cancelSubscription.value}
               </button>

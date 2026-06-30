@@ -27,25 +27,15 @@ See the database setup documentation for more detailed instructions.
 
 ### Authentication
 
-See the authentication setup documentation for more detailed instructions.
+Ask Xuan uses Supabase Auth. See the authentication setup documentation for more detailed instructions.
 
 | Variable   | Description |
 | -------- | ------- |
+| VITE_SUPABASE_URL  |  Supabase project URL    |
+| VITE_SUPABASE_ANON_KEY  |  Supabase publishable/anon key for browser auth    |
 | ADMIN_EMAILS  |  Admin email addresses    |
-| BETTER_AUTH_SECRET  |  Auth secret key    |
-| BETTER_AUTH_URL  |  Auth URL    |
 
-`BETTER_AUTH_SECRET` can be generated on the [better-auth](https://www.better-auth.com/docs/installation#set-environment-variables) website, or click the button below to generate one:
-
-<SecretGenerator label="Generate Secret" />
-
-If you want to use OAuth (GitHub or Google login), configure the following:
-| Variable   | Description |
-| -------- | ------- |
-| GITHUB_CLIENT_ID  |  GitHub OAuth Client ID    |
-| GITHUB_CLIENT_SECRET  |  GitHub OAuth Client Secret    |
-| GOOGLE_CLIENT_ID  |  Google OAuth Client ID    |
-| GOOGLE_CLIENT_SECRET  |  Google OAuth Client Secret    |
+Configure OAuth providers such as GitHub and Google in the Supabase Dashboard. No provider secrets are required in this app.
 
 ### TURNSTILE
 Ask Xuan uses TURNSTILE as a captcha service to protect your website. You need to register an account on the [TURNSTILE](https://developers.cloudflare.com/turnstile/?preferred-color-scheme=light) website and create a site to get the site key. See the captcha setup documentation for more details.

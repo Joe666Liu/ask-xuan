@@ -27,25 +27,15 @@ Ask Xuan 配置环境变量有两种方式：
 
 ### 身份鉴权
 
-在身份鉴权设置文档中查看更加详细的配置说明
+Ask Xuan 使用 Supabase Auth。在身份鉴权设置文档中查看更加详细的配置说明。
 
 | 变量   | 描述 |
 | -------- | ------- |
+| VITE_SUPABASE_URL  |  Supabase 项目 URL    |
+| VITE_SUPABASE_ANON_KEY  |  用于浏览器认证的 Supabase publishable/anon key    |
 | ADMIN_EMAILS  |  管理员邮箱    |
-| BETTER_AUTH_SECRET  |  鉴权密钥    |
-| BETTER_AUTH_URL  |  鉴权URL    |
 
-`BETTER_AUTH_SECRET` 可以在 [better-auth](https://www.better-auth.com/docs/installation#set-environment-variables) 官网生成，或者点击下方按钮生成：
-
-<SecretGenerator label="生成密钥" />
-
-如果你想使用OAuth（支持github或者谷歌登入），可以继续配置如下内容
-| 变量   | 描述 |
-| -------- | ------- |
-| GITHUB_CLIENT_ID  |  GitHub OAuth 客户端 ID    |
-| GITHUB_CLIENT_SECRET  |  GitHub OAuth 客户端密钥    |
-| GOOGLE_CLIENT_ID  |  Google OAuth 客户端 ID    |
-| GOOGLE_CLIENT_SECRET  |  Google OAuth 客户端密钥    |
+GitHub、Google 等 OAuth Provider 请在 Supabase Dashboard 中配置，本应用不再需要保存 Provider Secret。
 
 ### TURNSTILE
 Ask Xuan 使用 TURNSTILE 作为验证码服务，为你的网站启用验证码保护，你需要在 [TURNSTILE](https://developers.cloudflare.com/turnstile/?preferred-color-scheme=light) 官网注册一个账号，并创建一个站点，获取到站点密钥。在验证码设置文档中查看更加详细的配置说明

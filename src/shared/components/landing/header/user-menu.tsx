@@ -1,6 +1,6 @@
 import { getRouteApi } from "@tanstack/react-router"
 import { CoinsIcon, LogOutIcon, UserIcon } from "lucide-react"
-import { useState } from "react"
+import { parseAsInteger, parseAsStringLiteral, useQueryState } from "nuqs"
 import { useIntlayer } from "react-intlayer"
 import { LocalizedLink } from "@/shared/components/locale/localized-link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar"
@@ -15,7 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu"
 import { Skeleton } from "@/shared/components/ui/skeleton"
-import { UserDashboard } from "@/shared/components/user-dashboard"
+import {
+  type DashboardPanel,
+  dashboardPanels,
+  UserDashboard,
+} from "@/shared/components/user-dashboard"
 import { useGlobalContext } from "@/shared/context/global.context"
 import { signOut } from "@/shared/lib/auth/auth-client"
 
@@ -36,8 +40,22 @@ export function UserMenu() {
   const { userInfo, credits, config, isLoadingUserInfo } = useGlobalContext()
   const { isAuthEnabled } = rootRouteApi.useLoaderData()
   const creditEnabled = config?.public_credit_enable ?? false
-  const [isOpenUserDashboard, setIsOpenUserDashboard] = useState(false)
-  const [defaultPanel, setDefaultPanel] = useState<string | undefined>()
+  const [dashboardPanel, setDashboardPanel] = useQueryState(
+    "dashboard",
+    parseAsStringLiteral(dashboardPanels).withOptions({
+      history: "push",
+      shallow: true,
+      clearOnDefault: true,
+    })
+  )
+  const [, setCreditsPage] = useQueryState(
+    "creditsPage",
+    parseAsInteger.withOptions({
+      history: "push",
+      shallow: true,
+      clearOnDefault: true,
+    })
+  )
   if (!isAuthEnabled) {
     return null
   }
@@ -58,6 +76,28 @@ export function UserMenu() {
   }
 
   const { user } = userInfo
+  const activePanel: DashboardPanel =
+    dashboardPanel && (creditEnabled || dashboardPanel === "account") ? dashboardPanel : "account"
+  const isOpenUserDashboard = dashboardPanel !== null
+
+  const openDashboard = (panel: DashboardPanel) => {
+    void setDashboardPanel(panel)
+    if (panel !== "credit-history") {
+      void setCreditsPage(null)
+    }
+  }
+
+  const handleDashboardOpenChange = (open: boolean) => {
+    if (open) {
+      if (!dashboardPanel) {
+        void setDashboardPanel("account")
+      }
+      return
+    }
+
+    void setDashboardPanel(null)
+    void setCreditsPage(null)
+  }
 
   return (
     <>
@@ -103,10 +143,7 @@ export function UserMenu() {
             <>
               <DropdownMenuGroup>
                 <DropdownMenuItem
-                  onClick={() => {
-                    setDefaultPanel("credit-packages")
-                    setIsOpenUserDashboard(true)
-                  }}
+                  onClick={() => openDashboard("credit-packages")}
                   className="cursor-pointer"
                 >
                   <CoinsIcon className="size-4" />
@@ -125,10 +162,7 @@ export function UserMenu() {
 
           <DropdownMenuGroup>
             <DropdownMenuItem
-              onClick={() => {
-                setDefaultPanel(undefined)
-                setIsOpenUserDashboard(true)
-              }}
+              onClick={() => openDashboard("account")}
               className="cursor-pointer"
             >
               <UserIcon className="size-4" />
@@ -151,8 +185,9 @@ export function UserMenu() {
 
       <UserDashboard
         open={isOpenUserDashboard}
-        onOpenChange={setIsOpenUserDashboard}
-        defaultPanel={defaultPanel}
+        onOpenChange={handleDashboardOpenChange}
+        panel={activePanel}
+        onPanelChange={openDashboard}
       />
     </>
   )

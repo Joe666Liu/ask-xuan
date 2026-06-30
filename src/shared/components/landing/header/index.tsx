@@ -77,7 +77,7 @@ export const LandingHeader = () => {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
         <LocalizedLink
-          className="flex items-center gap-1"
+          className="flex min-h-11 items-center gap-1"
           to="/"
           aria-label="Go to homepage"
         >

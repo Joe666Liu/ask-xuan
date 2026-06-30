@@ -19,7 +19,7 @@ const FeatureCard = ({ feature }: { feature: FeatureItem }) => {
         className={cn(
           "size-16 mb-6 rounded-full border-2 border-primary/30",
           "flex items-center justify-center bg-transparent",
-          "hover:bg-primary/10 transition-all duration-300",
+          "hover:bg-primary/10 transition-[background-color,box-shadow] duration-300",
           "focus-within:ring-2 focus-within:ring-primary/50 focus-within:ring-offset-2"
         )}
         role="img"
