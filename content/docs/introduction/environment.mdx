@@ -22,7 +22,8 @@ See the database setup documentation for more detailed instructions.
 
 | Variable   | Description |
 | -------- | ------- |
-| DATABASE_URL  | Database connection URL    |
+| DATABASE_URL  | Runtime database connection URL. For Supabase, use the pooled transaction URL. |
+| DATABASE_MIGRATION_URL  | Optional migration connection URL. For Supabase, prefer the direct URL for Drizzle migrations. |
 
 ### Authentication
 

@@ -3,7 +3,11 @@ title: Supabase
 description: Open-source Firebase alternative with PostgreSQL database, auth, storage, and real-time subscriptions
 ---
 
-[Supabase](https://supabase.com/) is built on PostgreSQL and provides authentication, file storage, Edge Functions, and more beyond the database. The free tier offers 500 MB database storage, 1 GB file storage, and up to 2 active projects (paused after 1 week of inactivity).
+[Supabase](https://supabase.com/) is built on PostgreSQL and provides authentication, file storage, Edge Functions, and more beyond the database. Check the [Supabase pricing page](https://supabase.com/pricing) for current free-tier limits.
+
+<Callout type="info" title="Integration scope">
+Ask Xuan uses Supabase as a PostgreSQL provider through Drizzle ORM. Authentication remains powered by Better Auth, and file uploads use the project's S3-compatible storage layer.
+</Callout>
 
 ## Quick Start
 
@@ -26,10 +30,20 @@ description: Open-source Firebase alternative with PostgreSQL database, auth, st
   </div>
   <div className="fd-step">
     ### Configure Environment Variables
-    Paste the connection string into your `.env` file:
+    Paste the pooled transaction connection string into your `.env` file for application runtime. It usually uses port `6543`.
+
     ```bash
     DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres"
+    BETTER_AUTH_SECRET="your-generated-secret"
     ```
+
+    For migrations, prefer Supabase's direct connection string. Add it as `DATABASE_MIGRATION_URL`; Drizzle Kit will use it automatically and fall back to `DATABASE_URL` when it is not set.
+
+    ```bash
+    DATABASE_MIGRATION_URL="postgresql://postgres:password@db.xxx.supabase.co:5432/postgres"
+    ```
+
+    If your local network does not support IPv6 and you do not have Supabase's IPv4 add-on, use the session pooler URL on port `5432` for `DATABASE_MIGRATION_URL`.
   </div>
   <div className="fd-step">
     ### Run Migrations
@@ -75,4 +89,11 @@ Then specify the schema in the connection string:
 
 ```bash
 DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres?schema=your-schema-name"
+DATABASE_MIGRATION_URL="postgresql://postgres:password@db.xxx.supabase.co:5432/postgres?schema=your-schema-name"
 ```
+
+## Notes
+
+- Runtime uses `DATABASE_URL` through `postgres.js` with prepared statements disabled, which is compatible with Supabase transaction pooling.
+- Drizzle migrations use `DATABASE_MIGRATION_URL` when present, so schema changes can use Supabase's direct Postgres connection.
+- The app does not depend on Supabase Data API for server-side queries, so newly created table exposure settings in Supabase Data API do not affect normal application reads and writes.

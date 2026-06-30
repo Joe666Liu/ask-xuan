@@ -192,6 +192,8 @@ cp .env.example .env.local
 
 应用支持**零配置启动**——落地页、博客和文档无需数据库即可运行。如需启用认证和用户功能，请设置 `DATABASE_URL` 和 `BETTER_AUTH_SECRET`。
 
+项目支持将 Supabase 作为 PostgreSQL 数据库提供商。`DATABASE_URL` 建议使用 Supabase 的 pooled transaction URL；`DATABASE_MIGRATION_URL` 可选填 direct URL，专门给 Drizzle 迁移使用。详见 `content/docs/integration/database/supabase.zh.mdx`。
+
 ### 3. 初始化数据库（可选）
 
 ```bash

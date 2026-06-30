@@ -3,7 +3,11 @@ title: Supabase
 description: 开源 Firebase 替代品，PostgreSQL 数据库 + 认证 + 存储 + 实时订阅
 ---
 
-[Supabase](https://supabase.com/) 基于 PostgreSQL，除了数据库还提供认证、文件存储、Edge Functions 等功能。免费版提供 500 MB 数据库、1 GB 文件存储，最多 2 个活跃项目（1 周不活跃会暂停）。
+[Supabase](https://supabase.com/) 基于 PostgreSQL，除了数据库还提供认证、文件存储、Edge Functions 等功能。免费额度可能随时间调整，请以 [Supabase 价格页](https://supabase.com/pricing) 为准。
+
+<Callout type="info" title="集成范围">
+Ask Xuan 将 Supabase 作为 PostgreSQL 数据库提供商，通过 Drizzle ORM 访问数据库。登录认证仍由 Better Auth 提供，文件上传仍走项目内 S3 兼容存储层。
+</Callout>
 
 ## 快速开始
 
@@ -26,10 +30,20 @@ description: 开源 Firebase 替代品，PostgreSQL 数据库 + 认证 + 存储 
   </div>
   <div className="fd-step">
     ### 配置环境变量
-    将连接字符串粘贴到 `.env` 文件：
+    将 pooled transaction 连接字符串粘贴到 `.env` 文件，作为应用运行时数据库连接。它通常使用 `6543` 端口。
+
     ```bash
     DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres"
+    BETTER_AUTH_SECRET="your-generated-secret"
     ```
+
+    迁移建议使用 Supabase direct connection。将它配置为 `DATABASE_MIGRATION_URL` 后，Drizzle Kit 会自动优先使用它；未配置时会回退到 `DATABASE_URL`。
+
+    ```bash
+    DATABASE_MIGRATION_URL="postgresql://postgres:password@db.xxx.supabase.co:5432/postgres"
+    ```
+
+    如果你的本地网络不支持 IPv6，且没有购买 Supabase IPv4 add-on，可以用 `5432` 端口的 session pooler URL 作为 `DATABASE_MIGRATION_URL`。
   </div>
   <div className="fd-step">
     ### 执行迁移
@@ -75,4 +89,11 @@ Supabase 默认使用 `public` Schema，里面有 Supabase 自己的系统表（
 
 ```bash
 DATABASE_URL="postgresql://postgres.xxx:password@aws-0-region.pooler.supabase.com:6543/postgres?schema=your-schema-name"
+DATABASE_MIGRATION_URL="postgresql://postgres:password@db.xxx.supabase.co:5432/postgres?schema=your-schema-name"
 ```
+
+## 注意事项
+
+- 运行时通过 `DATABASE_URL` 使用 `postgres.js` 连接数据库，并已关闭 prepared statements，兼容 Supabase transaction pooling。
+- Drizzle 迁移在存在 `DATABASE_MIGRATION_URL` 时会优先使用它，方便用 Supabase direct Postgres 连接执行 schema 变更。
+- 应用服务端查询不依赖 Supabase Data API，因此 Supabase 新建表是否暴露到 Data API 不影响应用正常读写。

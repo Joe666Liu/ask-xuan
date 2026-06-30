@@ -22,7 +22,8 @@ Ask Xuan 配置环境变量有两种方式：
 
 | 变量   | 描述 |
 | -------- | ------- |
-| DATABASE_URL  | 数据库连接 URL    |
+| DATABASE_URL  | 运行时数据库连接 URL。使用 Supabase 时建议填写 pooled transaction URL。 |
+| DATABASE_MIGRATION_URL  | 可选的迁移数据库连接 URL。使用 Supabase 时建议填写 direct URL，供 Drizzle 迁移使用。 |
 
 ### 身份鉴权
 

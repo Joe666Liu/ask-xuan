@@ -192,6 +192,8 @@ cp .env.example .env.local
 
 The app runs in **static mode** with zero configuration — landing page, blog, and docs work without a database. To enable auth and user features, set `DATABASE_URL` and `BETTER_AUTH_SECRET`.
 
+Supabase is supported as the PostgreSQL provider. Use the Supabase pooled transaction URL for `DATABASE_URL`, and optionally set `DATABASE_MIGRATION_URL` to the direct URL for Drizzle migrations. See `content/docs/integration/database/supabase.mdx`.
+
 ### 3. Set up database (optional)
 
 ```bash
