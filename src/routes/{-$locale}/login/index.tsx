@@ -1,8 +1,10 @@
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile"
 import { createFileRoute, redirect } from "@tanstack/react-router"
+import { getPrefix } from "intlayer"
 import { ChevronLeftIcon, Eye, EyeOff, Loader2 } from "lucide-react"
 import type React from "react"
 import { useId, useRef, useState } from "react"
+import { useLocale } from "react-intlayer"
 import { siteConfig } from "@/config/site-config"
 import { LocalizedLink } from "@/shared/components/locale/localized-link"
 import { FloatingPaths } from "@/shared/components/login/floating-paths"
@@ -12,10 +14,15 @@ import { Label } from "@/shared/components/ui/label"
 import { useAuthMutations } from "@/shared/hooks/use-auth-mutations"
 import { authClient } from "@/shared/lib/auth/auth-client"
 import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
+import { normalizeAuthRedirect } from "@/shared/lib/auth/auth-redirect"
 
 export const Route = createFileRoute("/{-$locale}/login/")({
   component: RouteComponent,
   ssr: false,
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } => {
+    const redirect = normalizeAuthRedirect(search.redirect)
+    return redirect ? { redirect } : {}
+  },
   head: () => ({
     meta: [
       {
@@ -23,7 +30,7 @@ export const Route = createFileRoute("/{-$locale}/login/")({
       },
     ],
   }),
-  beforeLoad: async () => {
+  beforeLoad: async ({ params, search }) => {
     const isAuthEnabled = await getIsAuthEnabled()
     if (!isAuthEnabled) {
       throw redirect({
@@ -33,8 +40,16 @@ export const Route = createFileRoute("/{-$locale}/login/")({
     const session = await authClient.getSession()
 
     if (session.data?.user) {
+      if (search.redirect) {
+        throw redirect({
+          href: search.redirect,
+          replace: true,
+        })
+      }
+
       throw redirect({
         to: "/{-$locale}",
+        params: { locale: params.locale },
       })
     }
   },
@@ -43,6 +58,10 @@ export const Route = createFileRoute("/{-$locale}/login/")({
 const isCaptchaEnabled = import.meta.env.VITE_TURNSTILE_CAPTCHA_ENABLED === "true"
 
 function RouteComponent() {
+  const { redirect } = Route.useSearch()
+  const { locale } = useLocale()
+  const { localePrefix } = getPrefix(locale)
+  const postAuthRedirect = redirect ?? (localePrefix ? `/${localePrefix}` : "/")
   const nameId = useId()
   const emailId = useId()
   const passwordId = useId()
@@ -84,8 +103,9 @@ function RouteComponent() {
     turnstileResetRef,
     loginPage,
   } = useAuthMutations({
+    redirectTo: postAuthRedirect,
     onSignInSuccess: () => {
-      window.location.href = "/"
+      window.location.href = postAuthRedirect
     },
     onSignUpSuccess: () => {
       setEmail("")

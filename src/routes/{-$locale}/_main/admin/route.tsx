@@ -1,9 +1,10 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import { getRouteAuthStateFn } from "@/actions/auth.action"
 import { siteConfig } from "@/config/site-config"
 import AdminSidebar from "@/shared/components/sidebar/admin-sidebar"
 import { SidebarProvider, SidebarTrigger } from "@/shared/components/ui/sidebar"
 import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
-import { pageAdminMiddleware } from "@/shared/middleware/auth.middleware"
+import { normalizeAuthRedirect } from "@/shared/lib/auth/auth-redirect"
 
 export const Route = createFileRoute("/{-$locale}/_main/admin")({
   component: RouteComponent,
@@ -15,14 +16,30 @@ export const Route = createFileRoute("/{-$locale}/_main/admin")({
       },
     ],
   }),
-  server: {
-    middleware: [pageAdminMiddleware],
-  },
-  beforeLoad: async () => {
+  beforeLoad: async ({ location, params }) => {
     const isAuthEnabled = await getIsAuthEnabled()
     if (!isAuthEnabled) {
       throw redirect({
         to: "/{-$locale}/404",
+        params: { locale: params.locale },
+      })
+    }
+
+    const authState = await getRouteAuthStateFn()
+    if (!authState.isAuthenticated) {
+      throw redirect({
+        to: "/{-$locale}/login",
+        params: { locale: params.locale },
+        search: {
+          redirect: normalizeAuthRedirect(location.href, "/admin"),
+        },
+      })
+    }
+
+    if (!authState.isAdmin) {
+      throw redirect({
+        to: "/{-$locale}/404",
+        params: { locale: params.locale },
       })
     }
   },

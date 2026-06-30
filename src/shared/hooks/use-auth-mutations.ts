@@ -5,12 +5,14 @@ import { toast } from "sonner"
 import { authClient } from "@/shared/lib/auth/auth-client"
 
 interface UseAuthMutationsOptions {
+  redirectTo?: string
   onSignInSuccess?: () => void
   onSignUpSuccess?: () => void
 }
 
 export function useAuthMutations(options: UseAuthMutationsOptions = {}) {
   const { loginPage } = useIntlayer("auth")
+  const redirectTo = options.redirectTo ?? "/"
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileResetRef = useRef<(() => void) | null>(null)
 
@@ -48,7 +50,7 @@ export function useAuthMutations(options: UseAuthMutationsOptions = {}) {
     mutationFn: () =>
       authClient.signIn.social({
         provider: "google",
-        callbackURL: window.location.origin,
+        callbackURL: new URL(redirectTo, window.location.origin).toString(),
         fetchOptions: {
           headers: getCaptchaHeaders(),
           onError: (ctx) => handleAuthError(ctx.error, loginPage.toast.googleError.value),
@@ -60,7 +62,7 @@ export function useAuthMutations(options: UseAuthMutationsOptions = {}) {
     mutationFn: () =>
       authClient.signIn.social({
         provider: "github",
-        callbackURL: window.location.origin,
+        callbackURL: new URL(redirectTo, window.location.origin).toString(),
         fetchOptions: {
           headers: getCaptchaHeaders(),
           onError: (ctx) => handleAuthError(ctx.error, loginPage.toast.githubError.value),
@@ -73,7 +75,7 @@ export function useAuthMutations(options: UseAuthMutationsOptions = {}) {
       authClient.signIn.email({
         email,
         password,
-        callbackURL: "/",
+        callbackURL: redirectTo,
         fetchOptions: {
           headers: getCaptchaHeaders(),
           onSuccess: () => {
@@ -91,7 +93,7 @@ export function useAuthMutations(options: UseAuthMutationsOptions = {}) {
         email,
         password,
         name,
-        callbackURL: "/",
+        callbackURL: redirectTo,
         fetchOptions: {
           headers: getCaptchaHeaders(),
           onSuccess: () => {

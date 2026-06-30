@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start"
+import { asc, eq } from "drizzle-orm"
+import { creditPackage, db } from "@/db"
 import { CreditService } from "@/services/credits.service"
 import { sessionMiddleware } from "@/shared/middleware/auth.middleware"
+import type { CreditPackage } from "@/shared/types/payment"
 import type { UserCredits } from "@/shared/types/user"
 
 const DEFAULT_CREDITS: UserCredits = {
@@ -26,3 +29,18 @@ export const getUserCreditsFn = createServerFn({ method: "GET" })
       return DEFAULT_CREDITS
     }
   })
+
+export const getCreditPackagesFn = createServerFn({ method: "GET" }).handler(
+  async (): Promise<CreditPackage[]> => {
+    try {
+      return await db
+        .select()
+        .from(creditPackage)
+        .where(eq(creditPackage.isActive, true))
+        .orderBy(asc(creditPackage.sortOrder))
+    } catch (error) {
+      console.error("[getCreditPackagesFn] Failed to fetch credit packages:", error)
+      return []
+    }
+  }
+)

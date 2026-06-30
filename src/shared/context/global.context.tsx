@@ -1,9 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { createContext, type ReactNode, useCallback, useContext, useMemo } from "react"
-import { getConfigFn } from "@/actions/config.action"
-import { getUserCreditsFn } from "@/actions/credit.action"
-import { getUserInfoFn } from "@/actions/user.action"
 import type { PublicConfig } from "@/config/dynamic-config"
+import {
+  configQueryOptions,
+  userCreditsQueryOptions,
+  userInfoQueryOptions,
+} from "@/shared/lib/queries/app-queries"
 import type { UserCredits, UserInfo } from "@/shared/types/user"
 
 type GlobalContextType = {
@@ -32,25 +34,11 @@ export const useGlobalContext = () => {
 export const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient()
 
-  const { data: config, isLoading: isLoadingConfig } = useQuery({
-    queryKey: ["config"],
-    queryFn: () => getConfigFn(),
-    staleTime: 0,
-    gcTime: 0,
-  })
+  const { data: config, isLoading: isLoadingConfig } = useQuery(configQueryOptions())
 
-  const { data: userInfo, isLoading: isLoadingUserInfo } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => getUserInfoFn(),
-    staleTime: 5 * 60 * 1000,
-  })
+  const { data: userInfo, isLoading: isLoadingUserInfo } = useQuery(userInfoQueryOptions())
 
-  const { data: credits, isLoading: isLoadingCredits } = useQuery({
-    queryKey: ["credits"],
-    queryFn: () => getUserCreditsFn(),
-    staleTime: 0,
-    gcTime: 0,
-  })
+  const { data: credits, isLoading: isLoadingCredits } = useQuery(userCreditsQueryOptions())
 
   const refreshConfig = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ["config"] })

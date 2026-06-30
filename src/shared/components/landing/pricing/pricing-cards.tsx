@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { getPrefix } from "intlayer"
 import { Check, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useIntlayer } from "react-intlayer"
+import { useIntlayer, useLocale } from "react-intlayer"
 import { toast } from "sonner"
 import { getPlans } from "@/config/payment-config"
 import { Button } from "@/shared/components/ui/button"
@@ -16,7 +18,6 @@ import {
 import { Label } from "@/shared/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group"
 import { useGlobalContext } from "@/shared/context/global.context"
-import { useLocalizedNavigate } from "@/shared/hooks/use-localized-navigate"
 import { usePlanComparison } from "@/shared/hooks/use-plan-comparison"
 import { http } from "@/shared/lib/tools/http-client"
 import { cn } from "@/shared/lib/utils"
@@ -27,7 +28,9 @@ interface PricingCardsProps {
 }
 
 export function PricingCards({ variant = "default", onSuccess }: PricingCardsProps) {
-  const navigate = useLocalizedNavigate()
+  const navigate = useNavigate()
+  const { locale } = useLocale()
+  const { localePrefix } = getPrefix(locale)
   const { userInfo, isLoadingUserInfo } = useGlobalContext()
   const content = useIntlayer("pricing")
   const {
@@ -41,6 +44,7 @@ export function PricingCards({ variant = "default", onSuccess }: PricingCardsPro
 
   const plans = getPlans()
   const isCompact = variant === "compact"
+  const dashboardBillingPath = `${localePrefix ? `/${localePrefix}` : ""}/dashboard/billing`
 
   const [selectedPrices, setSelectedPrices] = useState<Record<string, number>>({})
   const [loadingPlan, setLoadingPlan] = useState<{ planId: string; priceId: string } | null>(null)
@@ -96,31 +100,33 @@ export function PricingCards({ variant = "default", onSuccess }: PricingCardsPro
     }) => {
       if (!userInfo?.user) {
         toast.error(content.loginRequired.value)
-        navigate("/login")
+        navigate({
+          to: "/{-$locale}/login",
+          params: { locale: localePrefix },
+          search: { redirect: dashboardBillingPath },
+        })
         return
       }
 
       setLoadingPlan({ planId, priceId })
 
-      const endpoint = isUpgradeAction ? "/api/payment/upgrade" : "/api/payment/checkout"
-
-      const data = await http<{ checkoutUrl?: string }>(endpoint, {
+      const data = await http<{ checkoutUrl?: string }>("/api/payment/checkout", {
         method: "POST",
         body: {
           planId,
           priceId,
-          successUrl: `${window.location.origin}/dashboard/billing`,
+          successUrl: `${window.location.origin}${dashboardBillingPath}?success=true`,
+          cancelUrl: `${window.location.origin}${dashboardBillingPath}`,
         },
       })
 
       return { data, isUpgradeAction }
     },
     onSuccess: (res) => {
-      if (res?.isUpgradeAction) {
-        toast.success("Subscription upgraded successfully!")
+      if (!res) return
+
+      if (res?.data?.checkoutUrl) {
         onSuccess?.()
-        window.location.reload()
-      } else if (res?.data?.checkoutUrl) {
         window.location.href = res.data.checkoutUrl
       } else {
         toast.error(content.paymentFailed.value)

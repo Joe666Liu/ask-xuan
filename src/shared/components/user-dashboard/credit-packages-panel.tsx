@@ -1,33 +1,38 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { getPrefix } from "intlayer"
 import { Coins, Loader2, Package } from "lucide-react"
-import { useIntlayer } from "react-intlayer"
+import { useIntlayer, useLocale } from "react-intlayer"
 import { toast } from "sonner"
 import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/components/ui/card"
 import { Skeleton } from "@/shared/components/ui/skeleton"
 import { useGlobalContext } from "@/shared/context/global.context"
+import { creditPackagesQueryOptions } from "@/shared/lib/queries/app-queries"
 import { http } from "@/shared/lib/tools/http-client"
-import type { CreditPackage } from "@/shared/types/payment"
 
 export const CreditPackagesPanel = () => {
   const content = useIntlayer("user-dashboard")
   const creditPackagesDict = useIntlayer("credit-packages")
+  const { locale } = useLocale()
+  const { localePrefix } = getPrefix(locale)
   const { credits, config, userInfo } = useGlobalContext()
 
   const isFreeUser = !userInfo?.payment?.activePlan
   const allowFreePurchase = config?.public_credit_allow_free_user_purchase ?? false
   const canPurchase = allowFreePurchase || !isFreeUser
+  const dashboardCreditsPath = `${localePrefix ? `/${localePrefix}` : ""}/dashboard/credits`
 
-  const { data: packages, isLoading } = useQuery({
-    queryKey: ["credit-packages"],
-    queryFn: () => http<CreditPackage[]>("/api/credit/packages"),
-  })
+  const { data: packages, isLoading } = useQuery(creditPackagesQueryOptions())
 
   const { mutate: handlePurchase, isPending } = useMutation({
     mutationFn: async (packageId: string) => {
       const data = await http<{ checkoutUrl?: string }>("/api/payment/credit-checkout", {
         method: "POST",
-        body: { packageId },
+        body: {
+          packageId,
+          successUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages&success=true`,
+          cancelUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages`,
+        },
       })
       return data
     },

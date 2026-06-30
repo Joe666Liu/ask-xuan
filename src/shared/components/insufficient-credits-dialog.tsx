@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { getPrefix } from "intlayer"
 import { Coins, Loader2, Sparkles } from "lucide-react"
-import { useIntlayer } from "react-intlayer"
+import { useIntlayer, useLocale } from "react-intlayer"
 import { toast } from "sonner"
 import { Badge } from "@/shared/components/ui/badge"
 import { Button } from "@/shared/components/ui/button"
@@ -12,8 +13,8 @@ import {
   DialogTitle,
 } from "@/shared/components/ui/dialog"
 import { useGlobalContext } from "@/shared/context/global.context"
+import { creditPackagesQueryOptions } from "@/shared/lib/queries/app-queries"
 import { http } from "@/shared/lib/tools/http-client"
-import type { CreditPackage } from "@/shared/types/payment"
 
 interface InsufficientCreditsDialogProps {
   open: boolean
@@ -28,15 +29,17 @@ export const InsufficientCreditsDialog = ({
 }: InsufficientCreditsDialogProps) => {
   const content = useIntlayer("user-dashboard")
   const creditPackagesDict = useIntlayer("credit-packages")
+  const { locale } = useLocale()
+  const { localePrefix } = getPrefix(locale)
   const { credits, config, userInfo } = useGlobalContext()
 
   const isFreeUser = !userInfo?.payment?.activePlan
   const allowFreePurchase = config?.public_credit_allow_free_user_purchase ?? false
   const canPurchase = allowFreePurchase || !isFreeUser
+  const dashboardCreditsPath = `${localePrefix ? `/${localePrefix}` : ""}/dashboard/credits`
 
   const { data: packages } = useQuery({
-    queryKey: ["credit-packages"],
-    queryFn: () => http<CreditPackage[]>("/api/credit/packages"),
+    ...creditPackagesQueryOptions(),
     enabled: open,
   })
 
@@ -44,7 +47,11 @@ export const InsufficientCreditsDialog = ({
     mutationFn: async (packageId: string) => {
       const data = await http<{ checkoutUrl?: string }>("/api/payment/credit-checkout", {
         method: "POST",
-        body: { packageId },
+        body: {
+          packageId,
+          successUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages&success=true`,
+          cancelUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages`,
+        },
       })
       return data
     },
