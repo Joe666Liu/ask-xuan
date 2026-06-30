@@ -13,7 +13,7 @@ import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 import { useAuthMutations } from "@/shared/hooks/use-auth-mutations"
 import { authClient } from "@/shared/lib/auth/auth-client"
-import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
+import { isAuthConfigured } from "@/shared/lib/auth/auth-config"
 import { normalizeAuthRedirect } from "@/shared/lib/auth/auth-redirect"
 
 export const Route = createFileRoute("/{-$locale}/login/")({
@@ -31,8 +31,7 @@ export const Route = createFileRoute("/{-$locale}/login/")({
     ],
   }),
   beforeLoad: async ({ params, search }) => {
-    const isAuthEnabled = await getIsAuthEnabled()
-    if (!isAuthEnabled) {
+    if (!isAuthConfigured) {
       throw redirect({
         to: "/{-$locale}/404",
       })

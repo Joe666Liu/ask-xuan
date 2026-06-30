@@ -16,14 +16,19 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar"
 import { Button } from "@/shared/components/ui/button"
 import { Separator } from "@/shared/components/ui/separator"
+import { Skeleton } from "@/shared/components/ui/skeleton"
 import { useGlobalContext } from "@/shared/context/global.context"
 import { signOut } from "@/shared/lib/auth/auth-client"
 
 export function AccountPanel() {
   const [isPricingOpen, setIsPricingOpen] = useState(false)
-  const { userInfo } = useGlobalContext()
+  const { userInfo, isLoadingUserInfo } = useGlobalContext()
 
   const user = userInfo?.user
+  if (isLoadingUserInfo) {
+    return <AccountPanelSkeleton />
+  }
+
   if (!user) return null
 
   const initials = user.name
@@ -76,6 +81,30 @@ export function AccountPanel() {
         open={isPricingOpen}
         onOpenChange={setIsPricingOpen}
       />
+    </div>
+  )
+}
+
+function AccountPanelSkeleton() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <Skeleton className="size-14 rounded-full md:size-16" />
+        <div className="flex-1 space-y-2">
+          <Skeleton className="h-5 w-36" />
+          <Skeleton className="h-4 w-52" />
+        </div>
+        <Skeleton className="size-9 rounded-md" />
+        <Skeleton className="size-9 rounded-md" />
+      </div>
+      <div className="space-y-4 rounded-lg border bg-muted/50 p-4">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-9 w-20 rounded-md" />
+        </div>
+        <Skeleton className="h-px w-full" />
+        <Skeleton className="h-4 w-40" />
+      </div>
     </div>
   )
 }

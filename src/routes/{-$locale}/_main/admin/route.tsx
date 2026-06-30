@@ -3,7 +3,7 @@ import { getRouteAuthStateFn } from "@/actions/auth.action"
 import { siteConfig } from "@/config/site-config"
 import AdminSidebar from "@/shared/components/sidebar/admin-sidebar"
 import { SidebarProvider, SidebarTrigger } from "@/shared/components/ui/sidebar"
-import { getIsAuthEnabled } from "@/shared/lib/auth/auth-config"
+import { isAuthConfigured } from "@/shared/lib/auth/auth-config"
 import { normalizeAuthRedirect } from "@/shared/lib/auth/auth-redirect"
 
 export const Route = createFileRoute("/{-$locale}/_main/admin")({
@@ -17,8 +17,7 @@ export const Route = createFileRoute("/{-$locale}/_main/admin")({
     ],
   }),
   beforeLoad: async ({ location, params }) => {
-    const isAuthEnabled = await getIsAuthEnabled()
-    if (!isAuthEnabled) {
+    if (!isAuthConfigured) {
       throw redirect({
         to: "/{-$locale}/404",
         params: { locale: params.locale },
