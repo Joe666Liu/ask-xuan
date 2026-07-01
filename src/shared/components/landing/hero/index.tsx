@@ -6,10 +6,14 @@ import { LocalizedLink, type To } from "@/shared/components/locale/localized-lin
 import { Button } from "@/shared/components/ui/button"
 import { cn } from "@/shared/lib/utils"
 
+const isActionableHref = (href: string) => Boolean(href && href !== "#")
+
 export const Hero = () => {
   const { hero } = useIntlayer("landing")
 
   const heroTitleId = useId()
+  const primaryHref = hero.buttons.start.url.value
+  const secondaryHref = hero.buttons.docs.url.value
 
   return (
     <header
@@ -106,41 +110,43 @@ export const Hero = () => {
                 >
                   <legend className="sr-only">Primary action buttons</legend>
 
-                  {/* Primary action button */}
-                  <div
-                    className={cn(
-                      "border bg-foreground/10 p-0.5",
-                      "rounded-[calc(var(--radius-xl)+0.125rem)]"
-                    )}
-                  >
+                  {isActionableHref(primaryHref) && (
+                    <div
+                      className={cn(
+                        "border bg-foreground/10 p-0.5",
+                        "rounded-[calc(var(--radius-xl)+0.125rem)]"
+                      )}
+                    >
+                      <Button
+                        asChild
+                        size="lg"
+                        className={cn("rounded-xl px-5 text-base cursor-pointer")}
+                      >
+                        <LocalizedLink
+                          to={primaryHref as To}
+                          aria-label={`Get started: ${hero.buttons.start.text.value}`}
+                        >
+                          <span className="text-nowrap">{hero.buttons.start.text.value}</span>
+                        </LocalizedLink>
+                      </Button>
+                    </div>
+                  )}
+
+                  {isActionableHref(secondaryHref) && (
                     <Button
                       asChild
                       size="lg"
-                      className={cn("rounded-xl px-5 text-base cursor-pointer")}
+                      variant="ghost"
+                      className={cn("h-10.5 rounded-xl px-5 cursor-pointer")}
                     >
                       <LocalizedLink
-                        to={hero.buttons.start.url.value as To}
-                        aria-label={`Get started: ${hero.buttons.start.text.value}`}
+                        to={secondaryHref as To}
+                        aria-label={`View documentation: ${hero.buttons.docs.text.value}`}
                       >
-                        <span className="text-nowrap">{hero.buttons.start.text.value}</span>
+                        <span className="text-nowrap">{hero.buttons.docs.text.value}</span>
                       </LocalizedLink>
                     </Button>
-                  </div>
-
-                  {/* Secondary action button */}
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className={cn("h-10.5 rounded-xl px-5 cursor-pointer")}
-                  >
-                    <LocalizedLink
-                      to={hero.buttons.docs.url.value as To}
-                      aria-label={`View documentation: ${hero.buttons.docs.text.value}`}
-                    >
-                      <span className="text-nowrap">{hero.buttons.docs.text.value}</span>
-                    </LocalizedLink>
-                  </Button>
+                  )}
                 </fieldset>
               </div>
             </div>

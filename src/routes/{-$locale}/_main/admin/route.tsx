@@ -41,13 +41,17 @@ export const Route = createFileRoute("/{-$locale}/_main/admin")({
         params: { locale: params.locale },
       })
     }
+
+    return { authState }
   },
 })
 
 function RouteComponent() {
+  const { authState } = Route.useRouteContext()
+
   return (
     <SidebarProvider>
-      <AdminSidebar />
+      <AdminSidebar user={authState.user} />
       <main
         id="main-content"
         className="flex min-h-dvh min-w-0 flex-1 flex-col"

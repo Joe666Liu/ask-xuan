@@ -6,7 +6,7 @@ import {
   assignRoleToUser,
   getUserRolesWithExpiry,
   removeRoleFromUser,
-} from "@/shared/model/rabc.model"
+} from "@/shared/model/rbac.model"
 
 export const Route = createFileRoute("/api/admin/users/$id/roles")({
   server: {

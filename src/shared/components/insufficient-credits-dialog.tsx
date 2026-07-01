@@ -36,7 +36,7 @@ export const InsufficientCreditsDialog = ({
   const isFreeUser = !userInfo?.payment?.activePlan
   const allowFreePurchase = config?.public_credit_allow_free_user_purchase ?? false
   const canPurchase = allowFreePurchase || !isFreeUser
-  const dashboardCreditsPath = `${localePrefix ? `/${localePrefix}` : ""}/dashboard/credits`
+  const settingsCreditsPath = `${localePrefix ? `/${localePrefix}` : ""}/app/settings/credits`
 
   const { data: packages } = useQuery({
     ...creditPackagesQueryOptions(),
@@ -49,8 +49,8 @@ export const InsufficientCreditsDialog = ({
         method: "POST",
         body: {
           packageId,
-          successUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages&success=true`,
-          cancelUrl: `${window.location.origin}${dashboardCreditsPath}?tab=packages`,
+          successUrl: `${window.location.origin}${settingsCreditsPath}?tab=packages&success=true`,
+          cancelUrl: `${window.location.origin}${settingsCreditsPath}?tab=packages`,
         },
       })
       return data

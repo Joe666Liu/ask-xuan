@@ -5,19 +5,19 @@ import {
   count,
   desc,
   eq,
+  gt,
+  gte,
   ilike,
   inArray,
   isNull,
   notInArray,
   or,
   type SQL,
+  sql,
 } from "drizzle-orm"
-import { db, subscription, user, userRole } from "@/db"
+import { credits, db, role, subscription, user, userRole } from "@/db"
 import { Resp } from "@/shared/lib/tools/response"
 import { getConfig } from "@/shared/model/config.model"
-import { getUserCreditBalance } from "@/shared/model/credit.model"
-import { getUserRolesWithExpiry } from "@/shared/model/rabc.model"
-import { findActiveSubscriptionByUserId } from "@/shared/model/subscription.model"
 import type { AdminUserListItem } from "@/shared/types/admin"
 
 export const Route = createFileRoute("/api/admin/users")({
@@ -102,30 +102,90 @@ export const Route = createFileRoute("/api/admin/users")({
               .offset(offset),
           ])
 
-          const enrichedUsers: AdminUserListItem[] = await Promise.all(
-            users.map(async (u) => {
-              const [roles, subscription, creditBalance] = await Promise.all([
-                getUserRolesWithExpiry(u.id),
-                findActiveSubscriptionByUserId(u.id),
-                creditEnabled ? getUserCreditBalance(u.id) : Promise.resolve(0),
-              ])
+          const userIds = users.map((u) => u.id)
+          const now = new Date()
 
-              return {
-                ...u,
-                banned: u.banned ?? false,
-                bannedAt: u.bannedAt,
-                roles,
-                subscription: subscription
-                  ? {
-                      planId: subscription.planId,
-                      planName: subscription.planId,
-                      status: subscription.status,
-                    }
-                  : null,
-                creditBalance,
-              }
-            })
+          const [roleRows, subscriptionRows, creditRows] =
+            userIds.length > 0
+              ? await Promise.all([
+                  db
+                    .select({
+                      userId: userRole.userId,
+                      id: userRole.id,
+                      roleId: role.id,
+                      name: role.name,
+                      title: role.title,
+                      expiresAt: userRole.expiresAt,
+                    })
+                    .from(userRole)
+                    .innerJoin(role, eq(userRole.roleId, role.id))
+                    .where(inArray(userRole.userId, userIds)),
+                  db
+                    .select()
+                    .from(subscription)
+                    .where(
+                      and(
+                        inArray(subscription.userId, userIds),
+                        or(eq(subscription.status, "active"), eq(subscription.status, "trialing"))
+                      )
+                    ),
+                  creditEnabled
+                    ? db
+                        .select({
+                          userId: credits.userId,
+                          balance: sql<number>`coalesce(sum(${credits.credits}), 0)::int`,
+                        })
+                        .from(credits)
+                        .where(
+                          and(
+                            inArray(credits.userId, userIds),
+                            eq(credits.transactionType, "credit"),
+                            gt(credits.credits, 0),
+                            or(isNull(credits.expiresAt), gte(credits.expiresAt, now))
+                          )
+                        )
+                        .groupBy(credits.userId)
+                    : Promise.resolve([]),
+                ])
+              : [[], [], []]
+
+          const rolesByUserId = new Map<string, typeof roleRows>()
+          for (const roleRow of roleRows) {
+            if (roleRow.expiresAt && roleRow.expiresAt <= now) continue
+            const roles = rolesByUserId.get(roleRow.userId) ?? []
+            roles.push(roleRow)
+            rolesByUserId.set(roleRow.userId, roles)
+          }
+
+          const subscriptionByUserId = new Map<string, (typeof subscriptionRows)[number]>()
+          for (const subscriptionRow of subscriptionRows) {
+            if (!subscriptionByUserId.has(subscriptionRow.userId)) {
+              subscriptionByUserId.set(subscriptionRow.userId, subscriptionRow)
+            }
+          }
+
+          const creditBalanceByUserId = new Map(
+            creditRows.map((row) => [row.userId, Number(row.balance ?? 0)])
           )
+
+          const enrichedUsers: AdminUserListItem[] = users.map((u) => {
+            const activeSubscription = subscriptionByUserId.get(u.id)
+
+            return {
+              ...u,
+              banned: u.banned ?? false,
+              bannedAt: u.bannedAt,
+              roles: rolesByUserId.get(u.id) ?? [],
+              subscription: activeSubscription
+                ? {
+                    planId: activeSubscription.planId,
+                    planName: activeSubscription.planId,
+                    status: activeSubscription.status,
+                  }
+                : null,
+              creditBalance: creditBalanceByUserId.get(u.id) ?? 0,
+            }
+          })
 
           return Resp.success({
             items: enrichedUsers,

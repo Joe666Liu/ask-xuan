@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useRouterState } from "@tanstack/react-router"
 import { createContext, type ReactNode, useCallback, useContext, useMemo } from "react"
 import type { PublicConfig } from "@/config/dynamic-config"
 import {
@@ -33,12 +34,20 @@ export const useGlobalContext = () => {
 
 export const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient()
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const shouldLoadAccountData = !/(^|\/)admin(\/|$)/.test(pathname)
 
   const { data: config, isLoading: isLoadingConfig } = useQuery(configQueryOptions())
 
-  const { data: userInfo, isLoading: isLoadingUserInfo } = useQuery(userInfoQueryOptions())
+  const { data: userInfo, isLoading: isLoadingUserInfo } = useQuery({
+    ...userInfoQueryOptions(),
+    enabled: shouldLoadAccountData,
+  })
 
-  const { data: credits, isLoading: isLoadingCredits } = useQuery(userCreditsQueryOptions())
+  const { data: credits, isLoading: isLoadingCredits } = useQuery({
+    ...userCreditsQueryOptions(),
+    enabled: shouldLoadAccountData,
+  })
 
   const refreshConfig = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ["config"] })
@@ -62,8 +71,8 @@ export const GlobalContextProvider = ({ children }: { children: ReactNode }) => 
       userInfo: userInfo ?? null,
       credits: credits ?? null,
       isLoadingConfig,
-      isLoadingUserInfo,
-      isLoadingCredits,
+      isLoadingUserInfo: shouldLoadAccountData ? isLoadingUserInfo : false,
+      isLoadingCredits: shouldLoadAccountData ? isLoadingCredits : false,
       refreshConfig,
       refreshUserInfo,
       refreshCredits,
@@ -76,6 +85,7 @@ export const GlobalContextProvider = ({ children }: { children: ReactNode }) => 
       isLoadingConfig,
       isLoadingUserInfo,
       isLoadingCredits,
+      shouldLoadAccountData,
       refreshConfig,
       refreshUserInfo,
       refreshCredits,

@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start"
 import { asc, eq } from "drizzle-orm"
 import { creditPackage, db } from "@/db"
 import { CreditService } from "@/services/credits.service"
-import { sessionMiddleware } from "@/shared/middleware/auth.middleware"
+import { profileSessionMiddleware } from "@/shared/middleware/auth.middleware"
 import type { CreditPackage } from "@/shared/types/payment"
 import type { UserCredits } from "@/shared/types/user"
 
@@ -13,7 +13,7 @@ const DEFAULT_CREDITS: UserCredits = {
 }
 
 export const getUserCreditsFn = createServerFn({ method: "GET" })
-  .middleware([sessionMiddleware])
+  .middleware([profileSessionMiddleware])
   .handler(async ({ context }): Promise<UserCredits> => {
     try {
       const userId = context.session?.user.id

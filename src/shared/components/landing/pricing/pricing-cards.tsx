@@ -44,7 +44,7 @@ export function PricingCards({ variant = "default", onSuccess }: PricingCardsPro
 
   const plans = getPlans()
   const isCompact = variant === "compact"
-  const dashboardBillingPath = `${localePrefix ? `/${localePrefix}` : ""}/dashboard/billing`
+  const settingsBillingPath = `${localePrefix ? `/${localePrefix}` : ""}/app/settings/billing`
 
   const [selectedPrices, setSelectedPrices] = useState<Record<string, number>>({})
   const [loadingPlan, setLoadingPlan] = useState<{ planId: string; priceId: string } | null>(null)
@@ -103,7 +103,7 @@ export function PricingCards({ variant = "default", onSuccess }: PricingCardsPro
         navigate({
           to: "/{-$locale}/login",
           params: { locale: localePrefix },
-          search: { redirect: dashboardBillingPath },
+          search: { redirect: settingsBillingPath },
         })
         return
       }
@@ -115,8 +115,8 @@ export function PricingCards({ variant = "default", onSuccess }: PricingCardsPro
         body: {
           planId,
           priceId,
-          successUrl: `${window.location.origin}${dashboardBillingPath}?success=true`,
-          cancelUrl: `${window.location.origin}${dashboardBillingPath}`,
+          successUrl: `${window.location.origin}${settingsBillingPath}?success=true`,
+          cancelUrl: `${window.location.origin}${settingsBillingPath}`,
         },
       })
 

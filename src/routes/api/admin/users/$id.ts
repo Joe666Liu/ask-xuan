@@ -4,7 +4,7 @@ import { db, user } from "@/db"
 import { Resp } from "@/shared/lib/tools/response"
 import { getConfig } from "@/shared/model/config.model"
 import { getUserCreditBalance } from "@/shared/model/credit.model"
-import { getUserRolesWithExpiry } from "@/shared/model/rabc.model"
+import { getUserRolesWithExpiry } from "@/shared/model/rbac.model"
 import { findActiveSubscriptionByUserId } from "@/shared/model/subscription.model"
 import type { AdminUserDetail } from "@/shared/types/admin"
 

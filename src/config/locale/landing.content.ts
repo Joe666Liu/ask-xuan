@@ -43,11 +43,11 @@ export default {
       buttons: {
         start: {
           text: t({ en: "Get Started", zh: "开始" }),
-          url: "/docs",
+          url: "/app/agent",
         },
         docs: {
           text: t({ en: "Learn More", zh: "了解更多" }),
-          url: "/docs",
+          url: "",
         },
       },
       image: {
@@ -622,17 +622,13 @@ export default {
         zh: "立即开始，构建你的下一个伟大项目。",
       }),
       primaryButtonText: t({ en: "Get Started", zh: "立即开始" }),
-      primaryButtonHref: "/docs",
+      primaryButtonHref: "/app/agent",
       secondaryButtonText: t({ en: "Book Demo", zh: "预约演示" }),
       secondaryButtonHref: "",
     },
     header: {
       display: true,
       items: [
-        {
-          label: t({ en: "Documentation", zh: "文档" }),
-          href: "/docs",
-        },
         {
           label: t({ en: "Features", zh: "特点" }),
           href: "/#introduction",
@@ -676,15 +672,13 @@ export default {
         {
           title: t({ en: "Features", zh: "功能" }),
           links: [
-            { label: t({ en: "Documentation", zh: "文档" }), href: "/docs" },
             { label: t({ en: "Roadmap", zh: "路线图" }), href: "/roadmap" },
-            { label: t({ en: "Dashboard", zh: "控制台" }), href: "/dashboard" },
+            { label: t({ en: "App", zh: "应用" }), href: "/app/agent" },
           ],
         },
         {
           title: t({ en: "Products", zh: "产品" }),
           links: [
-            { label: t({ en: "AI Providers", zh: "AI 服务商" }), href: "/docs/integration/ai" },
             { label: t({ en: "Templates", zh: "模板" }), href: "" },
             { label: t({ en: "Components", zh: "组件" }), href: "" },
           ],

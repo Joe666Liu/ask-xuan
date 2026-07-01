@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Resp } from "@/shared/lib/tools/response"
-import { getAllRoles } from "@/shared/model/rabc.model"
+import { getAllRoles } from "@/shared/model/rbac.model"
 
 export const Route = createFileRoute("/api/admin/roles")({
   server: {

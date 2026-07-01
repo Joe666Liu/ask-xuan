@@ -4,7 +4,7 @@ import { getRequestHeaders } from "@tanstack/react-start/server"
 import { ensureUserProfile, getSessionFromHeaders } from "@/shared/lib/auth/auth-server"
 import type { AuthSession } from "@/shared/lib/auth/auth-types"
 import { Resp } from "@/shared/lib/tools/response"
-import { isUserAdmin } from "@/shared/model/rabc.model"
+import { isUserAdmin } from "@/shared/model/rbac.model"
 import { isAuthConfigured } from "../lib/auth/auth-config"
 
 type Session = AuthSession | null
@@ -19,9 +19,6 @@ export const sessionMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     const headers = getRequestHeaders()
     const session = await getSessionFromHeaders(headers)
-    if (session) {
-      await ensureUserProfile(session.user)
-    }
     return await next({ context: { session } })
   } catch (error) {
     console.error("[sessionMiddleware] Failed to get session:", error)
@@ -30,11 +27,29 @@ export const sessionMiddleware = createMiddleware().server(async ({ next }) => {
 })
 
 /**
+ * Profile session middleware, syncs authenticated users into the local user table.
+ * Use this only for server work that needs local user-owned database records.
+ */
+export const profileSessionMiddleware = createMiddleware()
+  .middleware([sessionMiddleware])
+  .server(async ({ next, context }) => {
+    if (context.session) {
+      try {
+        await ensureUserProfile(context.session.user)
+      } catch (error) {
+        console.error("[profileSessionMiddleware] Failed to ensure user profile:", error)
+      }
+    }
+
+    return await next({ context: { session: context.session } })
+  })
+
+/**
  * API auth middleware, require user to be logged in, returns HTTP error responses
  * Use this for API routes (/api/*)
  */
 export const apiAuthMiddleware = createMiddleware()
-  .middleware([sessionMiddleware])
+  .middleware([profileSessionMiddleware])
   .server(async ({ next, context }) => {
     if (!isAuthConfigured) {
       return Resp.error("Authentication is not configured", 503)
@@ -66,7 +81,7 @@ export const pageAuthMiddleware = createMiddleware()
  * Use this for admin API routes (/api/admin/*)
  */
 export const apiAdminMiddleware = createMiddleware()
-  .middleware([sessionMiddleware])
+  .middleware([profileSessionMiddleware])
   .server(async ({ next, context }) => {
     if (!isAuthConfigured) {
       return Resp.error("Authentication is not configured", 503)
@@ -88,7 +103,7 @@ export const apiAdminMiddleware = createMiddleware()
  * Use this for admin page routes
  */
 export const pageAdminMiddleware = createMiddleware()
-  .middleware([sessionMiddleware])
+  .middleware([profileSessionMiddleware])
   .server(async ({ next, context }) => {
     if (!isAuthConfigured) {
       throw redirect({ to: "/{-$locale}/404" })

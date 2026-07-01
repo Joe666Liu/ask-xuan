@@ -1,0 +1,105 @@
+.agent-shell-craft {
+  --craft-topbar-height: 48px;
+  --craft-panel-gap: 6px;
+  --craft-panel-edge-inset: 6px;
+  --craft-radius-edge: 8px;
+  --craft-radius-inner: 10px;
+  --craft-sidebar-width: 220px;
+  --craft-navigator-width: 300px;
+  --craft-panel-min-width: 440px;
+  --craft-foreground-rgb: 23 23 23;
+  --craft-background-elevated: color-mix(in srgb, var(--foreground) 1.5%, var(--background));
+  --craft-foreground-2: color-mix(in srgb, var(--foreground) 2%, var(--background));
+  --craft-foreground-3: color-mix(in srgb, var(--foreground) 3%, var(--background));
+  --craft-foreground-5: color-mix(in srgb, var(--foreground) 5%, var(--background));
+  --craft-foreground-10: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  --craft-foreground-20: color-mix(in srgb, var(--foreground) 20%, var(--background));
+  --craft-user-message-bubble: color-mix(in srgb, var(--foreground) 5%, var(--background));
+  --craft-shadow-blur-opacity: 0.06;
+}
+
+.dark .agent-shell-craft {
+  --craft-foreground-rgb: 237 237 237;
+  --craft-shadow-blur-opacity: 0.12;
+}
+
+@media (max-width: 767px) {
+  .agent-shell-craft {
+    --craft-topbar-height: 56px;
+  }
+}
+
+.agent-shell-craft .craft-shadow-minimal {
+  box-shadow:
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(var(--craft-foreground-rgb) / 0.06) 0 0 0 1px,
+    rgb(0 0 0 / var(--craft-shadow-blur-opacity)) 0 1px 1px -0.5px,
+    rgb(0 0 0 / var(--craft-shadow-blur-opacity)) 0 3px 3px -1.5px;
+}
+
+.agent-shell-craft .craft-shadow-middle {
+  box-shadow:
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(var(--craft-foreground-rgb) / 0.06) 0 0 0 1px,
+    rgb(0 0 0 / var(--craft-shadow-blur-opacity)) 0 1px 1px -0.5px,
+    rgb(0 0 0 / var(--craft-shadow-blur-opacity)) 0 3px 3px -1.5px,
+    rgb(0 0 0 / var(--craft-shadow-blur-opacity)) 0 6px 6px -3px;
+}
+
+.agent-shell-craft .craft-shadow-panel-focused {
+  position: relative;
+  box-shadow:
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(0 0 0 / 0) 0 0 0 0,
+    rgb(0 0 0 / calc(var(--craft-shadow-blur-opacity) * 0.67)) 0 1px 1px -0.5px,
+    rgb(0 0 0 / calc(var(--craft-shadow-blur-opacity) * 0.67)) 0 3px 3px 1px,
+    rgb(0 0 0 / calc(var(--craft-shadow-blur-opacity) * 0.5)) 0 6px 6px 2px,
+    rgb(0 0 0 / calc(var(--craft-shadow-blur-opacity) * 0.5)) 0 12px 12px 3px;
+}
+
+.agent-shell-craft .craft-mask-fade-y {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+}
+
+.agent-shell-craft .craft-mask-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 32px), transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+}
+
+.agent-shell-craft .craft-scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.agent-shell-craft .craft-scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.agent-shell-craft .craft-compact-slot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 14px;
+  will-change: transform;
+}

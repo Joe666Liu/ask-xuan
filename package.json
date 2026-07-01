@@ -27,6 +27,20 @@
     "askxuan",
     "ask-xuan"
   ],
+  "intent": {
+    "skills": [
+      "@tanstack/ai",
+      "@tanstack/devtools",
+      "@tanstack/devtools-event-client",
+      "@tanstack/devtools-vite",
+      "@tanstack/react-start",
+      "@tanstack/router-core",
+      "@tanstack/router-plugin",
+      "@tanstack/start-client-core",
+      "@tanstack/start-server-core",
+      "@tanstack/virtual-file-routes"
+    ]
+  },
   "scripts": {
     "dev": "rm -rf node_modules/.vite && vite dev --port 3377",
     "build": "NODE_OPTIONS='--max-old-space-size=8192' vite build",
@@ -39,7 +53,7 @@
     "lint:fix": "biome lint --fix",
     "check": "biome check",
     "rbac": "tsx scripts/rbac.ts",
-    "email": "email dev --port ${PORT:-3006} --dir src/components/email",
+    "email": "email dev --port ${PORT:-3006} --dir src/shared/components/email",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -88,6 +102,8 @@
     "@supabase/ssr": "0.12.0",
     "@supabase/supabase-js": "2.108.2",
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/ai": "^0.39.0",
+    "@tanstack/ai-mcp": "^0.2.1",
     "@tanstack/react-devtools": "0.10.8",
     "@tanstack/react-query": "5.101.2",
     "@tanstack/react-query-devtools": "5.101.2",
@@ -117,8 +133,10 @@
     "fumadocs-mdx": "^14.2.6",
     "fumadocs-ui": "^16.4.7",
     "intlayer": "^7.5.14",
+    "iztro": "2.5.8",
     "lru-cache": "^11.2.4",
     "lucide-react": "^0.561.0",
+    "lunar-javascript": "1.7.7",
     "media-chrome": "^4.17.2",
     "motion": "^12.26.2",
     "nanoid": "^5.1.6",

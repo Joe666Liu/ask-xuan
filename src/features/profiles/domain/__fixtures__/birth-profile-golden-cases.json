@@ -1,0 +1,110 @@
+[
+  {
+    "id": "swift-profile-1990-01-01-shanghai-male",
+    "source": "wenxuan/App/BirthProfileCloudClient.swift BirthProfileCloudRecord",
+    "cloudRecord": {
+      "user_id": "00000000-0000-4000-8000-000000000001",
+      "profile_id": "11111111-1111-4111-8111-111111111111",
+      "owner_kind": "self",
+      "display_name": "案例14",
+      "relation_note": "",
+      "name": "案例14",
+      "gender": 1,
+      "calendar_kind": "solar",
+      "solar_birth_at": "1989-12-31T16:00:00.000Z",
+      "lunar_year": 1989,
+      "lunar_month": 12,
+      "lunar_day": 5,
+      "lunar_hour": 0,
+      "lunar_minute": 0,
+      "lunar_second": 0,
+      "birth_place": "上海",
+      "birth_place_label": "上海",
+      "birth_place_latitude": 31.2304,
+      "birth_place_longitude": 121.4737,
+      "birth_place_timezone": "Asia/Shanghai",
+      "birth_place_source": "apple_mapkit",
+      "birth_place_provider_place_id": "swift-shanghai",
+      "uses_true_solar_time": false,
+      "is_primary": true,
+      "source": "manual",
+      "created_at": "2026-01-01T00:00:00.000Z",
+      "updated_at": "2026-01-02T00:00:00.000Z"
+    },
+    "context": {
+      "targetDate": {
+        "year": 2026,
+        "month": 5,
+        "day": 23,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "defaultsToCurrentPeriods": true,
+      "selectedFlowMonthIndex": 5,
+      "swiftFixtureId": "swift-profile-1990-01-01-shanghai-male"
+    },
+    "expected": {
+      "domain": {
+        "displayName": "案例14",
+        "solarBirthAt": {
+          "year": 1990,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "lunarBirthAt": {
+          "year": 1989,
+          "month": 12,
+          "day": 5,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "isLeapMonth": false
+        }
+      },
+      "cache": {
+        "targetDateBucket": "2026-05-23",
+        "solarBirthDateSeconds": 631123200
+      },
+      "bazi": {
+        "baziText": "己巳 丙子 丙寅 戊子",
+        "startLuckDateText": "1998-03-01",
+        "firstFortuneCycle": {
+          "ganZhi": "乙亥",
+          "startYear": 1998,
+          "endYear": 2007
+        },
+        "selectedFlowYear": {
+          "year": 2026,
+          "ganZhi": "丙午"
+        },
+        "selectedFlowMonth": {
+          "label": "六",
+          "ganZhi": "乙未"
+        }
+      },
+      "ziwei": {
+        "lifePalace": {
+          "index": 11,
+          "isBodyPalace": true,
+          "majorStars": ["天府"],
+          "decadalRange": [2, 11]
+        },
+        "basicInfo": {
+          "earthlyBranchOfSoulPalace": "丑",
+          "earthlyBranchOfBodyPalace": "丑",
+          "fiveElementsClass": "水二局"
+        },
+        "horoscope": {
+          "targetSolarDate": "2026-5-23",
+          "nominalAge": 38,
+          "currentDecadalIndex": 8,
+          "currentYearlyIndex": 4
+        }
+      }
+    }
+  }
+]

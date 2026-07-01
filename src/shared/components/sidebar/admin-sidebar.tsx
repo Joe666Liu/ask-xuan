@@ -38,8 +38,8 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/shared/components/ui/sidebar"
-import { useGlobalContext } from "@/shared/context/global.context"
 import { signOut } from "@/shared/lib/auth/auth-client"
+import type { AuthUser } from "@/shared/lib/auth/auth-types"
 import { setLocaleCookie } from "@/shared/lib/locale/locale-cookie"
 import { cn } from "@/shared/lib/utils"
 
@@ -53,11 +53,14 @@ function getInitials(name: string | undefined | null) {
     .slice(0, 2)
 }
 
-export default function AdminSidebar() {
+type AdminSidebarProps = {
+  user: AuthUser | null
+}
+
+export default function AdminSidebar({ user }: AdminSidebarProps) {
   const content = useIntlayer("admin")
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
-  const { userInfo } = useGlobalContext()
   const { pathname } = useLocation()
   const { availableLocales, locale, setLocale } = useLocale()
   const pathWithoutLocale = getPathWithoutLocale(pathname)
@@ -243,7 +246,7 @@ export default function AdminSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
 
-        {userInfo?.user && (
+        {user && (
           <>
             <SidebarSeparator className="mx-0" />
             <SidebarMenu>
@@ -253,23 +256,21 @@ export default function AdminSidebar() {
                     <SidebarMenuButton
                       size="lg"
                       className="data-[state=open]:bg-sidebar-accent"
-                      tooltip={userInfo.user.name ?? "User"}
+                      tooltip={user.name ?? "User"}
                     >
                       <Avatar className="size-8 rounded-lg">
                         <AvatarImage
-                          src={userInfo.user.image ?? undefined}
-                          alt={userInfo.user.name ?? ""}
+                          src={user.image ?? undefined}
+                          alt={user.name ?? ""}
                           cache
                         />
                         <AvatarFallback className="rounded-lg text-xs">
-                          {getInitials(userInfo.user.name)}
+                          {getInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-medium">{userInfo.user.name}</span>
-                        <span className="truncate text-xs text-muted-foreground">
-                          {userInfo.user.email}
-                        </span>
+                        <span className="truncate font-medium">{user.name}</span>
+                        <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                       </div>
                       <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
                     </SidebarMenuButton>
@@ -283,17 +284,17 @@ export default function AdminSidebar() {
                     <div className="flex items-center gap-3 px-2 py-2">
                       <Avatar className="size-10 rounded-lg">
                         <AvatarImage
-                          src={userInfo.user.image ?? undefined}
-                          alt={userInfo.user.name ?? ""}
+                          src={user.image ?? undefined}
+                          alt={user.name ?? ""}
                           cache
                         />
                         <AvatarFallback className="rounded-lg">
-                          {getInitials(userInfo.user.name)}
+                          {getInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left leading-tight">
-                        <span className="font-medium">{userInfo.user.name}</span>
-                        <span className="text-xs text-muted-foreground">{userInfo.user.email}</span>
+                        <span className="font-medium">{user.name}</span>
+                        <span className="text-xs text-muted-foreground">{user.email}</span>
                       </div>
                     </div>
                     <DropdownMenuSeparator />

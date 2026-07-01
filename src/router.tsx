@@ -15,6 +15,7 @@ export const getRouter = () => {
       ...rqContext,
     },
     defaultPreload: "intent",
+    defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: GlobalNotFoundComponent,
     scrollRestoration: true,
   })

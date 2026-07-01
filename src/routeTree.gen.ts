@@ -30,14 +30,13 @@ import { Route as ApiAdminRolesRouteImport } from './routes/api/admin/roles'
 import { Route as ApiAdminOrdersRouteImport } from './routes/api/admin/orders'
 import { Route as ApiAdminCreditPackagesRouteImport } from './routes/api/admin/credit-packages'
 import { Route as ApiAdminConfigRouteImport } from './routes/api/admin/config'
-import { Route as Char123LocaleChar125MainDashboardRouteRouteImport } from './routes/{-$locale}/_main/dashboard/route'
+import { Route as Char123LocaleChar125MainAppRouteRouteImport } from './routes/{-$locale}/_main/app/route'
 import { Route as Char123LocaleChar125MainAdminRouteRouteImport } from './routes/{-$locale}/_main/admin/route'
 import { Route as Char123LocaleChar125MainLandingRouteRouteImport } from './routes/{-$locale}/_main/_landing/route'
-import { Route as Char123LocaleChar125MainDashboardIndexRouteImport } from './routes/{-$locale}/_main/dashboard/index'
+import { Route as Char123LocaleChar125MainAppIndexRouteImport } from './routes/{-$locale}/_main/app/index'
 import { Route as Char123LocaleChar125MainAdminIndexRouteImport } from './routes/{-$locale}/_main/admin/index'
 import { Route as Char123LocaleChar125MainLandingIndexRouteImport } from './routes/{-$locale}/_main/_landing/index'
-import { Route as Char123LocaleChar125MainDashboardCreditsRouteImport } from './routes/{-$locale}/_main/dashboard/credits'
-import { Route as Char123LocaleChar125MainDashboardBillingRouteImport } from './routes/{-$locale}/_main/dashboard/billing'
+import { Route as Char123LocaleChar125MainAppAgentRouteImport } from './routes/{-$locale}/_main/app/agent'
 import { Route as Char123LocaleChar125MainAdminUsersRouteImport } from './routes/{-$locale}/_main/admin/users'
 import { Route as Char123LocaleChar125MainAdminOrdersRouteImport } from './routes/{-$locale}/_main/admin/orders'
 import { Route as Char123LocaleChar125MainAdminCreditPackagesRouteImport } from './routes/{-$locale}/_main/admin/credit-packages'
@@ -49,7 +48,11 @@ import { Route as Char123LocaleChar125MainLandingChangelogRouteImport } from './
 import { Route as ApiPaymentWebhookProviderRouteImport } from './routes/api/payment/webhook.$provider'
 import { Route as ApiPaymentSubscriptionCancelRouteImport } from './routes/api/payment/subscription/cancel'
 import { Route as ApiAdminUsersIdRouteImport } from './routes/api/admin/users/$id'
+import { Route as Char123LocaleChar125MainAppSettingsRouteRouteImport } from './routes/{-$locale}/_main/app/settings/route'
+import { Route as Char123LocaleChar125MainAppSettingsIndexRouteImport } from './routes/{-$locale}/_main/app/settings/index'
 import { Route as Char123LocaleChar125MainLandingBlogIndexRouteImport } from './routes/{-$locale}/_main/_landing/blog/index'
+import { Route as Char123LocaleChar125MainAppSettingsCreditsRouteImport } from './routes/{-$locale}/_main/app/settings/credits'
+import { Route as Char123LocaleChar125MainAppSettingsBillingRouteImport } from './routes/{-$locale}/_main/app/settings/billing'
 import { Route as Char123LocaleChar125MainLandingLegalSlugRouteImport } from './routes/{-$locale}/_main/_landing/legal.$slug'
 import { Route as Char123LocaleChar125MainLandingBlogSlugRouteImport } from './routes/{-$locale}/_main/_landing/blog/$slug'
 import { Route as ApiAdminUsersIdRolesRouteImport } from './routes/api/admin/users/$id/roles'
@@ -167,10 +170,10 @@ const ApiAdminConfigRoute = ApiAdminConfigRouteImport.update({
   path: '/config',
   getParentRoute: () => ApiAdminRouteRoute,
 } as any)
-const Char123LocaleChar125MainDashboardRouteRoute =
-  Char123LocaleChar125MainDashboardRouteRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
+const Char123LocaleChar125MainAppRouteRoute =
+  Char123LocaleChar125MainAppRouteRouteImport.update({
+    id: '/app',
+    path: '/app',
     getParentRoute: () => Char123LocaleChar125MainRouteRoute,
   } as any)
 const Char123LocaleChar125MainAdminRouteRoute =
@@ -184,11 +187,11 @@ const Char123LocaleChar125MainLandingRouteRoute =
     id: '/_landing',
     getParentRoute: () => Char123LocaleChar125MainRouteRoute,
   } as any)
-const Char123LocaleChar125MainDashboardIndexRoute =
-  Char123LocaleChar125MainDashboardIndexRouteImport.update({
+const Char123LocaleChar125MainAppIndexRoute =
+  Char123LocaleChar125MainAppIndexRouteImport.update({
     id: '/',
     path: '/',
-    getParentRoute: () => Char123LocaleChar125MainDashboardRouteRoute,
+    getParentRoute: () => Char123LocaleChar125MainAppRouteRoute,
   } as any)
 const Char123LocaleChar125MainAdminIndexRoute =
   Char123LocaleChar125MainAdminIndexRouteImport.update({
@@ -202,17 +205,11 @@ const Char123LocaleChar125MainLandingIndexRoute =
     path: '/',
     getParentRoute: () => Char123LocaleChar125MainLandingRouteRoute,
   } as any)
-const Char123LocaleChar125MainDashboardCreditsRoute =
-  Char123LocaleChar125MainDashboardCreditsRouteImport.update({
-    id: '/credits',
-    path: '/credits',
-    getParentRoute: () => Char123LocaleChar125MainDashboardRouteRoute,
-  } as any)
-const Char123LocaleChar125MainDashboardBillingRoute =
-  Char123LocaleChar125MainDashboardBillingRouteImport.update({
-    id: '/billing',
-    path: '/billing',
-    getParentRoute: () => Char123LocaleChar125MainDashboardRouteRoute,
+const Char123LocaleChar125MainAppAgentRoute =
+  Char123LocaleChar125MainAppAgentRouteImport.update({
+    id: '/agent',
+    path: '/agent',
+    getParentRoute: () => Char123LocaleChar125MainAppRouteRoute,
   } as any)
 const Char123LocaleChar125MainAdminUsersRoute =
   Char123LocaleChar125MainAdminUsersRouteImport.update({
@@ -279,11 +276,35 @@ const ApiAdminUsersIdRoute = ApiAdminUsersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ApiAdminUsersRoute,
 } as any)
+const Char123LocaleChar125MainAppSettingsRouteRoute =
+  Char123LocaleChar125MainAppSettingsRouteRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => Char123LocaleChar125MainAppRouteRoute,
+  } as any)
+const Char123LocaleChar125MainAppSettingsIndexRoute =
+  Char123LocaleChar125MainAppSettingsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125MainAppSettingsRouteRoute,
+  } as any)
 const Char123LocaleChar125MainLandingBlogIndexRoute =
   Char123LocaleChar125MainLandingBlogIndexRouteImport.update({
     id: '/blog/',
     path: '/blog/',
     getParentRoute: () => Char123LocaleChar125MainLandingRouteRoute,
+  } as any)
+const Char123LocaleChar125MainAppSettingsCreditsRoute =
+  Char123LocaleChar125MainAppSettingsCreditsRouteImport.update({
+    id: '/credits',
+    path: '/credits',
+    getParentRoute: () => Char123LocaleChar125MainAppSettingsRouteRoute,
+  } as any)
+const Char123LocaleChar125MainAppSettingsBillingRoute =
+  Char123LocaleChar125MainAppSettingsBillingRouteImport.update({
+    id: '/billing',
+    path: '/billing',
+    getParentRoute: () => Char123LocaleChar125MainAppSettingsRouteRoute,
   } as any)
 const Char123LocaleChar125MainLandingLegalSlugRoute =
   Char123LocaleChar125MainLandingLegalSlugRouteImport.update({
@@ -322,7 +343,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/$': typeof Char123LocaleChar125SplatRoute
   '/{-$locale}/404': typeof Char123LocaleChar125404Route
   '/{-$locale}/admin': typeof Char123LocaleChar125MainAdminRouteRouteWithChildren
-  '/{-$locale}/dashboard': typeof Char123LocaleChar125MainDashboardRouteRouteWithChildren
+  '/{-$locale}/app': typeof Char123LocaleChar125MainAppRouteRouteWithChildren
   '/api/admin/config': typeof ApiAdminConfigRoute
   '/api/admin/credit-packages': typeof ApiAdminCreditPackagesRoute
   '/api/admin/orders': typeof ApiAdminOrdersRoute
@@ -336,6 +357,7 @@ export interface FileRoutesByFullPath {
   '/api/payment/credit-checkout': typeof ApiPaymentCreditCheckoutRoute
   '/{-$locale}/docs/$': typeof Char123LocaleChar125DocsSplatRoute
   '/{-$locale}/login/': typeof Char123LocaleChar125LoginIndexRoute
+  '/{-$locale}/app/settings': typeof Char123LocaleChar125MainAppSettingsRouteRouteWithChildren
   '/api/admin/users/$id': typeof ApiAdminUsersIdRouteWithChildren
   '/api/payment/subscription/cancel': typeof ApiPaymentSubscriptionCancelRoute
   '/api/payment/webhook/$provider': typeof ApiPaymentWebhookProviderRoute
@@ -347,17 +369,19 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/admin/credit-packages': typeof Char123LocaleChar125MainAdminCreditPackagesRoute
   '/{-$locale}/admin/orders': typeof Char123LocaleChar125MainAdminOrdersRoute
   '/{-$locale}/admin/users': typeof Char123LocaleChar125MainAdminUsersRoute
-  '/{-$locale}/dashboard/billing': typeof Char123LocaleChar125MainDashboardBillingRoute
-  '/{-$locale}/dashboard/credits': typeof Char123LocaleChar125MainDashboardCreditsRoute
+  '/{-$locale}/app/agent': typeof Char123LocaleChar125MainAppAgentRoute
   '/{-$locale}/': typeof Char123LocaleChar125MainLandingIndexRoute
   '/{-$locale}/admin/': typeof Char123LocaleChar125MainAdminIndexRoute
-  '/{-$locale}/dashboard/': typeof Char123LocaleChar125MainDashboardIndexRoute
+  '/{-$locale}/app/': typeof Char123LocaleChar125MainAppIndexRoute
   '/api/admin/users/$id/ban': typeof ApiAdminUsersIdBanRoute
   '/api/admin/users/$id/credits': typeof ApiAdminUsersIdCreditsRoute
   '/api/admin/users/$id/roles': typeof ApiAdminUsersIdRolesRoute
   '/{-$locale}/blog/$slug': typeof Char123LocaleChar125MainLandingBlogSlugRoute
   '/{-$locale}/legal/$slug': typeof Char123LocaleChar125MainLandingLegalSlugRoute
+  '/{-$locale}/app/settings/billing': typeof Char123LocaleChar125MainAppSettingsBillingRoute
+  '/{-$locale}/app/settings/credits': typeof Char123LocaleChar125MainAppSettingsCreditsRoute
   '/{-$locale}/blog/': typeof Char123LocaleChar125MainLandingBlogIndexRoute
+  '/{-$locale}/app/settings/': typeof Char123LocaleChar125MainAppSettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/{-$locale}': typeof Char123LocaleChar125MainLandingIndexRoute
@@ -391,16 +415,18 @@ export interface FileRoutesByTo {
   '/{-$locale}/admin/credit-packages': typeof Char123LocaleChar125MainAdminCreditPackagesRoute
   '/{-$locale}/admin/orders': typeof Char123LocaleChar125MainAdminOrdersRoute
   '/{-$locale}/admin/users': typeof Char123LocaleChar125MainAdminUsersRoute
-  '/{-$locale}/dashboard/billing': typeof Char123LocaleChar125MainDashboardBillingRoute
-  '/{-$locale}/dashboard/credits': typeof Char123LocaleChar125MainDashboardCreditsRoute
+  '/{-$locale}/app/agent': typeof Char123LocaleChar125MainAppAgentRoute
   '/{-$locale}/admin': typeof Char123LocaleChar125MainAdminIndexRoute
-  '/{-$locale}/dashboard': typeof Char123LocaleChar125MainDashboardIndexRoute
+  '/{-$locale}/app': typeof Char123LocaleChar125MainAppIndexRoute
   '/api/admin/users/$id/ban': typeof ApiAdminUsersIdBanRoute
   '/api/admin/users/$id/credits': typeof ApiAdminUsersIdCreditsRoute
   '/api/admin/users/$id/roles': typeof ApiAdminUsersIdRolesRoute
   '/{-$locale}/blog/$slug': typeof Char123LocaleChar125MainLandingBlogSlugRoute
   '/{-$locale}/legal/$slug': typeof Char123LocaleChar125MainLandingLegalSlugRoute
+  '/{-$locale}/app/settings/billing': typeof Char123LocaleChar125MainAppSettingsBillingRoute
+  '/{-$locale}/app/settings/credits': typeof Char123LocaleChar125MainAppSettingsCreditsRoute
   '/{-$locale}/blog': typeof Char123LocaleChar125MainLandingBlogIndexRoute
+  '/{-$locale}/app/settings': typeof Char123LocaleChar125MainAppSettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -414,7 +440,7 @@ export interface FileRoutesById {
   '/{-$locale}/404': typeof Char123LocaleChar125404Route
   '/{-$locale}/_main/_landing': typeof Char123LocaleChar125MainLandingRouteRouteWithChildren
   '/{-$locale}/_main/admin': typeof Char123LocaleChar125MainAdminRouteRouteWithChildren
-  '/{-$locale}/_main/dashboard': typeof Char123LocaleChar125MainDashboardRouteRouteWithChildren
+  '/{-$locale}/_main/app': typeof Char123LocaleChar125MainAppRouteRouteWithChildren
   '/api/admin/config': typeof ApiAdminConfigRoute
   '/api/admin/credit-packages': typeof ApiAdminCreditPackagesRoute
   '/api/admin/orders': typeof ApiAdminOrdersRoute
@@ -428,6 +454,7 @@ export interface FileRoutesById {
   '/api/payment/credit-checkout': typeof ApiPaymentCreditCheckoutRoute
   '/{-$locale}/docs/$': typeof Char123LocaleChar125DocsSplatRoute
   '/{-$locale}/login/': typeof Char123LocaleChar125LoginIndexRoute
+  '/{-$locale}/_main/app/settings': typeof Char123LocaleChar125MainAppSettingsRouteRouteWithChildren
   '/api/admin/users/$id': typeof ApiAdminUsersIdRouteWithChildren
   '/api/payment/subscription/cancel': typeof ApiPaymentSubscriptionCancelRoute
   '/api/payment/webhook/$provider': typeof ApiPaymentWebhookProviderRoute
@@ -439,17 +466,19 @@ export interface FileRoutesById {
   '/{-$locale}/_main/admin/credit-packages': typeof Char123LocaleChar125MainAdminCreditPackagesRoute
   '/{-$locale}/_main/admin/orders': typeof Char123LocaleChar125MainAdminOrdersRoute
   '/{-$locale}/_main/admin/users': typeof Char123LocaleChar125MainAdminUsersRoute
-  '/{-$locale}/_main/dashboard/billing': typeof Char123LocaleChar125MainDashboardBillingRoute
-  '/{-$locale}/_main/dashboard/credits': typeof Char123LocaleChar125MainDashboardCreditsRoute
+  '/{-$locale}/_main/app/agent': typeof Char123LocaleChar125MainAppAgentRoute
   '/{-$locale}/_main/_landing/': typeof Char123LocaleChar125MainLandingIndexRoute
   '/{-$locale}/_main/admin/': typeof Char123LocaleChar125MainAdminIndexRoute
-  '/{-$locale}/_main/dashboard/': typeof Char123LocaleChar125MainDashboardIndexRoute
+  '/{-$locale}/_main/app/': typeof Char123LocaleChar125MainAppIndexRoute
   '/api/admin/users/$id/ban': typeof ApiAdminUsersIdBanRoute
   '/api/admin/users/$id/credits': typeof ApiAdminUsersIdCreditsRoute
   '/api/admin/users/$id/roles': typeof ApiAdminUsersIdRolesRoute
   '/{-$locale}/_main/_landing/blog/$slug': typeof Char123LocaleChar125MainLandingBlogSlugRoute
   '/{-$locale}/_main/_landing/legal/$slug': typeof Char123LocaleChar125MainLandingLegalSlugRoute
+  '/{-$locale}/_main/app/settings/billing': typeof Char123LocaleChar125MainAppSettingsBillingRoute
+  '/{-$locale}/_main/app/settings/credits': typeof Char123LocaleChar125MainAppSettingsCreditsRoute
   '/{-$locale}/_main/_landing/blog/': typeof Char123LocaleChar125MainLandingBlogIndexRoute
+  '/{-$locale}/_main/app/settings/': typeof Char123LocaleChar125MainAppSettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -462,7 +491,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/$'
     | '/{-$locale}/404'
     | '/{-$locale}/admin'
-    | '/{-$locale}/dashboard'
+    | '/{-$locale}/app'
     | '/api/admin/config'
     | '/api/admin/credit-packages'
     | '/api/admin/orders'
@@ -476,6 +505,7 @@ export interface FileRouteTypes {
     | '/api/payment/credit-checkout'
     | '/{-$locale}/docs/$'
     | '/{-$locale}/login/'
+    | '/{-$locale}/app/settings'
     | '/api/admin/users/$id'
     | '/api/payment/subscription/cancel'
     | '/api/payment/webhook/$provider'
@@ -487,17 +517,19 @@ export interface FileRouteTypes {
     | '/{-$locale}/admin/credit-packages'
     | '/{-$locale}/admin/orders'
     | '/{-$locale}/admin/users'
-    | '/{-$locale}/dashboard/billing'
-    | '/{-$locale}/dashboard/credits'
+    | '/{-$locale}/app/agent'
     | '/{-$locale}/'
     | '/{-$locale}/admin/'
-    | '/{-$locale}/dashboard/'
+    | '/{-$locale}/app/'
     | '/api/admin/users/$id/ban'
     | '/api/admin/users/$id/credits'
     | '/api/admin/users/$id/roles'
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/legal/$slug'
+    | '/{-$locale}/app/settings/billing'
+    | '/{-$locale}/app/settings/credits'
     | '/{-$locale}/blog/'
+    | '/{-$locale}/app/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/{-$locale}'
@@ -531,16 +563,18 @@ export interface FileRouteTypes {
     | '/{-$locale}/admin/credit-packages'
     | '/{-$locale}/admin/orders'
     | '/{-$locale}/admin/users'
-    | '/{-$locale}/dashboard/billing'
-    | '/{-$locale}/dashboard/credits'
+    | '/{-$locale}/app/agent'
     | '/{-$locale}/admin'
-    | '/{-$locale}/dashboard'
+    | '/{-$locale}/app'
     | '/api/admin/users/$id/ban'
     | '/api/admin/users/$id/credits'
     | '/api/admin/users/$id/roles'
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/legal/$slug'
+    | '/{-$locale}/app/settings/billing'
+    | '/{-$locale}/app/settings/credits'
     | '/{-$locale}/blog'
+    | '/{-$locale}/app/settings'
   id:
     | '__root__'
     | '/{-$locale}'
@@ -553,7 +587,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/404'
     | '/{-$locale}/_main/_landing'
     | '/{-$locale}/_main/admin'
-    | '/{-$locale}/_main/dashboard'
+    | '/{-$locale}/_main/app'
     | '/api/admin/config'
     | '/api/admin/credit-packages'
     | '/api/admin/orders'
@@ -567,6 +601,7 @@ export interface FileRouteTypes {
     | '/api/payment/credit-checkout'
     | '/{-$locale}/docs/$'
     | '/{-$locale}/login/'
+    | '/{-$locale}/_main/app/settings'
     | '/api/admin/users/$id'
     | '/api/payment/subscription/cancel'
     | '/api/payment/webhook/$provider'
@@ -578,17 +613,19 @@ export interface FileRouteTypes {
     | '/{-$locale}/_main/admin/credit-packages'
     | '/{-$locale}/_main/admin/orders'
     | '/{-$locale}/_main/admin/users'
-    | '/{-$locale}/_main/dashboard/billing'
-    | '/{-$locale}/_main/dashboard/credits'
+    | '/{-$locale}/_main/app/agent'
     | '/{-$locale}/_main/_landing/'
     | '/{-$locale}/_main/admin/'
-    | '/{-$locale}/_main/dashboard/'
+    | '/{-$locale}/_main/app/'
     | '/api/admin/users/$id/ban'
     | '/api/admin/users/$id/credits'
     | '/api/admin/users/$id/roles'
     | '/{-$locale}/_main/_landing/blog/$slug'
     | '/{-$locale}/_main/_landing/legal/$slug'
+    | '/{-$locale}/_main/app/settings/billing'
+    | '/{-$locale}/_main/app/settings/credits'
     | '/{-$locale}/_main/_landing/blog/'
+    | '/{-$locale}/_main/app/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -755,11 +792,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminConfigRouteImport
       parentRoute: typeof ApiAdminRouteRoute
     }
-    '/{-$locale}/_main/dashboard': {
-      id: '/{-$locale}/_main/dashboard'
-      path: '/dashboard'
-      fullPath: '/{-$locale}/dashboard'
-      preLoaderRoute: typeof Char123LocaleChar125MainDashboardRouteRouteImport
+    '/{-$locale}/_main/app': {
+      id: '/{-$locale}/_main/app'
+      path: '/app'
+      fullPath: '/{-$locale}/app'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppRouteRouteImport
       parentRoute: typeof Char123LocaleChar125MainRouteRoute
     }
     '/{-$locale}/_main/admin': {
@@ -776,12 +813,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125MainLandingRouteRouteImport
       parentRoute: typeof Char123LocaleChar125MainRouteRoute
     }
-    '/{-$locale}/_main/dashboard/': {
-      id: '/{-$locale}/_main/dashboard/'
+    '/{-$locale}/_main/app/': {
+      id: '/{-$locale}/_main/app/'
       path: '/'
-      fullPath: '/{-$locale}/dashboard/'
-      preLoaderRoute: typeof Char123LocaleChar125MainDashboardIndexRouteImport
-      parentRoute: typeof Char123LocaleChar125MainDashboardRouteRoute
+      fullPath: '/{-$locale}/app/'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppRouteRoute
     }
     '/{-$locale}/_main/admin/': {
       id: '/{-$locale}/_main/admin/'
@@ -797,19 +834,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125MainLandingIndexRouteImport
       parentRoute: typeof Char123LocaleChar125MainLandingRouteRoute
     }
-    '/{-$locale}/_main/dashboard/credits': {
-      id: '/{-$locale}/_main/dashboard/credits'
-      path: '/credits'
-      fullPath: '/{-$locale}/dashboard/credits'
-      preLoaderRoute: typeof Char123LocaleChar125MainDashboardCreditsRouteImport
-      parentRoute: typeof Char123LocaleChar125MainDashboardRouteRoute
-    }
-    '/{-$locale}/_main/dashboard/billing': {
-      id: '/{-$locale}/_main/dashboard/billing'
-      path: '/billing'
-      fullPath: '/{-$locale}/dashboard/billing'
-      preLoaderRoute: typeof Char123LocaleChar125MainDashboardBillingRouteImport
-      parentRoute: typeof Char123LocaleChar125MainDashboardRouteRoute
+    '/{-$locale}/_main/app/agent': {
+      id: '/{-$locale}/_main/app/agent'
+      path: '/agent'
+      fullPath: '/{-$locale}/app/agent'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppAgentRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppRouteRoute
     }
     '/{-$locale}/_main/admin/users': {
       id: '/{-$locale}/_main/admin/users'
@@ -888,12 +918,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminUsersIdRouteImport
       parentRoute: typeof ApiAdminUsersRoute
     }
+    '/{-$locale}/_main/app/settings': {
+      id: '/{-$locale}/_main/app/settings'
+      path: '/settings'
+      fullPath: '/{-$locale}/app/settings'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppSettingsRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppRouteRoute
+    }
+    '/{-$locale}/_main/app/settings/': {
+      id: '/{-$locale}/_main/app/settings/'
+      path: '/'
+      fullPath: '/{-$locale}/app/settings/'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppSettingsIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppSettingsRouteRoute
+    }
     '/{-$locale}/_main/_landing/blog/': {
       id: '/{-$locale}/_main/_landing/blog/'
       path: '/blog'
       fullPath: '/{-$locale}/blog/'
       preLoaderRoute: typeof Char123LocaleChar125MainLandingBlogIndexRouteImport
       parentRoute: typeof Char123LocaleChar125MainLandingRouteRoute
+    }
+    '/{-$locale}/_main/app/settings/credits': {
+      id: '/{-$locale}/_main/app/settings/credits'
+      path: '/credits'
+      fullPath: '/{-$locale}/app/settings/credits'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppSettingsCreditsRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppSettingsRouteRoute
+    }
+    '/{-$locale}/_main/app/settings/billing': {
+      id: '/{-$locale}/_main/app/settings/billing'
+      path: '/billing'
+      fullPath: '/{-$locale}/app/settings/billing'
+      preLoaderRoute: typeof Char123LocaleChar125MainAppSettingsBillingRouteImport
+      parentRoute: typeof Char123LocaleChar125MainAppSettingsRouteRoute
     }
     '/{-$locale}/_main/_landing/legal/$slug': {
       id: '/{-$locale}/_main/_landing/legal/$slug'
@@ -996,31 +1054,52 @@ const Char123LocaleChar125MainAdminRouteRouteWithChildren =
     Char123LocaleChar125MainAdminRouteRouteChildren,
   )
 
-interface Char123LocaleChar125MainDashboardRouteRouteChildren {
-  Char123LocaleChar125MainDashboardBillingRoute: typeof Char123LocaleChar125MainDashboardBillingRoute
-  Char123LocaleChar125MainDashboardCreditsRoute: typeof Char123LocaleChar125MainDashboardCreditsRoute
-  Char123LocaleChar125MainDashboardIndexRoute: typeof Char123LocaleChar125MainDashboardIndexRoute
+interface Char123LocaleChar125MainAppSettingsRouteRouteChildren {
+  Char123LocaleChar125MainAppSettingsBillingRoute: typeof Char123LocaleChar125MainAppSettingsBillingRoute
+  Char123LocaleChar125MainAppSettingsCreditsRoute: typeof Char123LocaleChar125MainAppSettingsCreditsRoute
+  Char123LocaleChar125MainAppSettingsIndexRoute: typeof Char123LocaleChar125MainAppSettingsIndexRoute
 }
 
-const Char123LocaleChar125MainDashboardRouteRouteChildren: Char123LocaleChar125MainDashboardRouteRouteChildren =
+const Char123LocaleChar125MainAppSettingsRouteRouteChildren: Char123LocaleChar125MainAppSettingsRouteRouteChildren =
   {
-    Char123LocaleChar125MainDashboardBillingRoute:
-      Char123LocaleChar125MainDashboardBillingRoute,
-    Char123LocaleChar125MainDashboardCreditsRoute:
-      Char123LocaleChar125MainDashboardCreditsRoute,
-    Char123LocaleChar125MainDashboardIndexRoute:
-      Char123LocaleChar125MainDashboardIndexRoute,
+    Char123LocaleChar125MainAppSettingsBillingRoute:
+      Char123LocaleChar125MainAppSettingsBillingRoute,
+    Char123LocaleChar125MainAppSettingsCreditsRoute:
+      Char123LocaleChar125MainAppSettingsCreditsRoute,
+    Char123LocaleChar125MainAppSettingsIndexRoute:
+      Char123LocaleChar125MainAppSettingsIndexRoute,
   }
 
-const Char123LocaleChar125MainDashboardRouteRouteWithChildren =
-  Char123LocaleChar125MainDashboardRouteRoute._addFileChildren(
-    Char123LocaleChar125MainDashboardRouteRouteChildren,
+const Char123LocaleChar125MainAppSettingsRouteRouteWithChildren =
+  Char123LocaleChar125MainAppSettingsRouteRoute._addFileChildren(
+    Char123LocaleChar125MainAppSettingsRouteRouteChildren,
+  )
+
+interface Char123LocaleChar125MainAppRouteRouteChildren {
+  Char123LocaleChar125MainAppSettingsRouteRoute: typeof Char123LocaleChar125MainAppSettingsRouteRouteWithChildren
+  Char123LocaleChar125MainAppAgentRoute: typeof Char123LocaleChar125MainAppAgentRoute
+  Char123LocaleChar125MainAppIndexRoute: typeof Char123LocaleChar125MainAppIndexRoute
+}
+
+const Char123LocaleChar125MainAppRouteRouteChildren: Char123LocaleChar125MainAppRouteRouteChildren =
+  {
+    Char123LocaleChar125MainAppSettingsRouteRoute:
+      Char123LocaleChar125MainAppSettingsRouteRouteWithChildren,
+    Char123LocaleChar125MainAppAgentRoute:
+      Char123LocaleChar125MainAppAgentRoute,
+    Char123LocaleChar125MainAppIndexRoute:
+      Char123LocaleChar125MainAppIndexRoute,
+  }
+
+const Char123LocaleChar125MainAppRouteRouteWithChildren =
+  Char123LocaleChar125MainAppRouteRoute._addFileChildren(
+    Char123LocaleChar125MainAppRouteRouteChildren,
   )
 
 interface Char123LocaleChar125MainRouteRouteChildren {
   Char123LocaleChar125MainLandingRouteRoute: typeof Char123LocaleChar125MainLandingRouteRouteWithChildren
   Char123LocaleChar125MainAdminRouteRoute: typeof Char123LocaleChar125MainAdminRouteRouteWithChildren
-  Char123LocaleChar125MainDashboardRouteRoute: typeof Char123LocaleChar125MainDashboardRouteRouteWithChildren
+  Char123LocaleChar125MainAppRouteRoute: typeof Char123LocaleChar125MainAppRouteRouteWithChildren
 }
 
 const Char123LocaleChar125MainRouteRouteChildren: Char123LocaleChar125MainRouteRouteChildren =
@@ -1029,8 +1108,8 @@ const Char123LocaleChar125MainRouteRouteChildren: Char123LocaleChar125MainRouteR
       Char123LocaleChar125MainLandingRouteRouteWithChildren,
     Char123LocaleChar125MainAdminRouteRoute:
       Char123LocaleChar125MainAdminRouteRouteWithChildren,
-    Char123LocaleChar125MainDashboardRouteRoute:
-      Char123LocaleChar125MainDashboardRouteRouteWithChildren,
+    Char123LocaleChar125MainAppRouteRoute:
+      Char123LocaleChar125MainAppRouteRouteWithChildren,
   }
 
 const Char123LocaleChar125MainRouteRouteWithChildren =

@@ -1,0 +1,176 @@
+[
+  {
+    "id": "swift-bazi-ziwei-1990-01-01-shanghai-male",
+    "source": "wenxuanTests/BaziServiceTests.swift and ZiweiService Swift model parity fields",
+    "input": {
+      "name": "案例14",
+      "gender": 1,
+      "calendarKind": "solar",
+      "solarBirthAt": {
+        "year": 1990,
+        "month": 1,
+        "day": 1,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "birthPlace": "上海"
+    },
+    "context": {
+      "targetDate": {
+        "year": 2026,
+        "month": 5,
+        "day": 23,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "defaultsToCurrentPeriods": true,
+      "selectedFlowMonthIndex": 5,
+      "swiftFixtureId": "swift-bazi-ziwei-1990-01-01-shanghai-male"
+    },
+    "expected": {
+      "bazi": {
+        "baziText": "己巳 丙子 丙寅 戊子",
+        "startLuckDateText": "1998-03-01",
+        "firstFortuneCycle": {
+          "ganZhi": "乙亥",
+          "startYear": 1998,
+          "endYear": 2007,
+          "startAge": 9,
+          "endAge": 18,
+          "void": "申酉"
+        },
+        "selectedCycle": {
+          "sourceIndex": 3,
+          "ganZhi": "癸酉"
+        },
+        "selectedFlowYear": {
+          "year": 2026,
+          "ganZhi": "丙午",
+          "void": "寅卯"
+        },
+        "selectedFlowMonth": {
+          "label": "六",
+          "ganZhi": "乙未",
+          "void": "辰巳"
+        },
+        "pillars": [
+          {
+            "id": "year",
+            "ganZhi": "己巳",
+            "mainStar": "伤官",
+            "hiddenStems": ["丙", "庚", "戊"],
+            "void": "戌亥",
+            "naYin": "大林木"
+          },
+          {
+            "id": "month",
+            "ganZhi": "丙子",
+            "mainStar": "比肩",
+            "hiddenStems": ["癸"],
+            "void": "申酉",
+            "naYin": "涧下水"
+          },
+          {
+            "id": "day",
+            "ganZhi": "丙寅",
+            "mainStar": "元男",
+            "hiddenStems": ["甲", "丙", "戊"],
+            "void": "戌亥",
+            "naYin": "炉中火"
+          },
+          {
+            "id": "time",
+            "ganZhi": "戊子",
+            "mainStar": "食神",
+            "hiddenStems": ["癸"],
+            "void": "午未",
+            "naYin": "霹雳火"
+          }
+        ]
+      },
+      "ziwei": {
+        "basicInfo": {
+          "solarDate": "1990-1-1",
+          "lunarDate": "一九八九年腊月初五",
+          "chineseDate": "己巳 丁丑 丙寅 戊子",
+          "timeIndex": 0,
+          "time": "早子时",
+          "timeRange": "00:00~01:00",
+          "zodiac": "蛇",
+          "earthlyBranchOfSoulPalace": "丑",
+          "earthlyBranchOfBodyPalace": "丑",
+          "soul": "巨门",
+          "body": "天机",
+          "fiveElementsClass": "水二局"
+        },
+        "palaceNames": [
+          "父母",
+          "福德",
+          "田宅",
+          "官禄",
+          "仆役",
+          "迁移",
+          "疾厄",
+          "财帛",
+          "子女",
+          "夫妻",
+          "兄弟",
+          "命宫"
+        ],
+        "lifePalace": {
+          "index": 11,
+          "isBodyPalace": true,
+          "heavenlyStem": "丁",
+          "earthlyBranch": "丑",
+          "majorStars": ["天府"],
+          "decadalRange": [2, 11]
+        },
+        "horoscope": {
+          "targetSolarDate": "2026-5-23",
+          "targetLunarDate": "二〇二六年四月初七",
+          "nominalAge": 38,
+          "currentDecadal": {
+            "index": 8,
+            "heavenlyStem": "甲",
+            "earthlyBranch": "戌",
+            "palaceNames": [
+              "官禄",
+              "仆役",
+              "迁移",
+              "疾厄",
+              "财帛",
+              "子女",
+              "夫妻",
+              "兄弟",
+              "命宫",
+              "父母",
+              "福德",
+              "田宅"
+            ]
+          },
+          "currentYearly": {
+            "index": 4,
+            "heavenlyStem": "丙",
+            "earthlyBranch": "午",
+            "palaceNames": [
+              "财帛",
+              "子女",
+              "夫妻",
+              "兄弟",
+              "命宫",
+              "父母",
+              "福德",
+              "田宅",
+              "官禄",
+              "仆役",
+              "迁移",
+              "疾厄"
+            ]
+          }
+        }
+      }
+    }
+  }
+]

@@ -36,6 +36,27 @@
       "when": 1770484829409,
       "tag": "0004_tired_vermin",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782864000000,
+      "tag": "0005_user_birth_profile_records",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782950400000,
+      "tag": "0006_user_consents",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1783036800000,
+      "tag": "0007_user_liuyao_casts",
+      "breakpoints": true
     }
   ]
 }

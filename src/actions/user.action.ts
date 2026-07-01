@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { UserService } from "@/services/user.service"
-import { sessionMiddleware } from "@/shared/middleware/auth.middleware"
+import { profileSessionMiddleware } from "@/shared/middleware/auth.middleware"
 import type { UserInfo } from "@/shared/types/user"
 
 const DEFAULT_USER_INFO: UserInfo = {
@@ -9,7 +9,7 @@ const DEFAULT_USER_INFO: UserInfo = {
 }
 
 export const getUserInfoFn = createServerFn({ method: "GET" })
-  .middleware([sessionMiddleware])
+  .middleware([profileSessionMiddleware])
   .handler(async ({ context }): Promise<UserInfo> => {
     try {
       const userId = context.session?.user.id

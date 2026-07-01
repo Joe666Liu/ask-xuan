@@ -67,7 +67,7 @@ export function UserMenu() {
     const params = { locale: localePrefix }
     if (legacyDashboardPanel === "account") {
       void navigate({
-        to: "/{-$locale}/dashboard",
+        to: "/{-$locale}/app/settings",
         params,
         replace: true,
       })
@@ -75,7 +75,7 @@ export function UserMenu() {
     }
 
     void navigate({
-      to: "/{-$locale}/dashboard/credits",
+      to: "/{-$locale}/app/settings/credits",
       params,
       replace: true,
       search: {
@@ -154,7 +154,7 @@ export function UserMenu() {
                 className="cursor-pointer"
               >
                 <LocalizedLink
-                  to="/dashboard/credits"
+                  to="/app/settings/credits"
                   search={{ tab: "packages" } as never}
                 >
                   <CoinsIcon className="size-4" />
@@ -177,7 +177,7 @@ export function UserMenu() {
             asChild
             className="cursor-pointer"
           >
-            <LocalizedLink to="/dashboard">
+            <LocalizedLink to="/app/settings">
               <UserIcon className="size-4" />
               <span>{userMenu.profile.value}</span>
             </LocalizedLink>

@@ -80,7 +80,7 @@ export async function getSessionFromHeaders(headers: Headers): Promise<AuthSessi
 }
 
 export async function ensureUserProfile(authUser: AuthUser) {
-  if (!isDatabaseEnabled) return null
+  if (!isDatabaseEnabled()) return null
 
   const now = new Date()
   const values = {
@@ -98,6 +98,31 @@ export async function ensureUserProfile(authUser: AuthUser) {
     emailVerified: authUser.emailVerified,
     image: authUser.image,
     updatedAt: now,
+  }
+
+  const [existingById] = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.id, authUser.id))
+    .limit(1)
+
+  if (existingById && existingById.email === authUser.email) {
+    const isCurrent =
+      existingById.name === authUser.name &&
+      existingById.emailVerified === authUser.emailVerified &&
+      (existingById.image ?? null) === authUser.image
+
+    if (isCurrent) {
+      return existingById
+    }
+
+    const [profile] = await db
+      .update(userTable)
+      .set(updateValues)
+      .where(eq(userTable.id, authUser.id))
+      .returning()
+
+    return profile
   }
 
   return await db.transaction(async (tx) => {

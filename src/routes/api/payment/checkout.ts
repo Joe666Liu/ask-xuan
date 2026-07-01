@@ -81,8 +81,9 @@ export const Route = createFileRoute("/api/payment/checkout")({
             priceId,
             email: user.email,
             userId,
-            successUrl: successUrl || `${process.env.VITE_APP_URL}/dashboard/billing?success=true`,
-            cancelUrl: cancelUrl || `${process.env.VITE_APP_URL}/dashboard/billing`,
+            successUrl:
+              successUrl || `${process.env.VITE_APP_URL}/app/settings/billing?success=true`,
+            cancelUrl: cancelUrl || `${process.env.VITE_APP_URL}/app/settings/billing`,
             metadata: {
               ...metadata,
               planId,

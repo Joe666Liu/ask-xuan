@@ -104,7 +104,7 @@ TanStack Start 不同：你来决定每个页面的渲染策略。
 
 ```tsx
 // 纯 SPA 模式：适合仪表盘、工作区等高交互应用
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/app/settings')({
   ssr: false,
   component: Dashboard,
 });
